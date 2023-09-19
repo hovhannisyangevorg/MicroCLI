@@ -3,12 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gehovhan <gehovhan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/09/09 12:36:25 by gehovhan         ###   ########.fr       */
+/*   Updated: 2023/09/10 15:58:18 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/**
+ * Victory belongs to anyone who perseveres on any path.
+ */
 
 #include "minishell.h"
 

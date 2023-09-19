@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 22:23:33 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/09/19 15:44:21 by gevorg           ###   ########.fr       */
+/*   Created: 2023/09/19 15:54:26 by gevorg            #+#    #+#             */
+/*   Updated: 2023/09/19 15:58:22 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "minishell.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-
-# include "libft.h"
-# include "shell_struct.h"
-# include "shell_struct.h"
-
-/**
- * @path
- */
-
-#endif
+int ft_echo(char **av, char **env)
+{
+	
+}
