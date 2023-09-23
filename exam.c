@@ -6,141 +6,211 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 13:19:41 by gevorg            #+#    #+#             */
-/*   Updated: 2023/09/09 15:13:05 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/09/23 17:10:43 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-// typedef struct s_node t_node;
-// typedef struct s_data t_data;
-
-// struct s_node
-// {
-//     t_data data;
-//     struct s_node* left;
-//     struct s_node* right;
-// };
-
-// struct s_data
-// {
-//     int index;
-// };
+void	ft_panic(char *error);
+size_t	ft_strlen(const char *str);
 
 
-// void	ft_panic(char *mess)
-// {
-// 	fprintf(stderr, mess);
-//     exit(0);
-// }
+typedef struct	s_stack		t_stack;
+typedef struct	s_node		t_node;
 
-// t_node *ft_create_node(t_data data)
-// {
-// 	t_node *root = (t_node *)malloc(sizeof(t_node));
-// 	if(!root)
-// 		return (NULL);
-// 	root->data = data;
-// 	root->left = NULL;
-// 	root->right = NULL;
-// 	return (root);
-// }
-
-// t_node	*ft_insert_node(t_node *root, t_data data)
-// {
-// 	if (!root)
-// 		return (ft_create_node(root->data));
-// 	if (root->data.index < data.index)
-// 		root->left = ft_insert_node(root->left, data);
-// 	else if (root->data.index > data.index)
-// 		root->right = ft_insert_node(root->right, data);
-// 	return (root);
-// }
-
-// t_node	*ft_traversal(t_node *root, t_data data)
-// {
-// 	if (root)
-// 	{
-// 		ft_traversal(root->left, data);
-// 		ft_traversal(root->right, data);
-// 	}
-// }
-
-
-
-
-
-
-
-
-
-
-
-#include <stdio.h>
-#include <stdlib.h>
-
-// Structure for a binary tree node
-struct TreeNode {
-    int data;
-    struct TreeNode* left;
-    struct TreeNode* right;
+struct s_node
+{
+	char data;
+	t_node *next;
 };
 
-// Function to create a new node
-struct TreeNode* createNode(int data) {
-    struct TreeNode* newNode = (struct TreeNode*)malloc(sizeof(struct TreeNode));
-    if (newNode == NULL) {
-        fprintf(stderr, "Memory allocation failed\n");
-        exit(1);
-    }
-    newNode->data = data;
-    newNode->left = NULL;
-    newNode->right = NULL;
-    return newNode;
+struct s_stack
+{
+	t_node *top;
+};
+
+t_stack *initialize_stack()
+{
+	t_stack *stack;
+	
+	stack = (t_stack *)malloc(sizeof(t_stack));
+	if (stack == NULL)
+		return (NULL);
+	stack->top = NULL;
+	return (stack);
 }
 
-struct TreeNode* insertNode(struct TreeNode* root, int data) {
-    if (root == NULL)
-        return (createNode(data));
-
-    if (data < root->data) {
-        root->left = insertNode(root->left, data);
-    } else if (data > root->data) {
-        root->right = insertNode(root->right, data);
-    }
-
-    return (root);
+int is_empty(t_stack *stack)
+{
+	return (stack->top == NULL);
 }
 
-void inorderTraversal(struct TreeNode* root) {
-    if (root != NULL) {
-        inorderTraversal(root->left);
-        printf("%d ", root->data);
-        inorderTraversal(root->right);
-    }
+void	push_stack(t_stack *stack, char item)
+{
+	t_node *new_node = (t_node *)malloc(sizeof(t_node));
+	if (new_node == NULL)
+		return ;
+	new_node->data = item;
+	new_node->next = stack->top;
+	stack->top = new_node;
 }
 
-int main() {
-    struct TreeNode* root = NULL;
+char pop_stack(t_stack *stack)
+{
+	char item;
+	t_node *temp;
 
-    root = insertNode(root, 1);
-    root = insertNode(root, 2);
-    root = insertNode(root, 3);
-    root = insertNode(root, 4);
-    root = insertNode(root, 5);
-	root = insertNode(root, 6);
-    root = insertNode(root, 7);
-    root = insertNode(root, 8);
-	root = insertNode(root, 9);
-    root = insertNode(root, 10);
-    root = insertNode(root, 11);
-
-    printf("Inorder Traversal: ");
-    inorderTraversal(root);
-    printf("\n");
-
-    // Don't forget to free the allocated memory when done with the tree
-    // In a real program, you should have a proper memory management strategy.
-    return 0;
+	if (is_empty(stack))
+		return (0);
+	temp = stack->top;
+	item = temp->data;
+	stack->top = temp->next;
+	free(temp);
+	return (item);
 }
 
+void free_stack(t_stack *stack)
+{
+	if (stack == NULL || stack->top == NULL)
+		return ;
+	while (!is_empty(stack))
+		pop_stack(stack);
+	// free(stack);
+	stack = NULL;
+}
+
+
+
+static int	balancer(char *expression)
+{
+	int i;
+	int balanced;
+	
+	t_stack *stack = initialize_stack();
+	i = 0;
+	while (expression && expression[i])
+	{
+		if (expression[i] == '(')
+			push_stack(stack, '(');
+		else if (expression[i] == ')')
+		{
+			if (pop_stack(stack) != '(')
+			{
+				free_stack(stack);
+				free(stack);
+				return (0);
+			}
+		}
+		i++;
+	}
+	balanced = is_empty(stack);
+	free_stack(stack);
+	free(stack);
+	return (balanced);
+}
+
+void is_balanc(char *expression)
+{
+	if (!balancer(expression))
+		ft_panic("MiniShell Oops: Syntax error rarentheses are not balanced  `('");
+	
+}
+
+
+
+int main()
+{
+	char expression[] = "((((((((((((((((((((((((((((((((((((((((((((((()))))))))))))))))))))))))))))))))))))))))))))))";
+
+	is_balanc(expression);
+
+	return (0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void	ft_panic(char *error)
+{
+	write (2, error, ft_strlen(error));
+	write (2, "\n", 1);
+	exit (1);
+}
+
+size_t	ft_strlen(const char *str)
+{
+	const char	*ptr;
+
+	ptr = str;
+	while (ptr && *ptr)
+		ptr++;
+	return (ptr - str);
+}

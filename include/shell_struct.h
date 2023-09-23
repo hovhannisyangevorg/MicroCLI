@@ -6,29 +6,44 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 14:57:11 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/09/19 15:57:51 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/09/22 17:45:03 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_STRUCT_H
 # define SHELL_STRUCT_H
 
-// is a main structure
-typedef struct s_main		t_main;
-typedef int (*command_t)(char **args, char **env);
+/**
+ * @file shell_struct.h
+ * @brief Contains definitions of data structures for the Minishell project.
+ */
 
-struct function_cmd
+typedef struct	s_stack		t_stack;
+typedef struct	s_node		t_node;
+
+
+/**
+ * @struct s_node
+ * 
+ * @brief A structure representing a node in a singly-linked list.
+ */
+struct s_node
 {
-	char *cmd;
-	command_t func;
+	char data;
+	t_node *next;
 };
 
-function_cmd table[6];
-
-struct s_main
+/**
+ * @struct s_stack
+ * 
+ * @brief A structure representing a stack data structure implemented using linked list.
+ */
+struct s_stack
 {
-	
+	t_node *top;
 };
+
+
 
  
 #endif
