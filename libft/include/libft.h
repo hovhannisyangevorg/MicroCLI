@@ -94,4 +94,20 @@ char	*get_next_line(int fd);
 char	*ft_strjoin_utils(char *start, char *buff);
 char	*ft_join_utils(char *dest, char *s1, char *s2);
 
+
+char				*gnl_get_line(char *buffer);
+
+char				*gnl_get_buffer(char *buffer);
+
+int					ft_gnl_strchr(const char *s, int c);
+
+size_t				ft_gnl_strlen(const char *s1);
+
+char				*ft_gnl_strjoin(char *s1, char *s2);
+
+char				*get_gnl_line(char *memory);
+
+char				*get_gnl_buffer(char *s);
+int					ft_getline(int fd, char **line);
+
 #endif
