@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 14:57:11 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/09/22 17:45:03 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/09/29 18:47:24 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 typedef struct	s_stack		t_stack;
 typedef struct	s_node		t_node;
+typedef struct	s_token		t_token;
 
 
 /**
@@ -41,6 +42,13 @@ struct s_node
 struct s_stack
 {
 	t_node *top;
+};
+
+struct s_token
+{
+	int		type;
+	char	*token;
+	t_token	*next;
 };
 
 

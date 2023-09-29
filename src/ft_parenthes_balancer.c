@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 17:55:10 by gevorg            #+#    #+#             */
-/*   Updated: 2023/09/23 17:14:06 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/09/27 16:09:30 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static int	ft_parenthes_balancer(char *expression)
 	int i;
 	int balanced;
 	
-	t_stack *stack = ft_initialize_stack();
+	t_stack *stack;
+	stack = ft_initialize_stack();
 	i = 0;
 	while (expression && expression[i])
 	{
@@ -44,5 +45,5 @@ static int	ft_parenthes_balancer(char *expression)
 void ft_is_balanc(char *expression)
 {
 	if (!ft_parenthes_balancer(expression))
-		ft_panic("MiniShell Oops: Syntax error rarentheses are not balanced  `('");
+		ft_panic("MiniShell Oops: Syntax error parentheses are not balanced !   `('");
 }

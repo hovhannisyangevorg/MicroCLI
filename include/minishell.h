@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 22:23:33 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/09/23 17:13:11 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/09/27 16:10:16 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,13 @@ void 	ft_free_stack(t_stack *stack);
 * Description: This file contains the implementation of the following functions.
 */
 void ft_is_balanc(char *expression);
+
+
+
+
+
+
+void ft_check_quote(char *expression);
 
 
 #endif
