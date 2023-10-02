@@ -1,10 +1,24 @@
-#include "../../libft/include/libft.h"
+#include "../include/libft.h"
 # include <stdio.h>
 
 static int  count_split(const char *str, char *delims);
 static int delim_len(const char *str, char *delims);
 static char *get_word(const char *str, char *delims);
 static char **free_splited(char **splited, int i);
+
+
+char	*ft_strchr(char *string, int searched_char)
+{
+	char	*str;
+
+	str = string;
+	while (str && *str != searched_char && *str != 0)
+		str++;
+	if (str && *str == searched_char)
+		return (str);
+	else
+		return (NULL);
+}
 
 char	**ft_split2(char* str, char* delims)
 {
@@ -26,7 +40,7 @@ char	**ft_split2(char* str, char* delims)
                 return (free_splited(splited, i));
             i++;
         }
-        while (*str && ft_strchr(delims, *str))
+        while (*str && !ft_strchr(delims, *str))
            str++;
     }
     *(splited + 1) = 0;
@@ -92,11 +106,13 @@ static char **free_splited(char **splited, int i)
 
 int main(void)
 {
-	char **split = ft_split2("barev,karmir/arev",",/");
+	char **split = ft_split2("barev*karmir,arev",",*");
+	// printf("%s", split[0]);
 	int i = 0;
 	while (split[i])
 	{
-		printf("%s", split[i++]);
+		printf("%s", split[i]);
+		i++;
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gehovhan <gehovhan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: armhakob <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:10:28 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/09/08 22:29:10 by gehovhan         ###   ########.fr       */
+/*   Updated: 2023/10/02 14:59:06 by armhakob         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,7 @@ char				*get_gnl_line(char *memory);
 
 char				*get_gnl_buffer(char *s);
 int					ft_getline(int fd, char **line);
+
+char	**ft_split2(char* str, char* delims);
 
 #endif
