@@ -24,12 +24,12 @@ int		ft_count_token(char *str, char *delims, int str_len)
         if (ft_strchr(delims, str[i])) 
 		{
 			count++;
-			while (ft_strchr(delims, str[i]))
+			while (str[i] && ft_strchr(delims, str[i]))
 				i++;
-		}
-		i++;
+		} else
+			i++;
 	}
-	if (str[str_len - 1] != delims[0])
+	if (str_len && !ft_strchr(delims, str[str_len - 1]))
 		count++;
 	return (count);
 }
@@ -37,18 +37,24 @@ int		ft_count_token(char *str, char *delims, int str_len)
 char	*ft_create_token(const char *str, int token_start, int token_length)
 {
 	int i;
+	int j;
 	char *token;
-	
+
 	token = (char *)malloc((token_length + 1) * sizeof(char));
 	if (!token)
 		return(NULL);
 	i = 0;
-	while (i < token_length)
+	j = 0;
+	while (str && str[i])
 	{
-		token[i] = str[token_start + i];
+		if (i >= token_start && j< token_length)
+		{
+			token[j] = str[i];
+			j++;
+		}
 		++i;
 	}
-	token[token_length] = '\0';
+	token[j] = '\0';
 	return (token);
 }
 
@@ -61,16 +67,17 @@ char **ft_multi_split(char *str, char *delims)
 	int		token_index;
 	int 	token_start;
 	int 	token_length;
-
+	
 	str_len 		= ft_strlen(str);
 	tokens_count 	= ft_count_token(str, delims, str_len);
 	tokens			= (char **)malloc((tokens_count + 1) * sizeof(char *));
 	if (!tokens)
 		return (0);
 
+	i = 0;
 	token_index = 0;
 	token_start = 0;
-	while (i <= str_len) 
+	while (i <= str_len)
 	{
 		if (ft_strchr(delims, str[i]) || !str[i])
 		{
@@ -82,8 +89,9 @@ char **ft_multi_split(char *str, char *delims)
 				return (NULL);
 			}
 			token_index++;
-			while (ft_strchr(delims, str[i]))
+			while (str[i] && ft_strchr(delims, str[i]))
 				i++;
+			if (str[i])
 			token_start = i;
 		}
 		i++;
@@ -91,4 +99,3 @@ char **ft_multi_split(char *str, char *delims)
 	tokens[tokens_count] = NULL;
 	return (tokens);
 }
-

@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 15:05:13 by gevorg            #+#    #+#             */
-/*   Updated: 2023/10/07 13:42:34 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/07 14:55:32 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@ char    *ft_get_line()
 {
     char	*line;
 
-    line = NULL;
-    if (line)
-    {
-        free(line);
-        line = NULL;
-    }
     line = readline("Minishell $> ");
     if (line)
         add_history(line);

@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/10/07 13:52:08 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/07 19:13:49 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@
 // }
 
 int main()
-{	
+{
+	int i;
 	char *line;
 	char **spled;
 
@@ -69,16 +70,24 @@ int main()
 	rl_catch_signals = 0;
 	while (1)
 	{
+		i = 0;
 		line = ft_get_line();
 		if (!line)
 			return (0);
 		spled = ft_multi_split(line, SEPARARTORS);
-
-		// ft_vecstrdel(&spled);
-		// free(line);
+		// while (spled[i])
+		// {
+		// 	printf("%s", spled[i]);
+		// 	i++;
+		// }
+		ft_vecstrdel(&spled);
+		free(line);
     }
-	(void)spled;
     clear_history();
     return (0);
 }
+
+
+
+
 
