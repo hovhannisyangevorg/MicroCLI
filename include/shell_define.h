@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   shell_define.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gehovhan <gehovhan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 14:37:21 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/09/08 22:23:37 by gehovhan         ###   ########.fr       */
+/*   Updated: 2023/10/03 19:02:59 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_DEFINE_H
 # define MINISHELL_DEFINE_H
 
+#define SEPARARTORS ";|&<>()"
 
 #endif

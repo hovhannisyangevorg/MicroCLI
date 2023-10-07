@@ -6,17 +6,17 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 21:46:04 by gevorg            #+#    #+#             */
-/*   Updated: 2023/09/28 18:19:45 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/09/30 18:34:35 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-typedef enum s_quot
-{
-	SINGL 	= 0x0001,
-	DOUBLE 	= 0x1000,
-} t_quot;
+// typedef enum s_quot
+// {
+// 	SINGL 	= 0x0001,
+// 	DOUBLE 	= 0x1000,
+// } t_quot;
 
 
 // struct s_token
@@ -33,7 +33,7 @@ typedef enum s_quot
 
 
 
-// void	*ft_check_quote(char *expression)
+// void	ft_check_quote(char *expression, )
 // {
 // 	int flag;
 // 	flag = 0;
@@ -44,7 +44,7 @@ typedef enum s_quot
 // 			flag |= DOUBLE;
 // 		else if (*expression == '\"')
 // 			flag |= SINGL;
-// 		// printf("%d\n", flag);
+
 // 		if (flag == DOUBLE)
 // 			ft_quot(flag);
 // 		else if (flag == DOUBLE)

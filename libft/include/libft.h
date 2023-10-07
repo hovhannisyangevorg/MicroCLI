@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gehovhan <gehovhan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:10:28 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/09/08 22:29:10 by gehovhan         ###   ########.fr       */
+/*   Updated: 2023/10/01 13:11:01 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,12 @@ char	*ft_move_start(char	*start);
 char	*get_next_line(int fd);
 char	*ft_strjoin_utils(char *start, char *buff);
 char	*ft_join_utils(char *dest, char *s1, char *s2);
+
+char	*gnl_get_line(char *buffer);
+char	*gnl_get_buffer(char *buffer);
+int		ft_getline(int fd, char **line);
+size_t	ft_gnl_strlen(const char *s);
+char	*ft_gnl_strjoin(char *s1, char *s2);
+int		ft_gnl_strchr(const char *s, int c);
 
 #endif

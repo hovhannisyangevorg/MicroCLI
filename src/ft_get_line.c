@@ -1,34 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   ft_get_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/09 13:19:41 by gevorg            #+#    #+#             */
-/*   Updated: 2023/09/29 18:54:04 by gevorg           ###   ########.fr       */
+/*   Created: 2023/10/03 15:05:13 by gevorg            #+#    #+#             */
+/*   Updated: 2023/10/07 13:42:34 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	sig_handler_c(int signum)
+{
+    if (signum == SIGINT)
+    {
+        printf("\n");
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
+}
 
+char    *ft_get_line()
+{
+    char	*line;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    line = NULL;
+    if (line)
+    {
+        free(line);
+        line = NULL;
+    }
+    line = readline("Minishell $> ");
+    if (line)
+        add_history(line);
+    return (line);
+}
