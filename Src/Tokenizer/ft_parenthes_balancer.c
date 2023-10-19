@@ -6,11 +6,11 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 17:55:10 by gevorg            #+#    #+#             */
-/*   Updated: 2023/10/16 16:09:09 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/19 17:05:33 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 static int	ft_parenthes_balancer(char *expression)
 {

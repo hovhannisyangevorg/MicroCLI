@@ -6,11 +6,11 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 12:34:11 by gevorg            #+#    #+#             */
-/*   Updated: 2023/09/23 17:14:27 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/19 17:05:25 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 t_stack *ft_initialize_stack()
 {

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_struct.h                                     :+:      :+:    :+:   */
+/*   tokenizer_struct.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 14:57:11 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/10/18 21:47:16 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/19 18:06:25 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_STRUCT_H
-# define SHELL_STRUCT_H
+#ifndef		TOKENIZER_STRUCT_H
+# define	TOKENIZER_STRUCT_H
 
 
 #define SEPARARTORS ";|&<>()"
@@ -60,10 +60,6 @@ struct s_token
 	size_t	size;
 	t_token	*next;
 };
-
-
-
-
 
  
 #endif

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 char	*ft_create_token(const char *str, int token_start, int token_length)
 {

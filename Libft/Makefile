@@ -6,7 +6,7 @@
 #    By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 21:12:42 by gehovhan          #+#    #+#              #
-#    Updated: 2023/10/04 17:14:44 by gevorg           ###   ########.fr        #
+#    Updated: 2023/10/19 20:31:51 by gevorg           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,21 +38,26 @@ SANIT_FLAG		=	-g3 -fsanitize=address
 .DEFAULT_GOAL	=	all
 
 %.o:	%.c $(HDRS)
-	$(CC) $(INCS) $(CFLAGS) -c $< -o $@
+	@$(CC) $(INCS) $(CFLAGS) -c $< -o $@
 
 all:			$(NAME)	
 
 $(NAME) :		$(OBJS)
-				ar rcs $(NAME) $(OBJS)
+				$(info Generate objects for libft)
+				$(info Generate archive for libft)
+				@ar rcs $(NAME) $(OBJS)
 
 clean :
-				$(RM) $(OBJS)
+				$(info Remove objects from libft)
+				@$(RM) $(OBJS)
 
 fclean :			clean
-				$(RM) $(NAME)
+				$(info Remove archive from libft)
+				@$(RM) $(NAME)
 
 re :				fclean $(NAME)
+					$(info Recompile libft)
 
 .PHONY:			all clean fclean re 
 
-# .SILENT:
+#  .SILENT:

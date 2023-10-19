@@ -6,11 +6,11 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 21:46:04 by gevorg            #+#    #+#             */
-/*   Updated: 2023/10/16 13:34:58 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/19 17:05:30 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "shell.h"
 
 // typedef enum s_quot
 // {

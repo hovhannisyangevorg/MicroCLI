@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/10/18 21:21:49 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/19 17:05:15 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
  * Victory belongs to anyone who perseveres on any path.
  */
 
-#include "minishell.h"
+#include "shell.h"
 
 // typedef enum s_quot
 // {
