@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_panic.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 22:23:33 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/09/19 15:44:21 by gevorg           ###   ########.fr       */
+/*   Created: 2023/07/01 15:06:27 by gehovhan          #+#    #+#             */
+/*   Updated: 2023/10/16 15:52:25 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-
-# include "libft.h"
-# include "shell_struct.h"
-# include "shell_struct.h"
-
-/**
- * @path
- */
-
-#endif
+void	ft_panic(char *error)
+{
+	write (2, error, ft_strlen(error));
+	write (2, "\n", 1);
+	exit (1);
+}

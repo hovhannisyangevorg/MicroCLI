@@ -6,7 +6,7 @@
 #    By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 21:12:42 by gehovhan          #+#    #+#              #
-#    Updated: 2023/08/11 20:01:48 by gevorg           ###   ########.fr        #
+#    Updated: 2023/10/19 20:31:51 by gevorg           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRCS			=	src/ft_isalpha.c src/ft_isdigit.c src/ft_isalnum.c  src/ft_isascii.c sr
 					src/ft_lstnew.c src/ft_lstadd_front.c src/ft_lstsize.c src/ft_lstlast.c src/ft_lstadd_back.c \
 					src/ft_lstdelone.c  src/ft_lstclear.c src/ft_lstiter.c src/ft_lstmap.c src/ft_isspace.c \
 					src/get_next_word.c src/ft_isxdigit.c src/ft_panic.c src/ft_overflow.c src/ft_strdel.c \
-					src/ft_threestrdel.c src/ft_vecstrdel.c
+					src/ft_threestrdel.c src/ft_vecstrdel.c src/get_next_line.c src/get_next_line_utils.c
 OBJS			= $(SRCS:.c=.o)
 
 HDRS			=	include/libft.h
@@ -38,21 +38,26 @@ SANIT_FLAG		=	-g3 -fsanitize=address
 .DEFAULT_GOAL	=	all
 
 %.o:	%.c $(HDRS)
-	$(CC) $(INCS) $(CFLAGS) -c $< -o $@
+	@$(CC) $(INCS) $(CFLAGS) -c $< -o $@
 
 all:			$(NAME)	
 
 $(NAME) :		$(OBJS)
-				ar rcs $(NAME) $(OBJS)
+				$(info Generate objects for libft)
+				$(info Generate archive for libft)
+				@ar rcs $(NAME) $(OBJS)
 
 clean :
-				$(RM) $(OBJS)
+				$(info Remove objects from libft)
+				@$(RM) $(OBJS)
 
 fclean :			clean
-				$(RM) $(NAME)
+				$(info Remove archive from libft)
+				@$(RM) $(NAME)
 
 re :				fclean $(NAME)
+					$(info Recompile libft)
 
 .PHONY:			all clean fclean re 
 
-.SILENT:
+#  .SILENT:

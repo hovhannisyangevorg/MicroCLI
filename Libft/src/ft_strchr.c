@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gehovhan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/18 17:11:50 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/01/18 18:02:07 by gehovhan         ###   ########.fr       */
+/*   Created: 2023/01/19 17:45:22 by gehovhan          #+#    #+#             */
+/*   Updated: 2023/10/01 13:17:47 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+char	*ft_strchr(char *string, int searched_char)
 {
-	size_t	i;
+	char	*str;
 
-	if (!size)
-		return (ft_strlen(src));
-	i = 0;
-	while (src[i] && (i < size - 1))
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = 0;
-	return (ft_strlen(src));
+	str = string;
+	while (str && *str != searched_char && *str != 0)
+		str++;
+	if (str && *str == searched_char)
+		return (str);
+	else
+		return (NULL);
 }

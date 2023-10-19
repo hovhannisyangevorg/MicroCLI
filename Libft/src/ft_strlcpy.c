@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/09/10 15:58:18 by gevorg           ###   ########.fr       */
+/*   Created: 2023/01/18 17:11:50 by gehovhan          #+#    #+#             */
+/*   Updated: 2023/10/06 16:25:59 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/**
- * Victory belongs to anyone who perseveres on any path.
- */
+#include "libft.h"
 
-#include "minishell.h"
-
-int	main()
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	printf("Hello Minishell\n");
-	return (0);
+	size_t	i;
+
+	if (!size)
+		return (ft_strlen(src));
+	i = 0;
+	while (src[i] && (i < size))
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = 0;
+	return (ft_strlen(src));
 }

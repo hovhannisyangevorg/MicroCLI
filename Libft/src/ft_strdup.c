@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gehovhan <gehovhan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/19 17:45:22 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/07/02 19:39:18 by gehovhan         ###   ########.fr       */
+/*   Created: 2023/01/23 21:44:52 by gehovhan          #+#    #+#             */
+/*   Updated: 2023/09/29 17:48:14 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(char *string, int searched_char)
+char	*ft_strdup(const char *str)
 {
-	char	*str;
+	char	*new;
+	size_t	len;
+	if (!str && !*str)
+		return (0);
 
-	str = string;
-	while (str && *str != searched_char && *str != 0)
-		str++;
-	if (str && *str == searched_char)
-		return (str);
-	else
+	len = ft_strlen(str) + 1;
+	new = (char *)malloc(sizeof(*new) * len);
+	if (!new)
 		return (NULL);
+	return ((char *)ft_memcpy(new, str, len));
 }
