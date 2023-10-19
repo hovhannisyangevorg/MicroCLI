@@ -6,12 +6,20 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 14:57:11 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/09/29 20:02:50 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/18 21:47:16 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_STRUCT_H
 # define SHELL_STRUCT_H
+
+
+#define SEPARARTORS ";|&<>()"
+#define RED "\033[31m"
+#define BLACK "\033[30m"
+#define GREEN "\033[32m"
+
+
 
 /**
  * @file shell_struct.h
@@ -48,6 +56,8 @@ struct s_token
 {
 	int		type;
 	char	*token;
+	int 	quate_flags;
+	size_t	size;
 	t_token	*next;
 };
 

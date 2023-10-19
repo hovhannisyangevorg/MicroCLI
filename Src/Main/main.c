@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/10/07 19:13:49 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/18 21:21:49 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,54 +33,85 @@
 // 	return (0);
 // }
 
-// t_token	*ft_check_quote(char *expression)
+
+
+
+
+// struct s_token
 // {
-// 	int flag;
-// 	char *tmp;
-// 	t_token *token;
+// 	int		type;
+// 	char	*token;
+// 	int 	quate_flags;
+// 	size_t	size;
+// 	t_token	*next;
+// };
 
-// 	flag = 0;
-// 	token = 0;
-// 	tmp = expression;
-// 	while (tmp && *tmp)
-// 	{
-// 		if (*tmp == '\"')
-// 			flag |= DOUBLE;
-// 		else if (*tmp == '\"')
-// 			flag |= SINGL;
-// 		printf("%d\n", flag);
-// 		if (flag == DOUBLE)
-// 			token = ft_quot(tmp, flag);
-// 		else if (flag == SINGL)
-// 			token = ft_quot(tmp, flag);
+// int ft_quote_count()
+// {
 
-// 		tmp++;
-// 		flag = 0;
-// 	}
-// 	return (token);
 // }
+
+// void	ft_check_quote(t_token *head)
+// {
+// 	t_token *tmp;
+
+// 	tmp = head;
+		
+// 	while (tmp)
+// 	{
+// 		// if (tmp->token == '\"')
+// 		// 	flag |= DOUBLE;
+// 		// else if (*tmp == '\"')
+// 		// 	flag |= SINGL;
+// 		// printf("%d\n", flag);
+// 		// if (flag == DOUBLE)
+// 		// 	token = ft_quot(tmp, flag);
+// 		// else if (flag == SINGL)
+// 		// 	token = ft_quot(tmp, flag);
+// 		tmp = tmp->next;
+// 	}
+
+// }
+
+// printf("1\n");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 int main()
 {
-	int i;
 	char *line;
-	char **spled;
+	t_token *head;
 
 	signal(SIGINT, sig_handler_c);
 	rl_catch_signals = 0;
 	while (1)
 	{
-		i = 0;
 		line = ft_get_line();
+		ft_is_balanc(line);
 		if (!line)
 			return (0);
-		spled = ft_multi_split(line, SEPARARTORS);
-		// while (spled[i])
-		// {
-		// 	printf("%s", spled[i]);
-		// 	i++;
-		// }
-		ft_vecstrdel(&spled);
+		head = ft_multi_split(line, SEPARARTORS);
+		// ft_check_quote(head);
+
+		
+		ft_print_list(head);
+		ft_free_list(&head);
 		free(line);
     }
     clear_history();

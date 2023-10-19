@@ -12,28 +12,6 @@
 
 #include "minishell.h"
 
-int		ft_count_token(char *str, char *delims, int str_len)
-{
-	int i;
-	int count;
-
-	i = 0;
-	count = 0;
-	while (i < str_len)
-	{
-        if (ft_strchr(delims, str[i])) 
-		{
-			count++;
-			while (str[i] && ft_strchr(delims, str[i]))
-				i++;
-		} else
-			i++;
-	}
-	if (str_len && !ft_strchr(delims, str[str_len - 1]))
-		count++;
-	return (count);
-}
-
 char	*ft_create_token(const char *str, int token_start, int token_length)
 {
 	int i;
@@ -58,44 +36,33 @@ char	*ft_create_token(const char *str, int token_start, int token_length)
 	return (token);
 }
 
-char **ft_multi_split(char *str, char *delims)
+t_token *ft_multi_split(char *str, char *delims)
 {
-	int		i;
-	int		str_len;
-	char	**tokens;
-	int		tokens_count;
-	int		token_index;
+	size_t	i;
+	t_token *head;
+	char 	*tmp;
 	int 	token_start;
 	int 	token_length;
 	
-	str_len 		= ft_strlen(str);
-	tokens_count 	= ft_count_token(str, delims, str_len);
-	tokens			= (char **)malloc((tokens_count + 1) * sizeof(char *));
-	if (!tokens)
-		return (0);
-
-	i = 0;
-	token_index = 0;
+	ft_init_list(&head);
+	i = -1;
 	token_start = 0;
-	while (i <= str_len)
+	while (++i <= ft_strlen(str))
 	{
 		if (ft_strchr(delims, str[i]) || !str[i])
 		{
 			token_length = i - token_start;
-			tokens[token_index] = ft_create_token(str, token_start, token_length);
-			if (!tokens[token_index])
-			{
-				ft_vecstrdel(&tokens);
+			tmp = ft_create_token(str, token_start, token_length);
+			if (!tmp)
 				return (NULL);
-			}
-			token_index++;
+			ft_push_back(&head, str[i], tmp);
+			free(tmp);
 			while (str[i] && ft_strchr(delims, str[i]))
 				i++;
 			if (str[i])
-			token_start = i;
+				token_start = i;
 		}
-		i++;
 	}
-	tokens[tokens_count] = NULL;
-	return (tokens);
+	return (head);
 }
+// command arg 

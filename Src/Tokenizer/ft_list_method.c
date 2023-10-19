@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:02:45 by gevorg            #+#    #+#             */
-/*   Updated: 2023/09/29 18:58:41 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/07 21:19:23 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,18 @@ void	ft_free_list(t_token **head)
 		tmp = next;
 	}
 	*head = NULL;
+}
+
+
+void	ft_print_list(t_token *head)
+{
+	t_token* current;
+
+	current = head;
+
+	while (current)
+	{
+		printf("Type: %d, Token: %s\n", current->type, current->token);
+		current = current->next;
+    }
 }

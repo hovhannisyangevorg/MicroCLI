@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 17:55:10 by gevorg            #+#    #+#             */
-/*   Updated: 2023/09/27 16:09:30 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/16 16:09:09 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ static int	ft_parenthes_balancer(char *expression)
 
 void ft_is_balanc(char *expression)
 {
+	char *color;
 	if (!ft_parenthes_balancer(expression))
-		ft_panic("MiniShell Oops: Syntax error parentheses are not balanced !   `('");
+	{
+		color = RED "Bash Oops! : " BLACK "Syntax error parentheses are not balanced ! `('";
+		ft_panic(color);
+	}
 }

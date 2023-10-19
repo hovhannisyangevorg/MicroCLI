@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 21:46:04 by gevorg            #+#    #+#             */
-/*   Updated: 2023/09/30 18:34:35 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/16 13:34:58 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 
 
 
-// void	ft_check_quote(char *expression, )
+// void	ft_check_quote(char *expression)
 // {
 // 	int flag;
 // 	flag = 0;

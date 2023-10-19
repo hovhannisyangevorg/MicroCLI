@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_define.h                                     :+:      :+:    :+:   */
+/*   ft_panic.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 14:37:21 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/10/03 19:02:59 by gevorg           ###   ########.fr       */
+/*   Created: 2023/07/01 15:06:27 by gehovhan          #+#    #+#             */
+/*   Updated: 2023/10/16 15:52:25 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_DEFINE_H
-# define MINISHELL_DEFINE_H
+#include "libft.h"
 
-#define SEPARARTORS ";|&<>()"
-
-#endif
+void	ft_panic(char *error)
+{
+	write (2, error, ft_strlen(error));
+	write (2, "\n", 1);
+	exit (1);
+}
