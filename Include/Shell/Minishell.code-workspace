@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../readline-8.0"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"shell.h": "c",
+			"rlstdc.h": "c",
+			"readline.h": "c",
+			"rltypedefs.h": "c",
+			"history.h": "c"
+		}
+	}
+}
