@@ -1,6 +1,6 @@
 .vscode
 **/a.out
 **/*.o
-**/*.DS_Storex
+**/*.DS_Store
 **/*.sw*
 
