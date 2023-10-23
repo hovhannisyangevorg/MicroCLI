@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD:Libft/include/libft.h
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:10:28 by gehovhan          #+#    #+#             */
 /*   Updated: 2023/10/01 13:11:01 by gevorg           ###   ########.fr       */
+=======
+/*   By: armhakob <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 14:10:28 by gehovhan          #+#    #+#             */
+/*   Updated: 2023/10/02 14:59:06 by armhakob         ###   ########.fr       */
+>>>>>>> d87676c0f4a9627384897b952b54dc3ef0b83cdc:libft/include/libft.h
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +101,31 @@ char	*get_next_line(int fd);
 char	*ft_strjoin_utils(char *start, char *buff);
 char	*ft_join_utils(char *dest, char *s1, char *s2);
 
+<<<<<<< HEAD:Libft/include/libft.h
 char	*gnl_get_line(char *buffer);
 char	*gnl_get_buffer(char *buffer);
 int		ft_getline(int fd, char **line);
 size_t	ft_gnl_strlen(const char *s);
 char	*ft_gnl_strjoin(char *s1, char *s2);
 int		ft_gnl_strchr(const char *s, int c);
+=======
+
+char				*gnl_get_line(char *buffer);
+
+char				*gnl_get_buffer(char *buffer);
+
+int					ft_gnl_strchr(const char *s, int c);
+
+size_t				ft_gnl_strlen(const char *s1);
+
+char				*ft_gnl_strjoin(char *s1, char *s2);
+
+char				*get_gnl_line(char *memory);
+
+char				*get_gnl_buffer(char *s);
+int					ft_getline(int fd, char **line);
+
+char	**ft_split2(char* str, char* delims);
+>>>>>>> d87676c0f4a9627384897b952b54dc3ef0b83cdc:libft/include/libft.h
 
 #endif

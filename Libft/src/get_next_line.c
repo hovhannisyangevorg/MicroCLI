@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: armhakob <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/01 13:08:00 by gevorg            #+#    #+#             */
-/*   Updated: 2023/10/01 13:10:47 by gevorg           ###   ########.fr       */
+/*   Created: 2021/02/24 18:58:42 by hohayrap          #+#    #+#             */
+/*   Updated: 2023/09/26 15:09:14 by armhakob         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char	*gnl_get_line(char *buffer)
 		line[index] = buffer[index];
 		++index;
 	}
+	// line[index] = '\n';
+	// ++index;
 	line[index] = '\0';
 	return (line);
 }
