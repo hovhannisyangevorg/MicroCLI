@@ -7,8 +7,8 @@ OBJ_DIR			= 	Obj
 INC_DIR			=	Include
 FT_LIB			=	Libft
 INC_DIR_LIB		= 	include
-READ_DIR 		=	readline
-READ_UPDIR		=	readline_update
+READ_DIR 		=	Readline
+READ_UPDIR		=	Readline_update
 READ_ARX 		=	lib
 
 OS				=	$(shell uname -s)
@@ -81,7 +81,7 @@ ALL 			=	all
 CLEAN 			=	clean
 FCLEAN 			=	fclean
 RE 				=	re
-RL 				=	readline
+RL 				=	Readline
 
 
 
@@ -115,10 +115,10 @@ INCS_ALL 		=	$(INCS_EXEC) $(INCS_LEXR) $(INCS_PARS) $(INCS_TOKS) $(INCS_SHELL)
 
 
 # # All include path
-INCLUDES			=	$(I_FLAG)$(INC_DIR) $(I_FLAG)$(FT_LIB)/$(INC_DIR_LIB) $(I_FLAG)$(INC_EXEC_DIR) $(I_FLAG)$(INC_LEXR_DIR) $(I_FLAG)$(INC_PARS_DIR) $(I_FLAG)$(INC_TOKS_DIR) $(I_FLAG)$(INC_SHELL_DIR) $(I_FLAG)$(READ_UPDIR)/$(INC_DIR_LIB)
+INCLUDES		=	$(I_FLAG)$(INC_DIR) $(I_FLAG)$(FT_LIB)/$(INC_DIR_LIB) $(I_FLAG)$(INC_EXEC_DIR) $(I_FLAG)$(INC_LEXR_DIR) $(I_FLAG)$(INC_PARS_DIR) $(I_FLAG)$(INC_TOKS_DIR) $(I_FLAG)$(INC_SHELL_DIR) $(I_FLAG)$(READ_UPDIR)/$(INC_DIR_LIB)
 
 
-.DEFAULT_GOAL	=	$(ALL)
+.DEFAULT_GOAL	:=	$(ALL)
 
 
 define generate_rule_hier
