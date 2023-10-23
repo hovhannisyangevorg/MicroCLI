@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: armhakob <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 15:05:13 by gevorg            #+#    #+#             */
-/*   Updated: 2023/10/19 17:06:11 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/23 20:31:58 by armhakob         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
 
 void	sig_handler_c(int signum)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: armhakob <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/10/23 14:02:06 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/23 20:24:34 by armhakob         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int main()
 	t_token *head;
 
 	signal(SIGINT, sig_handler_c);
-	rl_catch_signals = 0;
+	// rl_catch_signals = 0;
 	while (1)
 	{
 		line = ft_get_line();
@@ -39,27 +39,3 @@ int main()
     clear_history();
     return (0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

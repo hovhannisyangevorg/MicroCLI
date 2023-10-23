@@ -1,10 +1,13 @@
 {
 	"files.associations": {
-		"algorithm": "c",
-		"minishell.h": "c",
-		"unistd.h": "c",
-		"stdio.h": "c",
+		"shell.h": "c",
+		"rlstdc.h": "c",
+		"readline.h": "c",
+		"rltypedefs.h": "c",
+		"history.h": "c",
 		"stdlib.h": "c",
+		"unistd.h": "c",
+		"libft.h": "c",
 		"string.h": "c"
 	}
 }
