@@ -31,7 +31,7 @@ PACKAGE_TARNAME = readline
 srcdir = .
 
 top_srcdir = .
-BUILD_DIR = /Users/armhakob/Desktop/Minishell/readline
+BUILD_DIR = /Users/armhakob/Desktop/Gevor/Readline
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -48,7 +48,7 @@ MV = mv
 
 SHELL = /bin/sh
 
-prefix = /Users/armhakob/Desktop/Minishell/readline_update
+prefix = /Users/armhakob/Desktop/Gevor/Readline_update
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share
