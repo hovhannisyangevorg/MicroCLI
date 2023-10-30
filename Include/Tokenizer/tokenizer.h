@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: armhakob <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 22:23:33 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/10/23 15:26:58 by armhakob         ###   ########.fr       */
+/*   Updated: 2023/10/30 14:14:39 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,21 @@ void		ft_push_stack(t_stack *stack, char item);
 char 		ft_pop_stack(t_stack *stack);
 void 		ft_free_stack(t_stack *stack);
 void		ft_is_balanc(char *expression);
-void		ft_check_quote(t_token *token);
-void		ft_init_list(t_token **head);
-void		ft_push_back(t_token **head, int type, const char *token);
-void		ft_push_front(t_token **head, int type, const char *token);
-void		ft_pop_back(t_token **head);
-void		ft_pop_front(t_token **head);
-void		ft_free_list(t_token **head);
-void		ft_print_list(t_token *head);
-t_token		*ft_multi_split(char* str, char* delims);
+void		ft_init_list(t_list_token *list);
+void		ft_push_back(t_list_token *list, int type, const char *token);
+void		ft_push_front(t_list_token *list, int type, const char *token);
+void		ft_pop_back(t_list_token *list);
+void		ft_pop_front(t_list_token *list);
+void		ft_free_list(t_list_token *list);
+void		ft_print_list(t_list_token list);
+t_list_token *ft_multi_split(char* str, char* delims);
 char		*ft_get_line();
 void		sig_handler_c(int signum);
+
+
+
+void 		ft_ordering(t_list_token *list);
+
+
 
 #endif

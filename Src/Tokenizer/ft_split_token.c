@@ -1,37 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_split_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/10/30 17:04:15 by gevorg           ###   ########.fr       */
+/*   Created: 2023/10/29 19:15:33 by gevorg            #+#    #+#             */
+/*   Updated: 2023/10/30 13:44:51 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int main()
-{
-	char *line;
-	t_list_token *list;
-
-	signal(SIGINT, sig_handler_c);
-	rl_catch_signals = 0;
-	while (1)
-	{
-		line = ft_get_line();
-		if (!line)
-			return (0);
-		ft_is_balanc(line);
-		list = ft_multi_split(line, SEPARARTORS);
-		if (list->size != 0)
-			ft_ordering(list);
-		ft_print_list(*list);
-		ft_free_list(list);
-		free(line);
-    }
-    clear_history();
-    return (0);
-}
+// void	ft_split_token(t_list_token *list)
+// {
+	
+	
+// }

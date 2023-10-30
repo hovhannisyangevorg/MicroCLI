@@ -6,50 +6,34 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 21:46:04 by gevorg            #+#    #+#             */
-/*   Updated: 2023/10/19 17:05:30 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/29 13:46:40 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-// typedef enum s_quot
+// t_quote	ft_check_quote(char *quote)
 // {
-// 	SINGL 	= 0x0001,
-// 	DOUBLE 	= 0x1000,
-// } t_quot;
+// 	int i = 0;
+// 	t_quote quote_count;
 
-
-// struct s_token
-// {
-// 	int type;
-// 	char *token;
-// 	t_token *next;
-// };
-
-// char *ft_quot(char *expression)
-// {
-	
-// }
-
-
-
-// void	ft_check_quote(char *expression)
-// {
-// 	int flag;
-// 	flag = 0;
-
-// 	while (expression && *expression)
+// 	quote_count.double_quote = 0;
+// 	quote_count.singl_quote = 0;
+// 	while (quote && quote[i])
 // 	{
-// 		if (*expression == '\"')
-// 			flag |= DOUBLE;
-// 		else if (*expression == '\"')
-// 			flag |= SINGL;
-
-// 		if (flag == DOUBLE)
-// 			ft_quot(flag);
-// 		else if (flag == DOUBLE)
-// 			ft_quot(flag);
-
-// 		expression++;
+// 		if (quote[i] == '\'')
+// 		{
+// 			while (quote[i] && quote[i] != '\'')
+// 				i++;
+// 			quote_count.singl_quote++;
+// 		}
+// 		if (quote[i] == '\"')
+// 		{
+// 			while (quote[i] && quote[i] != '\"')
+// 				i++;
+// 			quote_count.double_quote++;
+// 		}	
+// 		i++;
 // 	}
+// 	return (quote_count);
 // }

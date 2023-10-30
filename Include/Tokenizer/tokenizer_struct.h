@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 14:57:11 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/10/21 15:16:34 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/30 16:52:06 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 
 
 #define SEPARARTORS ";|&<>()" // || >> << &&
+// #define DELIMITER "|&<>" 
 #define RED "\033[31m"
 #define BLACK "\033[30m"
 #define GREEN "\033[32m"
 
-typedef struct	s_stack		t_stack;
-typedef struct	s_node		t_node;
-typedef struct	s_token		t_token;
+typedef struct	s_stack			t_stack;
+typedef struct	s_node			t_node;
+typedef struct	s_token			t_token;
+typedef enum	e_token_types	t_token_types;
+typedef struct	s_list_token	t_list_token;
 
 struct s_node
 {
@@ -39,8 +42,28 @@ struct s_token
 	int		type;
 	char	*token;
 	int 	quate_flags;
-	size_t	size;
 	t_token	*next;
+	t_token *prev;
+};
+
+struct s_list_token
+{
+	t_token *head;
+	t_token *tail;
+	size_t	size;
+};
+
+
+enum e_token_types
+{
+	NNULL,
+	TEXT	= 1000,
+	PIPE	= 124,
+	OR		= -124,
+	AMP		= 34,
+	AND		= -34,
+	SEMI	= 59,
+	SEMITWO = -59
 };
 
 #endif
