@@ -9,7 +9,6 @@
 /*   Updated: 2023/10/01 13:04:12 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "shell.h"
 
 static int ft_hash(int num)
@@ -41,21 +40,38 @@ char	*ft_create_token(const char *str, int token_start, int token_length)
 	return (token);
 }
 
-
-
-t_token *ft_multi_split(char *str, char *delims)
+int ft_ignor_quot(char *str, char quot, size_t i)
 {
-	size_t	i;
-	t_token *head;
-	char 	*tmp;
-	int 	token_start;
-	int 	token_length;
+	if (str && str[i])
+	{
+		i++;
+		while (str[i] && str[i] != quot)
+			i++;
+		if (str && str[i] && str[i] == quot)
+			i++;
+	}
+	return (i);
+}
+
+t_list_token *ft_multi_split(char *str, char *delims)
+{
+	size_t			i;
+	t_list_token	*list;
+	char 			*tmp;
+	int 			token_start;
+	int 			token_length;
 	
-	ft_init_list(&head);
+
+	list = (t_list_token *)malloc(sizeof(t_list_token));
+	ft_init_list(list);
 	i = -1;
 	token_start = 0;
+	// int quote;
 	while (++i <= ft_strlen(str))
 	{
+		// quote = 0;
+		if (str[i] && ft_strchr("\"\'", str[i]))
+			i = ft_ignor_quot(str, str[i], i);
 		if (ft_strchr(delims, str[i]) || !str[i])
 		{
 			token_length = i - token_start;
@@ -63,15 +79,22 @@ t_token *ft_multi_split(char *str, char *delims)
 			if (!tmp)
 				return (NULL);
 			if (str[i] && str[i + 1] && (str[i + 1] == str[i]))
-				ft_push_back(&head, ft_hash(str[i]), tmp);
+			{
+				ft_push_back(list, ft_hash(str[i]), tmp);
+				i += 2;
+			}
 			else
-				ft_push_back(&head, str[i], tmp);
+			{
+				ft_push_back(list, str[i], tmp);
+				while (str[i] && ft_strchr(delims, str[i]))
+					i++;
+					
+			}
 			free(tmp);
-			while (str[i] && ft_strchr(delims, str[i]))
-				i++;
+
 			if (str[i])
 				token_start = i;
 		}
 	}
-	return (head);
+	return (list);
 }

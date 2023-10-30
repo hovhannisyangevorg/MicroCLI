@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 17:55:10 by gevorg            #+#    #+#             */
-/*   Updated: 2023/10/19 17:05:33 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/29 11:43:07 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static int	ft_parenthes_balancer(char *expression)
 void ft_is_balanc(char *expression)
 {
 	char *color;
+
 	if (!ft_parenthes_balancer(expression))
 	{
 		color = RED "Bash Oops! : " BLACK "Syntax error parentheses are not balanced ! `('";

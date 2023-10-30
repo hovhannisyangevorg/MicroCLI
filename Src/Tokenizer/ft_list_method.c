@@ -6,78 +6,115 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:02:45 by gevorg            #+#    #+#             */
-/*   Updated: 2023/10/30 17:23:55 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/10/30 18:38:02 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	ft_init_list(t_token **head)
+// static int is_negative(int num)
+// {
+//     if (num < 0)
+//         return 1;
+//     else
+//         return 0;
+// }
+
+void	ft_init_list(t_list_token *list)
 {
-	*head = NULL;
+	list->head = NULL;
+	list->tail = NULL;
+	list->size = 0;
 }
 
-void	ft_push_back(t_token **head, int type, const char *token)
+void ft_init_token(t_token *node, int type, char *elem)
+{
+	node->quate_flags = 0;
+	node->token = 0;
+	node->type = type;
+	node->token = elem;
+	node->next = NULL;
+	node->next = NULL;
+}
+
+void	ft_push_back(t_list_token *list, int type, const char *token)
 {
 	t_token	*new;
 	t_token	*tmp;
 
-	if (!head)
+	if (!list)
 		return ;
 	new = (t_token *)malloc(sizeof(t_token));
 	if (new == NULL)
 		return ;
-	new->type = type;
-	new->token = ft_strdup(token);
-	new->next = NULL;
-	if (*head == NULL)
-		*head = new;
+	ft_init_token(new, type, ft_strdup(token));
+	if (list->head == NULL)
+	{
+		list->head = new;
+		list->tail = new;
+	}
 	else
 	{
-		tmp = *head;
+		tmp = list->head;
 		while (tmp->next != NULL)
 			tmp = tmp->next;
 		tmp->next = new;
+		new->prev = tmp;
+		list->tail = new;
 	}
+	++list->size;
 }
 
-void	ft_push_front(t_token **head, int type, const char *token)
+void	ft_push_front(t_list_token *list, int type, const char *token)
 {
 	t_token	*new;
+	t_token *last;
 
-	if (!head)
+	if (!list)
 		return ;
 	new = (t_token *)malloc(sizeof(t_token));
 	if (new == NULL)
 		return ;
-	new->type = type;
-	new->token = ft_strdup(token);
-	new->next = *head;
-	*head = new;
+	ft_init_token(new, type, ft_strdup(token));
+	// new->type = type;
+	// new->token = ;
+	new->next = list->head;
+	list->head->prev = new->next;
+	list->head = new;
+	last = list->head;
+	while (last && last->next != NULL)
+		last = last->next;
+	list->tail = last;
+	++list->size;
 }
 
-void	ft_pop_front(t_token **head)
+void	ft_pop_front(t_list_token *list)
 {
 	t_token	*tmp;
 
-	if (!head || !(*head))
+	if (list == NULL || list->head == NULL)
 		return ;
-	tmp = *head;
-	*head = (*head)->next;
+	if (list->size == 1)
+		list->tail = NULL;
+	tmp = list->head;
+	list->head = (list->head)->next;
+	if (list->head)
+		list->head->prev = NULL;
 	free(tmp->token);
 	free(tmp);
+	--list->size;
 }
 
-void	ft_pop_back(t_token **head)
+void	ft_pop_back(t_list_token *list)
 {
 	t_token	*tmp;
 	t_token	*prev;
 
-	if (!head || !(*head))
+	if (list == NULL || list->head == NULL)
 		return ;
-	tmp = *head;
+	tmp = list->head;
 	prev = NULL;
-	while (tmp->next != NULL)
+	while (tmp && tmp->next != NULL)
 	{
 		prev = tmp;
 		tmp = tmp->next;
@@ -86,7 +123,7 @@ void	ft_pop_back(t_token **head)
 	{
 		free(tmp->token);
 		free(tmp);
-		*head = NULL;
+		list->head = NULL;
 	}
 	else
 	{
@@ -94,16 +131,17 @@ void	ft_pop_back(t_token **head)
 		free(tmp->token);
 		free(tmp);
 	}
+	list->tail = prev;
 }
 
-void	ft_free_list(t_token **head)
+void	ft_free_list(t_list_token *list)
 {
 	t_token	*tmp;
 	t_token	*next;
 
-	if (head == NULL || *head == NULL)
+	if (list == NULL || list->head == NULL)
 		return ;
-	tmp = *head;
+	tmp = list->head;
 	while (tmp != NULL)
 	{
 		next = tmp->next;
@@ -111,14 +149,16 @@ void	ft_free_list(t_token **head)
 		free(tmp);
 		tmp = next;
 	}
-	*head = NULL;
+	list->head = NULL;
+	list->size = 0;
+	free(list);
 }
 
-void	ft_print_list(t_token *head)
+void	ft_print_list(t_list_token list)
 {
 	t_token* current;
 
-	current = head;
+	current = list.head;
 
 	while (current)
 	{
@@ -126,3 +166,74 @@ void	ft_print_list(t_token *head)
 		current = current->next;
     }
 }
+
+
+//           ;|&<>()
+
+
+
+
+// int 	ft_isserar(int type)
+// {
+// 	int i;
+// 	int flag;
+	
+// 	i = 0;
+// 	flag = 0;
+
+// 	if (type < 0)
+// 	{
+// 		flag = -1;
+// 		type *= flag;
+// 	}
+	
+
+// 	if ()
+
+
+// }
+
+
+
+void 	ft_ordering(t_list_token *list)
+{
+	t_token *root;
+	t_token *new;
+	
+	if (list->size == 0)
+		return ;
+	root = list->head;
+
+	while (root)
+	{
+		t_token* next;
+
+		next = root->next;
+		new = (t_token *)malloc(sizeof(t_token));
+		if (new == NULL)
+			return ;
+		if (root->type < 0)
+		{	
+			ft_init_token(new, (char)root->type, ft_strdup("NULL"));
+			root->type = TEXT;
+		}
+		else if (root->type > 0)
+		{
+			ft_init_token(new, (char)root->type, ft_strdup("NULL"));
+			root->type = TEXT;	
+		}
+		else
+		{
+			ft_init_token(new, (char)root->type, ft_strdup("NULL"));
+			root->type = TEXT;
+		}
+		new->next = root->next;
+		new->prev = root;
+		if (root->next)
+			root->next->prev = new;
+		root->next = new;	
+		list->size++;
+		root = next;
+	}	 
+}
+
