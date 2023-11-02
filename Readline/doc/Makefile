@@ -22,7 +22,7 @@ topdir = ..
 srcdir = .
 
 
-prefix = /Users/armhakob/Desktop/Gevor/Readline_update
+prefix = /home/gevorg/Desktop/Minishell/Readline_update
 
 datarootdir = ${prefix}/share
 
@@ -49,7 +49,7 @@ RM = rm -f
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 
-BUILD_DIR = /Users/armhakob/Desktop/Gevor/Readline
+BUILD_DIR = /home/gevorg/Desktop/Minishell/Readline
 TEXINPUTDIR = $(srcdir)
 
 MAKEINFO    = LANGUAGE= makeinfo

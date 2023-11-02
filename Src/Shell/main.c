@@ -6,13 +6,13 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/10/30 17:04:15 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/11/01 22:23:33 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int main()
+void	ft_program()
 {
 	char *line;
 	t_list_token *list;
@@ -23,15 +23,24 @@ int main()
 	{
 		line = ft_get_line();
 		if (!line)
-			return (0);
+			return ;
 		ft_is_balanc(line);
 		list = ft_multi_split(line, SEPARARTORS);
 		if (list->size != 0)
 			ft_ordering(list);
+		ft_split_token(list);
+		ft_parser(list);
 		ft_print_list(*list);
 		ft_free_list(list);
 		free(line);
     }
     clear_history();
-    return (0);
 }
+
+
+int main()
+{
+	ft_program();
+	return (0);	
+}
+

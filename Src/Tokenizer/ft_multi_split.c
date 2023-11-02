@@ -66,10 +66,8 @@ t_list_token *ft_multi_split(char *str, char *delims)
 	ft_init_list(list);
 	i = -1;
 	token_start = 0;
-	// int quote;
 	while (++i <= ft_strlen(str))
 	{
-		// quote = 0;
 		if (str[i] && ft_strchr("\"\'", str[i]))
 			i = ft_ignor_quot(str, str[i], i);
 		if (ft_strchr(delims, str[i]) || !str[i])
@@ -87,11 +85,9 @@ t_list_token *ft_multi_split(char *str, char *delims)
 			{
 				ft_push_back(list, str[i], tmp);
 				while (str[i] && ft_strchr(delims, str[i]))
-					i++;
-					
+					i++;	
 			}
 			free(tmp);
-
 			if (str[i])
 				token_start = i;
 		}

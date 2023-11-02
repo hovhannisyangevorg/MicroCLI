@@ -6,19 +6,11 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:02:45 by gevorg            #+#    #+#             */
-/*   Updated: 2023/10/30 18:38:02 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/11/01 21:38:48 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-// static int is_negative(int num)
-// {
-//     if (num < 0)
-//         return 1;
-//     else
-//         return 0;
-// }
 
 void	ft_init_list(t_list_token *list)
 {
@@ -76,8 +68,6 @@ void	ft_push_front(t_list_token *list, int type, const char *token)
 	if (new == NULL)
 		return ;
 	ft_init_token(new, type, ft_strdup(token));
-	// new->type = type;
-	// new->token = ;
 	new->next = list->head;
 	list->head->prev = new->next;
 	list->head = new;
@@ -168,33 +158,6 @@ void	ft_print_list(t_list_token list)
 }
 
 
-//           ;|&<>()
-
-
-
-
-// int 	ft_isserar(int type)
-// {
-// 	int i;
-// 	int flag;
-	
-// 	i = 0;
-// 	flag = 0;
-
-// 	if (type < 0)
-// 	{
-// 		flag = -1;
-// 		type *= flag;
-// 	}
-	
-
-// 	if ()
-
-
-// }
-
-
-
 void 	ft_ordering(t_list_token *list)
 {
 	t_token *root;
@@ -236,4 +199,3 @@ void 	ft_ordering(t_list_token *list)
 		root = next;
 	}	 
 }
-

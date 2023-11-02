@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 14:57:11 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/10/30 16:52:06 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/11/01 21:37:45 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 # define	TOKENIZER_STRUCT_H
 
 
-#define SEPARARTORS ";|&<>()" // || >> << &&
-// #define DELIMITER "|&<>" 
-#define RED "\033[31m"
-#define BLACK "\033[30m"
-#define GREEN "\033[32m"
+# define 	SEPARARTORS 		";|&<>()"
+# define 	RED 				"\033[31m"
+# define 	BLACK 				"\033[30m"
+# define 	GREEN 				"\033[32m"
 
 typedef struct	s_stack			t_stack;
 typedef struct	s_node			t_node;

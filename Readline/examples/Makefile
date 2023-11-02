@@ -21,7 +21,7 @@ RL_LIBRARY_VERSION = 8.1
 SHELL = /bin/sh
 RM = rm -f
 
-prefix = /Users/armhakob/Desktop/Gevor/Readline_update
+prefix = /home/gevorg/Desktop/Minishell/Readline_update
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share
@@ -32,7 +32,7 @@ datadir = ${datarootdir}
 
 top_srcdir = ..
 #BUILD_DIR = .
-BUILD_DIR = /Users/armhakob/Desktop/Gevor/Readline
+BUILD_DIR = /home/gevorg/Desktop/Minishell/Readline
 installdir = $(datadir)/readline
 
 INSTALL = /usr/bin/install -c
