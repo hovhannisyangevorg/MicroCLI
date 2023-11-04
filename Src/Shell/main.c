@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/11/01 22:23:33 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/11/04 14:58:16 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ void	ft_program()
     clear_history();
 }
 
+// union test
+// {
+// 	char 	x;
+// 	int 	d;
+// 	int 	o;
+// 	float 	y;
+// };
 
 int main()
 {

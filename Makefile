@@ -95,7 +95,7 @@ SRCS_LEXR		=	$(wildcard	$(SRC_LEXR_DIR)/*$(_C))
 SRCS_PARS		=	$(wildcard	$(SRC_PARS_DIR)/*$(_C))
 SRCS_TOKS		=	$(wildcard	$(SRC_TOKS_DIR)/*$(_C))
 SRCS_SHELL		=	$(wildcard	$(SRC_SHELL_DIR)/*$(_C))
-SRCS_SEMATIC	=	$(wildcard	$(SRC_SHELL_DIR)/*$(_C))
+SRCS_SEMATIC	=	$(wildcard	$(SRC_SEMATIC_DIR)/*$(_C))
 
 # # List of all Object Files
 OBJS_EXEC		=	$(patsubst 	$(SRC_EXEC_DIR)/%$(_C), 	$(OBJ_EXEC_DIR)/%$(_O),		$(SRCS_EXEC))
@@ -124,7 +124,7 @@ INCS_ALL 		=	$(INCS_EXEC) $(INCS_LEXR) $(INCS_PARS) $(INCS_TOKS) $(INCS_SHELL) $
 
 
 # # All include path
-INCLUDES		=	$(I_FLAG)$(INC_DIR) $(I_FLAG)$(FT_LIB)/$(INC_DIR_LIB) $(I_FLAG)$(INC_EXEC_DIR) $(I_FLAG)$(INC_LEXR_DIR) $(I_FLAG)$(INC_PARS_DIR) $(I_FLAG)$(INC_TOKS_DIR) $(I_FLAG)$(INC_SHELL_DIR) $(I_FLAG)$(INC_SEMATIC_DIR) $(I_FLAG)$(READ_UPDIR)/$(INC_DIR_LIB) 
+INCLUDES		=	$(I_FLAG)$(INC_DIR) $(I_FLAG)$(FT_LIB)/$(INC_DIR_LIB) $(I_FLAG)$(INC_EXEC_DIR) $(I_FLAG)$(INC_LEXR_DIR) $(I_FLAG)$(INC_PARS_DIR) $(I_FLAG)$(INC_TOKS_DIR) $(I_FLAG)$(INC_SEMATIC_DIR) $(I_FLAG)$(INC_SHELL_DIR) $(I_FLAG)$(READ_UPDIR)/$(INC_DIR_LIB) 
 
 
 .DEFAULT_GOAL	:=	$(ALL)
@@ -151,14 +151,17 @@ $(eval $(call generate_rule_hier, $(OBJ_SHELL_DIR), $(SRC_SHELL_DIR)))
 $(eval $(call generate_rule_hier, $(OBJ_SEMATIC_DIR), $(SRC_SEMATIC_DIR)))
 
 
-$(eval $(call generate_obj_rule_hier, $(OBJ_DIR), $(SRC_DIR), $(INCS_ALL)))
-$(eval $(call generate_obj_rule_hier, $(OBJ_EXEC_DIR), $(SRC_EXEC_DIR), $(INCS_ALL)))
+$(eval $(call generate_obj_rule_hier, $(OBJ_DIR), 	$(SRC_DIR), $(INCS_ALL)))
+$(eval $(call generate_obj_rule_hier, $(OBJ_EXEC_DIR), 	$(SRC_EXEC_DIR), $(INCS_ALL)))
 $(eval $(call generate_obj_rule_hier, $(OBJ_LEXR_DIR), $(SRC_LEXR_DIR), $(INCS_ALL)))
 $(eval $(call generate_obj_rule_hier, $(OBJ_PARS_DIR), $(SRC_PARS_DIR), $(INCS_ALL)))
 $(eval $(call generate_obj_rule_hier, $(OBJ_TOKS_DIR), $(SRC_TOKS_DIR), $(INCS_ALL)))
 $(eval $(call generate_obj_rule_hier, $(OBJ_SHELL_DIR), $(SRC_SHELL_DIR), $(INCS_ALL)))
 $(eval $(call generate_obj_rule_hier, $(OBJ_SEMATIC_DIR), $(SRC_SEMATIC_DIR), $(INCS_ALL)))
 
+
+test: 
+	@echo  $(OBJS_SEMATIC)  
 
 $(ALL): $(FT_LIB)/$(FT_ARX) $(NAME) 
 
