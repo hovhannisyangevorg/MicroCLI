@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:02:45 by gevorg            #+#    #+#             */
-/*   Updated: 2023/11/01 21:38:48 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/11/20 21:23:54 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void	ft_init_list(t_list_token *list)
 	list->size = 0;
 }
 
-void ft_init_token(t_token *node, int type, char *elem)
+void	ft_init_token(t_token *node, int type, char *elem)
 {
 	node->quate_flags = 0;
 	node->token = 0;
 	node->type = type;
 	node->token = elem;
 	node->next = NULL;
-	node->next = NULL;
+	node->prev = NULL;
 }
 
 void	ft_push_back(t_list_token *list, int type, const char *token)

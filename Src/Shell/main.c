@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/11/04 14:58:16 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/11/20 21:09:40 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_program()
 			ft_ordering(list);
 		ft_split_token(list);
 		ft_parser(list);
-		ft_print_list(*list);
+		// ft_print_list(*list);
 		ft_free_list(list);
 		free(line);
     }
