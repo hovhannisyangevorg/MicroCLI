@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 22:23:33 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/11/01 21:45:36 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/11/21 23:36:06 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "shell.h"
 
 t_stack 		*ft_initialize_stack();
-t_list_token 	*ft_multi_split(char* str, char* delims);
+t_list_token 	*ft_multi_split(char* str, char* delims, int issub);
 int 			ft_is_empty(t_stack *stack);
 void			ft_push_stack(t_stack *stack, char item);
 char 			ft_pop_stack(t_stack *stack);

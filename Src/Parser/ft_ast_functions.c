@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:52:35 by gevorg            #+#    #+#             */
-/*   Updated: 2023/11/20 22:42:39 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/11/22 01:22:15 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ t_ast_node 	*ft_create_ast_node(t_token *token)
 	new_node = (t_ast_node *)malloc(sizeof(t_ast_node));
     if (!new_node)
 		return (NULL);
-
+	
     new_node->token_type 	= token->type;
     new_node->token 		= ft_strdup(token->token);
     new_node->quate_flags 	= 0;
     new_node->left 			= NULL;
+	new_node->midle			= NULL;
     new_node->right 		= NULL;
     return (new_node);
 }
@@ -150,7 +151,7 @@ void ft_ast_print(t_ast_node *head, char *prefix, int is_left, int is_root)
 		printf(" ) \n");
 		char *str;
 		if (is_left)
-			str = ft_ast_strjoin(prefix, "|      ");
+			str = ft_ast_strjoin(prefix, "│      ");
 		else
 			str = ft_ast_strjoin(prefix, "       ");
 		ft_ast_print(head->left, str, 1, 0);

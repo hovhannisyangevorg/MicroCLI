@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 14:57:11 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/11/04 16:27:04 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/11/22 00:59:47 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 # define	TOKENIZER_STRUCT_H
 
 
-# define 	SEPARARTORS 		";|&<>()"
+# define 	SUBSHELLSEP 		";|&<>()"
+//;|&<>
+# define 	SEPARARTORS 		";|&<>"
 # define 	RED 				"\033[31m"
 # define 	BLACK 				"\033[30m"
 # define 	GREEN 				"\033[32m"

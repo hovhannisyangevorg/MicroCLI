@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:44:21 by gevorg            #+#    #+#             */
-/*   Updated: 2023/11/20 22:09:14 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/11/22 22:49:23 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ enum e_token_type
 	AMP			= 38,
 	AND			= -38,
 	SEMI		= 59,
-	SEMITWO 	= -59
+	SEMITWO 	= -59,
+	OPBREK		= 40,
+	CLBREK		= 41,
+	SUBSHELL 	= 500
 };
 
 enum e_quot_type
@@ -88,6 +91,7 @@ struct s_ast_node
 	t_quot_type		quate_flags;
     char			*token;
     t_ast_node		*left;
+	t_ast_node		*midle;
     t_ast_node		*right;
 };
 
@@ -108,8 +112,5 @@ struct s_shant_stack
 	t_ast_node		*ast_node;
 	t_shant_stack 	*next;
 };
-
-
-
 
 #endif

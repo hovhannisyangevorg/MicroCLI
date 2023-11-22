@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:02:45 by gevorg            #+#    #+#             */
-/*   Updated: 2023/11/20 21:23:54 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/11/22 21:00:04 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	ft_pop_back(t_list_token *list)
 		free(tmp);
 	}
 	list->tail = prev;
+	--list->size;
 }
 
 void	ft_free_list(t_list_token *list)
@@ -175,21 +176,8 @@ void 	ft_ordering(t_list_token *list)
 		new = (t_token *)malloc(sizeof(t_token));
 		if (new == NULL)
 			return ;
-		if (root->type < 0)
-		{	
-			ft_init_token(new, (char)root->type, ft_strdup("NULL"));
-			root->type = TEXT;
-		}
-		else if (root->type > 0)
-		{
-			ft_init_token(new, (char)root->type, ft_strdup("NULL"));
-			root->type = TEXT;	
-		}
-		else
-		{
-			ft_init_token(new, (char)root->type, ft_strdup("NULL"));
-			root->type = TEXT;
-		}
+		ft_init_token(new, root->type, ft_strdup("NULL"));
+		root->type = TEXT;
 		new->next = root->next;
 		new->prev = root;
 		if (root->next)

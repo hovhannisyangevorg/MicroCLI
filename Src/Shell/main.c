@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/11/20 21:09:40 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/11/22 00:59:09 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void	ft_program()
 		if (!line)
 			return ;
 		ft_is_balanc(line);
-		list = ft_multi_split(line, SEPARARTORS);
+		list = ft_multi_split(line, SEPARARTORS, 0);
 		if (list->size != 0)
 			ft_ordering(list);
 		ft_split_token(list);
-		ft_parser(list);
 		// ft_print_list(*list);
+		ft_parser(list);
 		ft_free_list(list);
 		free(line);
     }
@@ -45,8 +45,50 @@ void	ft_program()
 // 	float 	y;
 // };
 
+// static int	ft_find_index(char *expression, int index)
+// {
+// 	int i;
+	
+// 	t_stack *stack;
+// 	stack = ft_initialize_stack();
+// 	// t_stack *stack2;
+// 	// stack2 = ft_initialize_stack();
+// 	i = 0;
+// 	while (expression && expression[i])
+// 	{
+// 		if (expression[i] == '(')
+// 		{
+// 			// ft_push_stack(stack, '(');
+// 			ft_push_stack(stack, i);
+// 		}
+// 		else if (expression[i] == ')')
+// 		{
+// 			if (stack->top)
+// 			{
+// 				int res = stack->top->data;
+// 				printf("%d\n", res);
+// 				if (res == index)
+// 					return i;
+// 			}
+// 			ft_pop_stack(stack);
+// 			// if (c != '(')
+// 			// {
+// 			// 	ft_free_stack(stack);
+// 			// 	free(stack);
+// 			// 	return (0);
+// 			// }
+// 		}
+// 		++i;
+	
+// 	}
+// 	ft_free_stack(stack);
+// 	free(stack);
+// 	return -1;
+// }
 int main()
 {
+	// char *p = "((dsadasdsa(dsadas)))";
+	// printf("%d\n", ft_find_index(p, 1));
 	ft_program();
 	return (0);	
 }
