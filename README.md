@@ -70,7 +70,7 @@ $ ./minishell
 ```
 
 
-## 📌 Useful Links
+## 🔗 Useful Links
 
 * [The Linux Programming Interface](https://sciencesoftcode.files.wordpress.com/2018/12/the-linux-programming-interface-michael-kerrisk-1.pdf)
 * [AST - Abstract syntax tree data structure](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
