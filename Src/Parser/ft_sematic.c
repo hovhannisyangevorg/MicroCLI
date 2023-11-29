@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 20:08:20 by gevorg            #+#    #+#             */
-/*   Updated: 2023/11/27 17:49:26 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/11/29 14:15:57 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ void ft_create_subtree(t_ast_node *tree)
 
 	if (tree->token_type == SUBSHELL)
 	{
-		ft_subtree_TST(tree);
+		// ft_subtree_TST(tree);
 	}
 	
 	ft_create_subtree(tree->left);
