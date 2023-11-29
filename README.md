@@ -58,6 +58,10 @@ The program is written in C language for **Linux** distributions and thus needs 
 To compile the program, run:
 
 ```shell
+$ cd Minishell
+```
+
+```shell
 $ make
 ```
 
