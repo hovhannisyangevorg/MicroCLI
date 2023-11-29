@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:02:45 by gevorg            #+#    #+#             */
-/*   Updated: 2023/11/22 21:00:04 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/11/23 16:05:41 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ void 	ft_ordering(t_list_token *list)
 {
 	t_token *root;
 	t_token *new;
-	
+
 	if (list->size == 0)
 		return ;
 	root = list->head;
@@ -185,5 +185,5 @@ void 	ft_ordering(t_list_token *list)
 		root->next = new;	
 		list->size++;
 		root = next;
-	}	 
+	}
 }

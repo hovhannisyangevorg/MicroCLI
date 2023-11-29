@@ -6,17 +6,11 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 21:00:12 by gevorg            #+#    #+#             */
-/*   Updated: 2023/11/22 22:45:02 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/11/23 16:22:18 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-// t_ast_node *ft_convert_shant_node(t_shant_stack *stack_node)
-// {
-	
-// }
-
 
 int ft_isoperator(int type)
 {
@@ -123,6 +117,8 @@ t_global_tree *ft_shunting_yard_build_ast(t_list_token *list)
 		ft_pop_front(list);
 	tree->ast_node = stack_oute->top->ast_node;
 	tree->tree_size = ft_ast_len(tree->ast_node);
+
+	ft_print_list(*list);
 
 	// ft_ast_print(tree->ast_node, ft_strdup(""), 0, 1);
 	return (tree);
