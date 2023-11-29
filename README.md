@@ -79,7 +79,7 @@ $ ./minishell
 * [Introduction to Systems Programming: a Hands-on Approach - Chapter 5. Writing Your Own Shell ](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
 
 
-## 🤓 Study Summary
+## 😎 Study Summary
 
 ### Definition
 
