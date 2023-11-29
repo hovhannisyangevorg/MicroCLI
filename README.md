@@ -30,3 +30,19 @@
 For detailed information, refer to the [**subject of this project**](https://github.com/hovhannisyangevorg/Minishell/blob/main/en.subject.pdf).
 
 	🚀 TLDR: this project consists of coding a basic shell.
+
+
+## 📑 Index
+
+`@root`
+
+* [**📁 Include:**](Include/) contains the program's headers.
+* [**📁 Readline:**](Readline/) contains the program's Readline library for Linux and MacOS.
+* [**📁 Libft:**](Libft/) contains the source code of the `libft` library, which is used in the program.
+* [**📁 Src:**](Src/) contains the source code of the program.
+* [**📄 Makefile**](Makefile) - contains instructions for compiling the program and testing it.
+
+
+
+
+
