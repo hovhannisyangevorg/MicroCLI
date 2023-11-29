@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:02:45 by gevorg            #+#    #+#             */
-/*   Updated: 2023/11/01 21:38:48 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/11/23 16:05:41 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void	ft_init_list(t_list_token *list)
 	list->size = 0;
 }
 
-void ft_init_token(t_token *node, int type, char *elem)
+void	ft_init_token(t_token *node, int type, char *elem)
 {
 	node->quate_flags = 0;
 	node->token = 0;
 	node->type = type;
 	node->token = elem;
 	node->next = NULL;
-	node->next = NULL;
+	node->prev = NULL;
 }
 
 void	ft_push_back(t_list_token *list, int type, const char *token)
@@ -122,6 +122,7 @@ void	ft_pop_back(t_list_token *list)
 		free(tmp);
 	}
 	list->tail = prev;
+	--list->size;
 }
 
 void	ft_free_list(t_list_token *list)
@@ -162,7 +163,7 @@ void 	ft_ordering(t_list_token *list)
 {
 	t_token *root;
 	t_token *new;
-	
+
 	if (list->size == 0)
 		return ;
 	root = list->head;
@@ -175,21 +176,8 @@ void 	ft_ordering(t_list_token *list)
 		new = (t_token *)malloc(sizeof(t_token));
 		if (new == NULL)
 			return ;
-		if (root->type < 0)
-		{	
-			ft_init_token(new, (char)root->type, ft_strdup("NULL"));
-			root->type = TEXT;
-		}
-		else if (root->type > 0)
-		{
-			ft_init_token(new, (char)root->type, ft_strdup("NULL"));
-			root->type = TEXT;	
-		}
-		else
-		{
-			ft_init_token(new, (char)root->type, ft_strdup("NULL"));
-			root->type = TEXT;
-		}
+		ft_init_token(new, root->type, ft_strdup("NULL"));
+		root->type = TEXT;
 		new->next = root->next;
 		new->prev = root;
 		if (root->next)
@@ -197,5 +185,5 @@ void 	ft_ordering(t_list_token *list)
 		root->next = new;	
 		list->size++;
 		root = next;
-	}	 
+	}
 }

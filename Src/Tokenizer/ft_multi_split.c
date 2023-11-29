@@ -53,7 +53,38 @@ int ft_ignor_quot(char *str, char quot, size_t i)
 	return (i);
 }
 
-t_list_token *ft_multi_split(char *str, char *delims)
+static int	ft_find_index(char *expression, int index)
+{
+	int i;
+	
+	t_stack *stack;
+	stack = ft_initialize_stack();
+	i = 0;
+	while (expression && expression[i])
+	{
+		if (expression[i] == '(')
+		{
+			ft_push_stack(stack, i);
+		}
+		else if (expression[i] == ')')
+		{
+			if (stack->top)
+			{
+				int res = stack->top->data;
+				if (res == index)
+					return i;
+			}
+			ft_pop_stack(stack);
+		}
+		++i;
+	
+	}
+	ft_free_stack(stack);
+	free(stack);
+	return -1;
+}
+
+t_list_token *ft_multi_split(char *str, char *delims, int issub)
 {
 	size_t			i;
 	t_list_token	*list;
@@ -65,11 +96,19 @@ t_list_token *ft_multi_split(char *str, char *delims)
 	list = (t_list_token *)malloc(sizeof(t_list_token));
 	ft_init_list(list);
 	i = -1;
+	int j = 0;
 	token_start = 0;
+
 	while (++i <= ft_strlen(str))
 	{
 		if (str[i] && ft_strchr("\"\'", str[i]))
 			i = ft_ignor_quot(str, str[i], i);
+		if (str[i] == '(' && !issub)
+		{
+			j = ft_find_index(str, i);
+			if ( j != -1 )
+				i = j + 1;
+		}
 		if (ft_strchr(delims, str[i]) || !str[i])
 		{
 			token_length = i - token_start;
