@@ -6,7 +6,7 @@ SRC_DIR 		= 	Src
 OBJ_DIR			= 	Obj
 INC_DIR			=	Include
 FT_LIB			=	Libft
-INC_DIR_LIB		= 	include
+INC_DIR_LIB		= 	Include
 READ_DIR 		=	Readline
 READ_UPDIR		=	Readline_update
 READ_ARX 		=	lib
@@ -140,13 +140,13 @@ INCLUDES		=	$(I_FLAG)$(INC_DIR) $(I_FLAG)$(FT_LIB)/$(INC_DIR_LIB) $(I_FLAG)$(INC
 
 
 define generate_rule_hier
-$(info Generated object dir for $(2) module)
+$(info ✅ Generated object dir for  $(2) module)
 $(1): $(2)
 	@$$(MK) $$@
 endef
 
 define generate_obj_rule_hier
-$(info Generated objects for $(2) module)
+$(info ✅ Generated objects for $(2) module)
 $(1)/%$(_O): $(2)/%$(_C) $(3)
 	$$(CC) $$(CFLAGS) $$(INCLUDES) $$(C_FLAG) $$< $$(O_FLAG) $$@ 
 endef
@@ -201,3 +201,5 @@ $(RE): $(FCLEAN) $(ALL)
 	@$(MAKE) -C $(FT_LIB) $(RE)
 
 .PHONY: $(ALL) $(CLEAN) $(FCLEAN) $(RE) $(RL)
+
+.SILENT:
