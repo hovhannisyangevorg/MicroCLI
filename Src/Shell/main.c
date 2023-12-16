@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/11/29 14:13:59 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/16 20:15:47 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	ft_program()
 		if (list->size != 0)
 			ft_ordering(list);
 		ft_split_token(list);
-
+		
+		// ft_ast_print();
 		ft_print_list(*list);
 		ft_parser(list);
 		ft_free_list(list);
@@ -40,6 +41,11 @@ void	ft_program()
 
 
 
+int main()
+{
+	ft_program();
+	return (0);	
+}
 
 
 
@@ -163,11 +169,14 @@ void	ft_program()
 // 	free(stack);
 // 	return -1;
 // }
-int main()
-{
-	// char *p = "((dsadasdsa(dsadas)))";
-	// printf("%d\n", ft_find_index(p, 1));
-	ft_program();
-	return (0);	
-}
+
+
+
+// int main()
+// {
+// 	// char *p = "((dsadasdsa(dsadas)))";
+// 	// printf("%d\n", ft_find_index(p, 1));
+// 	ft_program();
+// 	return (0);	
+// }
 

@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 20:08:20 by gevorg            #+#    #+#             */
-/*   Updated: 2023/11/29 14:15:57 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/16 19:57:46 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	isbrakets(t_list_token *list)
 	}
 	return (0);
 }
-
-
 
 // void correct_tree(t_ast_node *tree)
 // {
