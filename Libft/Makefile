@@ -6,58 +6,161 @@
 #    By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 21:12:42 by gehovhan          #+#    #+#              #
-#    Updated: 2023/10/19 20:31:51 by gevorg           ###   ########.fr        #
+#    Updated: 2023/12/16 22:36:52 by gevorg           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			= libft.a
 
-OS 			=	$(shell uname -s)
 
-SRCS			=	src/ft_isalpha.c src/ft_isdigit.c src/ft_isalnum.c  src/ft_isascii.c src/ft_isprint.c \
-					src/ft_strlen.c src/ft_memset.c src/ft_bzero.c src/ft_memcpy.c src/ft_memmove.c \
-					src/ft_strlcpy.c src/ft_strlcat.c  src/ft_toupper.c src/ft_tolower.c  src/ft_strchr.c \
-					src/ft_strrchr.c src/ft_strncmp.c src/ft_memchr.c   src/ft_memcmp.c src/ft_strnstr.c \
-					src/ft_atoi.c src/ft_calloc.c  src/ft_strdup.c  src/ft_substr.c  src/ft_strjoin.c \
-					src/ft_strtrim.c src/ft_split.c  src/ft_itoa.c src/ft_strmapi.c  src/ft_striteri.c  \
-					src/ft_putchar_fd.c  src/ft_putstr_fd.c src/ft_putendl_fd.c src/ft_putnbr_fd.c \
-					src/ft_isspace.c  src/ft_strpbrk.c src/ft_strfind.c \
-					src/ft_lstnew.c src/ft_lstadd_front.c src/ft_lstsize.c src/ft_lstlast.c src/ft_lstadd_back.c \
-					src/ft_lstdelone.c  src/ft_lstclear.c src/ft_lstiter.c src/ft_lstmap.c src/ft_isspace.c \
-					src/get_next_word.c src/ft_isxdigit.c src/ft_panic.c src/ft_overflow.c src/ft_strdel.c \
-					src/ft_threestrdel.c src/ft_vecstrdel.c src/get_next_line.c src/get_next_line_utils.c
-OBJS			= $(SRCS:.c=.o)
 
-HDRS			=	include/libft.h
-INCS			=	-Iinclude
-CC				= 	cc
-RM				= 	rm -f
-CFLAGS			= 	-Wall -Wextra -Werror -Iinclude -D$(OS)
-SANIT_FLAG		=	-g3 -fsanitize=address
 
-.DEFAULT_GOAL	=	all
 
-%.o:	%.c $(HDRS)
-	@$(CC) $(INCS) $(CFLAGS) -c $< -o $@
 
-all:			$(NAME)	
 
-$(NAME) :		$(OBJS)
-				$(info Generate objects for libft)
-				$(info Generate archive for libft)
-				@ar rcs $(NAME) $(OBJS)
 
-clean :
-				$(info Remove objects from libft)
-				@$(RM) $(OBJS)
 
-fclean :			clean
-				$(info Remove archive from libft)
-				@$(RM) $(NAME)
 
-re :				fclean $(NAME)
-					$(info Recompile libft)
 
-.PHONY:			all clean fclean re 
 
-#  .SILENT:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Main Exercise Name
+NAME 			= 	libft
+SRC_DIR 		= 	Src
+OBJ_DIR			= 	Obj
+INC_DIR			=	Include
+FT_ARX			=	libft.a
+
+OS 				=	$(shell uname -s)
+
+# File extension Variables
+_C 				=	.c
+_O 				=	.o
+_H 				=	.h
+
+# Common Targets Variables
+ALL 			=	all
+CLEAN 			=	clean
+FCLEAN 			=	fclean
+RE 				=	re
+
+# # Single Flags
+L_FLAG			=	-L
+I_FLAG			=	-I
+O_FLAG 			=	-o
+C_FLAG 			=	-c
+
+# CLI Variable
+CC				=	cc
+CD 				=	cd
+RM				=	rm -rf
+MK				=	mkdir -p
+
+# Compiler and Linker Options
+HARD_FLAG		=	-Wall -Wextra -Werror
+SANIT_FLAG		=	#-g3 -fsanitize=address
+CFLAGS			=	$(HARD_FLAG) $(SANIT_FLAG) -D$(OS)
+
+# List of all Source Files
+SRCS_EXEC		=	$(wildcard	$(SRC_DIR)/*$(_C))
+INCS_EXEC		=	$(wildcard 	$(INC_DIR)/*$(_H))
+OBJS_EXEC		=	$(patsubst 	$(SRC_DIR)/%$(_C),$(OBJ_DIR)/%$(_O),$(SRCS_EXEC))
+
+INCLUDES		=	$(I_FLAG)$(INC_DIR) 
+
+
+.DEFAULT_GOAL	:=	$(ALL)
+
+
+define generate_rule_hier
+$(info ✅ Generated object dir for $(2) module)
+$(1): $(2)
+	@$$(MK) $$@
+endef
+
+define generate_obj_rule_hier
+$(info ✅ Generated objects for $(2) module)
+$(1)/%$(_O): $(2)/%$(_C) $(3)
+	$$(CC) $$(CFLAGS) $$(INCLUDES) $$(C_FLAG) $$< $$(O_FLAG) $$@ 
+endef
+
+$(eval $(call generate_rule_hier,$(OBJ_DIR),$(SRC_DIR)))
+$(eval $(call generate_obj_rule_hier,$(OBJ_DIR),$(SRC_DIR),$(INCS_EXEC)))
+
+$(ALL): $(FT_ARX)
+
+
+$(FT_ARX):	$(OBJ_DIR) $(OBJS_EXEC)
+	$(info ✅ Generate Objects For Libft)
+	$(info ✅ Generate Archive For Libft)
+	@ar rcs $(FT_ARX) $(OBJS_EXEC)
+
+$(CLEAN):
+	$(info ✅ Remove Objects From Libft)
+	@$(RM) $(OBJ_DIR)
+
+$(FCLEAN): 		$(CLEAN)
+	$(info ✅ Remove archive from libft)
+	@$(RM) $(FT_ARX)
+
+$(RE):	$(FCLEAN) $(FT_ARX)
+	$(info ✅ Recompile Libft)
+
+
+.PHONY: $(ALL) $(CLEAN) $(FCLEAN) $(RE) $(RL)
+
+.SILENT:

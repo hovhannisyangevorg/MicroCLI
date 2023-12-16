@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/12/16 20:43:28 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/16 20:59:27 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_program()
 
 		
 		ft_print_list(*list);
-		ft_parser(list);
+		// ft_parser(list);
 		
 		
 		ft_free_list(list);
@@ -40,8 +40,6 @@ void	ft_program()
     }
     clear_history();
 }
-
-
 
 int main()
 {
