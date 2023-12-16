@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 20:08:20 by gevorg            #+#    #+#             */
-/*   Updated: 2023/11/27 17:49:26 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/16 20:22:50 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	isbrakets(t_list_token *list)
 	}
 	return (0);
 }
-
-
 
 // void correct_tree(t_ast_node *tree)
 // {
@@ -211,16 +209,12 @@ void ft_create_subtree(t_ast_node *tree)
 
 	if (tree->token_type == SUBSHELL)
 	{
-		ft_subtree_TST(tree);
+		// ft_subtree_TST(tree);
 	}
 	
 	ft_create_subtree(tree->left);
 	ft_create_subtree(tree->right);
 }
-
-
-
-
 
 t_global_tree	*ft_sematic_with_tree(t_list_token *list)
 {
@@ -230,7 +224,6 @@ t_global_tree	*ft_sematic_with_tree(t_list_token *list)
 	
 	return (tree);	
 }
-
 
 void	ft_sematic(t_list_token *list, int isast)
 {
