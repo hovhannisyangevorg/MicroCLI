@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 20:08:20 by gevorg            #+#    #+#             */
-/*   Updated: 2023/12/16 20:22:50 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/17 16:18:23 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,148 +27,6 @@ int	isbrakets(t_list_token *list)
 	return (0);
 }
 
-// void correct_tree(t_ast_node *tree)
-// {
-// 	if (!tree)
-// 		return ;
-
-// 	if (tree->token_type == TEXT)
-// 	{
-// 		t_list_token* sub_list = ft_multi_split(tree->token, SUBSHELLSEP, 1);
-// 		ft_ordering(sub_list);
-// 		// ft_print_list(*sub_list);
-// 		if(isbrakets(sub_list))
-// 		{
-// 			t_global_tree* sub_tree = ft_sematic_with_tree(sub_list);
-// 			tree->token_type = SUBSHELL;
-// 			tree->left = sub_tree->ast_node;	
-// 		}
-
-// 	}
-// 	correct_tree(tree->left);
-// 	correct_tree(tree->right);
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// void correct_tree(t_ast_node *tree)
-// {
-// 	if (!tree)
-// 		return ;
-
-// 	if (tree->token_type == TEXT)
-// 	{
-// 		t_list_token* sub_list = ft_multi_split(tree->token, SUBSHELLSEP, 1);
-// 		ft_ordering(sub_list);
-// 		// ft_print_list(*sub_list);
-// 		if(isbrakets(sub_list))
-// 		{
-// 			t_global_tree* sub_tree = ft_sematic_with_tree(sub_list);
-// 			tree->token_type = SUBSHELL;
-// 			tree->left = sub_tree->ast_node;	
-// 		}
-
-// 	}
-// 	correct_tree(tree->left);
-// 	correct_tree(tree->right);
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void ft_subshell_convert_type(t_ast_node *tree)
 {
 	if (!tree)
@@ -182,25 +40,6 @@ void ft_subshell_convert_type(t_ast_node *tree)
 	ft_subshell_convert_type(tree->left);
 	ft_subshell_convert_type(tree->right);
 }
-
-
-
-// void	ft_subtree_TST(t_ast_node *tree)
-// {
-// 	t_list_token *sub_list;
-// 	t_ast_node 	*sub_tree;
-
-// 	sub_list = ft_multi_split(tree->token, SEPARARTORS, 1);
-// 	ft_ordering(sub_list);
-// 	printf("\nIs a sublist\n");
-// 	ft_print_list(*sub_list);
-// 	sub_tree = ft_create_ast_node(sub_list->head);
-// 	ft_subshell_convert_type(sub_tree);
-// 	ft_subtree_TST(tree->left);
-// 	ft_subtree_TST(tree->midle);
-// 	ft_subtree_TST(tree->right);
-// }
-
 
 void ft_create_subtree(t_ast_node *tree)
 {
@@ -216,14 +55,6 @@ void ft_create_subtree(t_ast_node *tree)
 	ft_create_subtree(tree->right);
 }
 
-t_global_tree	*ft_sematic_with_tree(t_list_token *list)
-{
-	t_global_tree *tree;
-
-	tree = ft_shunting_yard_build_ast(list);
-	
-	return (tree);	
-}
 
 void	ft_sematic(t_list_token *list, int isast)
 {
@@ -231,7 +62,8 @@ void	ft_sematic(t_list_token *list, int isast)
 	
 	if(isast)
 	{
-		tree = ft_sematic_with_tree(list);
+		tree = ft_shunting_yard_build_ast(list);
+
 		ft_subshell_convert_type(tree->ast_node);
 		ft_create_subtree(tree->ast_node);
 
@@ -247,3 +79,124 @@ void	ft_sematic(t_list_token *list, int isast)
 	// 	// ft_sematic_with_list(t);
 	// }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// void correct_tree(t_ast_node *tree)
+// {
+// 	if (!tree)
+// 		return ;
+
+// 	if (tree->token_type == TEXT)
+// 	{
+// 		t_list_token* sub_list = ft_multi_split(tree->token, SUBSHELLSEP, 1);
+// 		ft_ordering(sub_list);
+// 		// ft_print_list(*sub_list);
+// 		if(isbrakets(sub_list))
+// 		{
+// 			t_global_tree* sub_tree = ft_shunting_yard_build_ast(sub_list);
+// 			tree->token_type = SUBSHELL;
+// 			tree->left = sub_tree->ast_node;	
+// 		}
+
+// 	}
+// 	correct_tree(tree->left);
+// 	correct_tree(tree->right);
+// }

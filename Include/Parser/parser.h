@@ -13,7 +13,6 @@ int			ft_should_ast_create(t_list_token *list);
 
 // ft_sematic.c
 void			ft_sematic(t_list_token *list, int isast);
-t_global_tree	*ft_sematic_with_tree(t_list_token *list);
 void 			ft_subshell_convert_type(t_ast_node *tree);
 void			ft_subtree_TST(t_ast_node *tree);
 
