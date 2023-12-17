@@ -35,11 +35,12 @@ For detailed information, refer to the [**subject of this project**](https://git
 
 `@root`
 
-* [**📁 Include:**](Include/) contains the program's headers.
-* [**📁 Readline:**](Readline/) contains the program's Readline library for Linux and MacOS.
-* [**📁 Libft:**](Libft/) contains the source code of the `libft` library, which is used in the program.
-* [**📁 Src:**](Src/) contains the source code of the program.
-* [**📄 Makefile**](Makefile) - contains instructions for compiling the program and testing it.
+* [**📁 Include:**](Include/) 		Contains the program's headers.
+* [**📁 Readline:**](Readline/) 	Contains the program's Readline library for Linux and MacOS.
+* [**📁 Libft:**](Libft/) 		Contains the source code of the `libft` library, which is used in the program.
+* [**📁 Src:**](Src/) 			Contains the source code of the program.
+* [**📄 Makefile**](Makefile)   	Contains instructions for compiling the program and testing it.
+* [**📄 Makefile.mk**](MakeFile.mk)   	Contains a header file for the makefile.
 
 
 Note: program covers only mandatory requirements of the project's subject.
