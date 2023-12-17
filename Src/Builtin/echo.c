@@ -24,11 +24,9 @@ void	ft_putstr_fd(char *s, int fd)
 
 //
 
-int echo(int argc, char **argv, int env_count, char **env)
+int echo(int argc, char **argv,char **env)
 {
-    // (void)argc;
     (void)env;
-    (void)env_count;
 
     int i;
     int flag;
@@ -68,6 +66,5 @@ static int check_flag(char *arg)
 
 int main(int argc, char **argv, char **env)
 {
-    int env_count = 12;
-    echo(argc, argv, env_count, env);
+    echo(argc, argv,env);
 }
