@@ -6,77 +6,9 @@
 #    By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 21:12:42 by gehovhan          #+#    #+#              #
-#    Updated: 2023/12/16 22:36:52 by gevorg           ###   ########.fr        #
+#    Updated: 2023/12/16 22:42:45 by gevorg           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Main Exercise Name
 NAME 			= 	libft
@@ -98,7 +30,7 @@ CLEAN 			=	clean
 FCLEAN 			=	fclean
 RE 				=	re
 
-# # Single Flags
+# Single Flags
 L_FLAG			=	-L
 I_FLAG			=	-I
 O_FLAG 			=	-o
