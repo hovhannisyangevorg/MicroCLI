@@ -23,7 +23,7 @@ LEXR_DIR		=	Lexer
 PARS_DIR		=	Parser
 TOKS_DIR		=	Tokenizer
 SHELL_DIR 		=	Shell
-BILTIN_DIR 		=	Biltin
+BILTIN_DIR 		=	Builtin
 SEMATIC_DIR 	=	Sematic
 
 

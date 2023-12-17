@@ -101,4 +101,6 @@ size_t	ft_gnl_strlen(const char *s);
 char	*ft_gnl_strjoin(char *s1, char *s2);
 int		ft_gnl_strchr(const char *s, int c);
 
+int	ft_strcmp(char *s1, char *s2);
+
 #endif
