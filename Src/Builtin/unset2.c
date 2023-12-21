@@ -39,9 +39,9 @@ int	unset(int argc, char **argv, char **env)
 	return(0);
 }
 
-int main(int argc, char **argv, char **env)
-{
-	printf("%i", unset(argc, argv, env));
-	// printf("%i",env_m(argc, argv, env));
-	// printf ("%d", pwd(argc, argv, env));
-}
+// int main(int argc, char **argv, char **env)
+// {
+// 	printf("%i", unset(argc, argv, env));
+// 	// printf("%i",env_m(argc, argv, env));
+// 	// printf ("%d", pwd(argc, argv, env));
+// }

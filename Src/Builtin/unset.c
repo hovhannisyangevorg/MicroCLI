@@ -66,14 +66,14 @@ int	unset(int argc, char **argv, char **env)
 	return(0);
 }
 
-int main(int argc, char **argv, char **env)
-{
-	t_env *my_env;
+// int main(int argc, char **argv, char **env)
+// {
+// 	t_env *my_env;
 
-	my_env = NULL;
-	my_env= env_init(env, my_env);
-	printf("%i", unset(argc, argv, env));
-	write_env(&my_env);
-	// printf("%i",env_m(argc, argv, env));
-	// printf ("%d", pwd(argc, argv, env));
-}
+// 	my_env = NULL;
+// 	my_env= env_init(env, my_env);
+// 	printf("%i", unset(argc, argv, env));
+// 	write_env(&my_env);
+// 	// printf("%i",env_m(argc, argv, env));
+// 	// printf ("%d", pwd(argc, argv, env));
+// }

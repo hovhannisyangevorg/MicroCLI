@@ -12,6 +12,7 @@
 
 #include "shell.h"
 
+/*
 void	ft_program()
 {
 	char *line;
@@ -43,15 +44,14 @@ void	ft_program()
     }
     clear_history();
 }
+*/
 
 int main()
 {
-	ft_program();
+	// ft_program();
+    printf("Minishell");
 	return (0);	
 }
-
-
-
 
 
 

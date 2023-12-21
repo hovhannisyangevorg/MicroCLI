@@ -64,7 +64,7 @@ static int check_flag(char *arg)
     return (0);
 }
 
-int main(int argc, char **argv, char **env)
-{
-    echo(argc, argv,env);
-}
+// int main(int argc, char **argv, char **env)
+// {
+//     echo(argc, argv,env);
+// }
