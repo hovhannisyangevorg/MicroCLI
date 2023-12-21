@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:55:56 by gevorg            #+#    #+#             */
-/*   Updated: 2023/11/20 22:09:42 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/18 13:02:01 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,8 @@ int ft_should_ast_create(t_list_token *list)
 	temp = list->head;
 	while (temp)
 	{
-		// printf("(type: %d, token: %s)\n", temp->type, temp->token);
 		if(temp->type == PIPE || temp->type == AND)
-		{
 			pc++;
-		}
 		temp = temp->next;
 	}
 	return (pc != 0);

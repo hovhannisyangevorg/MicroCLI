@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 22:23:33 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/11/21 23:36:06 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/18 14:20:27 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int 			ft_is_empty(t_stack *stack);
 void			ft_push_stack(t_stack *stack, char item);
 char 			ft_pop_stack(t_stack *stack);
 void 			ft_free_stack(t_stack *stack);
-void			ft_is_balanc(char *expression);
+void			ft_brackets_balanced(char *expression);
 void			ft_init_list(t_list_token *list);
 void			ft_push_back(t_list_token *list, int type, const char *token);
 void			ft_push_front(t_list_token *list, int type, const char *token);

@@ -13,8 +13,9 @@ int			ft_should_ast_create(t_list_token *list);
 
 // ft_sematic.c
 void			ft_sematic(t_list_token *list, int isast);
-void 			ft_subshell_convert_type(t_ast_node *tree);
-void			ft_subtree_TST(t_ast_node *tree);
+void 			ft_build_subshell(t_ast_node *tree);
+
+// void			ft_subtree_TST(t_ast_node *tree);
 
 // ft_ast_functions.c
 t_global_tree 	*ft_init_ast_tree();
@@ -33,5 +34,12 @@ void			ft_free_shant_stack(t_global_stack *stack);
 // ft_shanting_yard.c
 int 			ft_isoperator(int type);
 t_global_tree 	*ft_shunting_yard_build_ast(t_list_token *list);
+
+
+
+
+
+void			ft_subshell(t_ast_node* node, size_t *index);
+
 
 #endif

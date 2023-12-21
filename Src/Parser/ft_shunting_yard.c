@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 21:00:12 by gevorg            #+#    #+#             */
-/*   Updated: 2023/11/23 16:22:18 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/21 14:39:47 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,20 @@ int ft_isoperator(int type)
 
 t_global_tree *ft_shunting_yard_build_ast(t_list_token *list)
 {
-	t_token 			token;
-	t_token				tok;
 	t_global_tree 		*tree;
 	t_ast_node			*ast_node;
 	t_ast_node 			*ast_left;
 	t_ast_node 			*ast_right;
+
+	t_token 			token;
+	t_token				tok;
+	
 	t_global_stack 		*stack_opre;
 	t_global_stack 		*stack_oute;
 	
-	tree 				= ft_init_ast_tree();
-	stack_opre			= ft_init_shant_stack(); 
-	stack_oute			= ft_init_shant_stack(); 
+	tree 				= ft_init_ast_tree();		// head = NULL
+	stack_opre			= ft_init_shant_stack();	// head = NULL
+	stack_oute			= ft_init_shant_stack();	// head = NULL
 	ast_node 			= NULL;
 
 	while (list->head && list->head->type != 0)
@@ -43,24 +45,16 @@ t_global_tree *ft_shunting_yard_build_ast(t_list_token *list)
 			while (stack_opre->size && ft_isoperator(stack_opre->top->ast_node->token_type))
 			{
 				if (stack_oute->size)
-				{
 					ast_right = stack_oute->top->ast_node;
-				}
 				else
-				{
 					ast_right = NULL;	
-				}
 
 				ft_pop_shant_stack(stack_oute);
 
 				if (stack_oute->size)
-				{
 					ast_left = stack_oute->top->ast_node;
-				}
 				else
-				{
 					ast_left = NULL;
-				}
 
 				ft_pop_shant_stack(stack_oute);
 				ft_init_token(&tok, stack_opre->top->ast_node->token_type, ft_strdup(stack_opre->top->ast_node->token));
@@ -84,24 +78,16 @@ t_global_tree *ft_shunting_yard_build_ast(t_list_token *list)
 	while (stack_opre->size)
 	{
 		if (stack_oute->size)
-		{
 			ast_right = stack_oute->top->ast_node;
-		}
 		else
-		{
 			ast_right = NULL;
-		}
 		
 		ft_pop_shant_stack(stack_oute);
 		
 		if (stack_oute->size)
-		{
 			ast_left = stack_oute->top->ast_node;
-		}
 		else
-		{
 			ast_left = NULL;	
-		}
 			
 		ft_pop_shant_stack(stack_oute);
 		// printf("----%d\n", stack_opre->top->ast_node->token_type);
@@ -123,6 +109,41 @@ t_global_tree *ft_shunting_yard_build_ast(t_list_token *list)
 	// ft_ast_print(tree->ast_node, ft_strdup(""), 0, 1);
 	return (tree);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

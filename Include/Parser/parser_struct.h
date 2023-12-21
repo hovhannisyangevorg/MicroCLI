@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:44:21 by gevorg            #+#    #+#             */
-/*   Updated: 2023/11/22 22:49:23 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/21 14:34:39 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ enum e_quot_type
 struct s_ast_node
 {
     t_token_type	token_type;
-	t_quot_type		quate_flags;
+	t_quot_type		quate_type;
     char			*token;
     t_ast_node		*left;
-	t_ast_node		*midle;
     t_ast_node		*right;
+	t_global_stack	*subshell;
 };
 
 struct s_global_tree

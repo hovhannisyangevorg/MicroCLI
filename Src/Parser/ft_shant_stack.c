@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:54:42 by gevorg            #+#    #+#             */
-/*   Updated: 2023/11/20 18:44:21 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/18 13:02:50 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ t_shant_stack	*ft_push_shant_stack(t_global_stack *stack, t_ast_node *ast_node)
 	++stack->size;
 	return (new_stack);
 }
-
 
 void	ft_pop_shant_stack(t_global_stack *stack)
 {

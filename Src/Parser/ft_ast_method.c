@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ast_functions.c                                 :+:      :+:    :+:   */
+/*   ft_ast_method.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:52:35 by gevorg            #+#    #+#             */
-/*   Updated: 2023/11/22 01:22:15 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/21 14:34:54 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ t_ast_node 	*ft_create_ast_node(t_token *token)
 	
     new_node->token_type 	= token->type;
     new_node->token 		= ft_strdup(token->token);
-    new_node->quate_flags 	= 0;
+    new_node->quate_type 	= 0;
     new_node->left 			= NULL;
-	new_node->midle			= NULL;
+	new_node->subshell		= ft_init_shant_stack();
     new_node->right 		= NULL;
     return (new_node);
 }
@@ -106,7 +106,6 @@ size_t ft_ast_len(t_ast_node* root)
 
 
 
-///printf tree
 static char	*ft_ast_strjoin(char *s1, char *s2)
 {
 	char		*new_str;
@@ -154,6 +153,12 @@ void ft_ast_print(t_ast_node *head, char *prefix, int is_left, int is_root)
 			str = ft_ast_strjoin(prefix, "│      ");
 		else
 			str = ft_ast_strjoin(prefix, "       ");
+		t_shant_stack* node = head->subshell->top;
+		while (node)
+		{
+			ft_ast_print(node->ast_node, str, 1, 0);
+			node = node->next;
+		}
 		ft_ast_print(head->left, str, 1, 0);
 		ft_ast_print(head->right, str, 0, 0);
 		free(str);
