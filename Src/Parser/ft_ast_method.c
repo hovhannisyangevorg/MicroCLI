@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:52:35 by gevorg            #+#    #+#             */
-/*   Updated: 2023/12/21 14:34:54 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/23 17:51:14 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ t_ast_node 	*ft_create_ast_node(t_token *token)
     new_node->right 		= NULL;
     return (new_node);
 }
+
+
+
+
 
 size_t ft_ast_len(t_ast_node* root)
 {
@@ -139,7 +143,7 @@ void ft_ast_print(t_ast_node *head, char *prefix, int is_left, int is_root)
 		}
 		else
 			printf("└───");
-		printf("AST_NODE( type: %d, token: %s", head->token_type, head->token);
+		printf("AST_NODE { type: %d, token: %s", head->token_type, head->token);
 		if ( is_root == 0 )
 		{
 			if (is_left)
@@ -147,7 +151,7 @@ void ft_ast_print(t_ast_node *head, char *prefix, int is_left, int is_root)
 			else
 				printf(", R");
 		}
-		printf(" ) \n");
+		printf(" } \n");
 		char *str;
 		if (is_left)
 			str = ft_ast_strjoin(prefix, "│      ");
@@ -170,7 +174,7 @@ void ft_ast_print(t_ast_node *head, char *prefix, int is_left, int is_root)
 			printf("├───");
 		else
 			printf("└───");
-		printf("AST_NODE( NULL");
+		printf("AST_NODE { NULL");
 		if ( is_root == 0 )
 		{
 			if (is_left)
@@ -178,6 +182,6 @@ void ft_ast_print(t_ast_node *head, char *prefix, int is_left, int is_root)
 			else
 				printf(", R");
 		}
-		printf(" ) \n");
+		printf(" } \n");
 	}
 }

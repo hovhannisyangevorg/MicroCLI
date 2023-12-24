@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 14:57:11 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/12/17 15:39:32 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/21 14:45:43 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ struct s_token
 {
 	int		type;
 	char	*token;
-	int 	quate_flags;
+	int 	quate_type;
 	t_token	*next;
 	t_token *prev;
 };

@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/12/21 14:31:31 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/23 21:10:15 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,113 @@ void	ft_program()
     clear_history();
 }
 
+// int	ft_find_close(char* str, size_t size, int openIndex)
+// {
+// 	int count;
+// 	size_t i;
+
+// 	i = openIndex + 1;
+// 	count = 1;
+// 	while (i < size)
+// 	{
+// 		if (str[i] == '(')
+// 			++count;
+// 		else if (str[i] == ')')
+// 		{
+// 			--count;
+// 			if (0 == count)
+// 				return (i);
+// 		}
+// 		++i;
+// 	}
+// 	return (-1);
+// }
+
+// int ft_find(char* str, char c, size_t pos)
+// {
+// 	size_t i = pos;
+// 	while(str[i])
+// 	{
+// 		if (str[i] == c)
+// 			return i;
+// 		++i;
+// 	}
+// 	return -1;
+// }
+
+// char* get_sub_string(char *str, size_t size, size_t start)
+// {
+	
+// 	size_t pos = ft_find(str, '(', start);
+// 	if ((int)pos < 0)
+// 		return NULL;
+// 	size_t end = ft_find_close(str, size, pos);
+// 	// printf("%lu\n", (end - start - 1));
+// 	return (ft_substr(str, pos + 1, end - start - 2));
+// }
+
+
+
+// t_ast_node* correct_subshell(t_ast_node* root)
+// {
+// 	if (root->token_type == TEXT)
+// 	{
+// 		if (ft_strchr(root->token, OPBREK) || ft_strchr(root->token, CLBREK))
+// 		{
+// 			char* subshell = get_sub_string(root->token, ft_strlen(root->token), 0);
+// 			t_list_token* list = ft_multi_split(subshell, SEPARARTORS, 0);
+// 			if (list->size != 0){
+// 				ft_ordering(list);
+// 			}
+// 				// ft_push_front(list, 0, ft_strdup("START"));
+// 			// ft_print_list(*list);
+// 			ft_split_token(list);
+// 			t_global_tree* tree = ft_shunting_yard_build_ast(list);
+// 			ft_push_shant_stack(root->subshell, tree->ast_node);
+// 			// correct_subshell(tree->ast_node);
+// 		}
+// 	}
+// 	return root;
+// }
+
+
+// int main()
+// {
+// 	char* str = "((ls) | (grep) | e | r | k)";
+// 	char* subshell = get_sub_string(str, ft_strlen(str), 0);
+// 	t_list_token* list = ft_multi_split(subshell, SEPARARTORS, 0);
+// 	if (list->size != 0){
+// 		ft_ordering(list);
+// 	}
+// 		// ft_push_front(list, 0, ft_strdup("START"));
+// 	// ft_print_list(*list);
+// 	ft_split_token(list);
+// 	t_global_tree* tree = ft_shunting_yard_build_ast(list);
+// 	// ft_push_shant_stack(root->subshell, tree->ast_node);
+// 	// correct_subshell(tree->ast_node);
+// 	// char* out = ;
+// 	// printf("%s\n", out);
+	
+// 	ft_ast_print(tree->ast_node, ft_strdup(""), 0, 1);
+	
+// 	// size_t index = 0;
+// 	// t_token tok;
+
+// 	// ft_init_token(&tok, SUBSHELL, ft_strdup(str));
+// 	// t_ast_node* node = ft_create_ast_node(&tok);
+// 	// ft_sub1(node, ft_strlen(str), &index, 0);
+// 	// ft_ast_print(node, ft_strdup(""), 0, 1);
+// 	// ft_program();
+// 	return (0);	
+// }
+
+
+
 int main()
 {
 	ft_program();
 	return (0);	
 }
-
-
-
-
-
-
-
-
 
 
 

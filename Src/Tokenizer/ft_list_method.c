@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:02:45 by gevorg            #+#    #+#             */
-/*   Updated: 2023/12/17 14:44:56 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/21 14:49:17 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ void	ft_init_list(t_list_token *list)
 
 void	ft_init_token(t_token *node, int type, char *elem)
 {
-	node->quate_flags = 0;
-	node->token = 0;
+	node->quate_type = 0;
 	node->type = type;
 	node->token = elem;
 	node->next = NULL;

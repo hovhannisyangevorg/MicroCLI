@@ -6,33 +6,34 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 21:00:12 by gevorg            #+#    #+#             */
-/*   Updated: 2023/12/21 14:39:47 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/21 16:24:41 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int ft_isoperator(int type)
+int ft_isoper(int type)
 {
 	return (type != TEXT);
 }
 
 t_global_tree *ft_shunting_yard_build_ast(t_list_token *list)
 {
-	t_global_tree 		*tree;
 	t_ast_node			*ast_node;
 	t_ast_node 			*ast_left;
 	t_ast_node 			*ast_right;
 
 	t_token 			token;
-	t_token				tok;
+	t_token				tmp_token;
 	
+	t_global_tree 		*tree;
 	t_global_stack 		*stack_opre;
 	t_global_stack 		*stack_oute;
 	
-	tree 				= ft_init_ast_tree();		// head = NULL
-	stack_opre			= ft_init_shant_stack();	// head = NULL
-	stack_oute			= ft_init_shant_stack();	// head = NULL
+	tree 				= ft_init_ast_tree();
+	stack_opre			= ft_init_shant_stack();
+	stack_oute			= ft_init_shant_stack();
+	
 	ast_node 			= NULL;
 
 	while (list->head && list->head->type != 0)
@@ -40,14 +41,14 @@ t_global_tree *ft_shunting_yard_build_ast(t_list_token *list)
 		ft_init_token(&token, list->head->type, ft_strdup(list->head->token));
 		ft_pop_front(list);
 
-		if (ft_isoperator(token.type))
+		if (ft_isoper(token.type))
 		{
-			while (stack_opre->size && ft_isoperator(stack_opre->top->ast_node->token_type))
+			while (stack_opre->size && ft_isoper(stack_opre->top->ast_node->token_type))
 			{
 				if (stack_oute->size)
 					ast_right = stack_oute->top->ast_node;
 				else
-					ast_right = NULL;	
+					ast_right = NULL;
 
 				ft_pop_shant_stack(stack_oute);
 
@@ -57,14 +58,15 @@ t_global_tree *ft_shunting_yard_build_ast(t_list_token *list)
 					ast_left = NULL;
 
 				ft_pop_shant_stack(stack_oute);
-				ft_init_token(&tok, stack_opre->top->ast_node->token_type, ft_strdup(stack_opre->top->ast_node->token));
-				ast_node 		= ft_create_ast_node(&tok);
+				
+				ft_init_token(&tmp_token, stack_opre->top->ast_node->token_type, ft_strdup(stack_opre->top->ast_node->token));
+				ast_node 		= ft_create_ast_node(&tmp_token);
 				ast_node->left 	= ast_left;
 				ast_node->right = ast_right;
 			
 				ft_push_shant_stack(stack_oute, ast_node);
 				ft_pop_shant_stack(stack_opre);
-				free(tok.token);	
+				free(tmp_token.token);	
 			}
 			ft_push_shant_stack(stack_opre, ft_create_ast_node(&token));
 		}
@@ -72,6 +74,7 @@ t_global_tree *ft_shunting_yard_build_ast(t_list_token *list)
 		{
 			ft_push_shant_stack(stack_oute, ft_create_ast_node(&token));
 		}
+		
 		free(token.token);
 	}
 
@@ -90,7 +93,6 @@ t_global_tree *ft_shunting_yard_build_ast(t_list_token *list)
 			ast_left = NULL;	
 			
 		ft_pop_shant_stack(stack_oute);
-		// printf("----%d\n", stack_opre->top->ast_node->token_type);
 		ft_init_token(&token, stack_opre->top->ast_node->token_type, ft_strdup(stack_opre->top->ast_node->token));
 		ast_node = ft_create_ast_node(&token);
 		ast_node->left = ast_left;
@@ -321,7 +323,7 @@ t_global_tree *ft_shunting_yard_build_ast(t_list_token *list)
 
 // #include "shell.h"
 
-// int ft_isoperator(int type)
+// int ft_isoper(int type)
 // {
 // 	return (type != TEXT && type != NNULL);
 // }
@@ -346,9 +348,9 @@ t_global_tree *ft_shunting_yard_build_ast(t_list_token *list)
 // 		ft_init_token(&token, list->head->type, ft_strdup(list->head->token));
 // 		ft_pop_front(list);
 
-// 		if (ft_isoperator(token.type))
+// 		if (ft_isoper(token.type))
 // 		{
-// 			while (stack_opre->size && ft_isoperator(stack_opre->top->t_ast_node->token_type))
+// 			while (stack_opre->size && ft_isoper(stack_opre->top->t_ast_node->token_type))
 // 			{
 // 				if (stack_oute->size)
 // 					ast_right = stack_oute->top;

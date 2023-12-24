@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 20:08:20 by gevorg            #+#    #+#             */
-/*   Updated: 2023/12/19 13:17:11 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/23 18:22:18 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ void	ft_sematic(t_list_token *list, int isast)
 	}
 	else
 	{
-		printf("\n---------------\n\n/**\n * Pipe Validation\n * \n */\n// ft_sematic_with_list(t);\n");
+		printf("\n/**\n * Pipe Validation\n * \n */\n// ft_sematic_with_list(t);\n");
 	}
+	
 }
 
 

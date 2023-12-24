@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 20:25:50 by gevorg            #+#    #+#             */
-/*   Updated: 2023/12/17 22:57:14 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/23 21:41:16 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,74 +27,111 @@ int	isbrakets(t_list_token *list)
 	return (0);
 }
 
-void ft_build_subshell(t_ast_node *tree)
+void ft_build_subshell(t_ast_node *ast_node)
 {
-	if (!tree)
+	// size_t index;
+
+	if (!ast_node)
 		return ;
-	if (tree->token_type == TEXT)
+
+	if (ast_node->token_type == TEXT)
 	{
-		if (ft_strchr(tree->token, OPBREK) || ft_strchr(tree->token, CLBREK))
+		if (ft_strchr(ast_node->token, OPBREK) || ft_strchr(ast_node->token, CLBREK))
 		{
-			size_t index = 0;
-			ft_subshell(tree, &index);
-			
-			// t_ast_node* node = tree;
-			
-			// tree->token_type = SUBSHELL;
-			
+			ft_correct_subshell(ast_node);
+			free(ast_node->token);
+			ast_node->token = ft_strdup("SubShell");
+			// index = 0;
+			// ft_subshell(ast_node, &index);
 		}
 	}
-	ft_build_subshell(tree->left);
-	ft_build_subshell(tree->right);
+	t_shant_stack* node = ast_node->subshell->top;
+	while (node)
+	{
+		ft_build_subshell(node->ast_node);
+		node = node->next;
+	}
+	
+	ft_build_subshell(ast_node->left);
+	ft_build_subshell(ast_node->right);
 }
 
-void	ft_subshell(t_ast_node* sub, size_t *index)
+int	ft_find_close(char* str, size_t size, int openIndex)
+{
+	int count;
+	size_t i;
+
+	i = openIndex + 1;
+	count = 1;
+	while (i < size)
+	{
+		if (str[i] == '(')
+			++count;
+		else if (str[i] == ')')
+		{
+			--count;
+			if (0 == count)
+				return (i);
+		}
+		++i;
+	}
+	return (-1);
+}
+
+int ft_find(char* str, char c, size_t pos)
+{
+	size_t i = pos;
+	while(str[i])
+	{
+		if (str[i] == c)
+			return i;
+		++i;
+	}
+	return -1;
+}
+
+char* get_sub_string(char *str, size_t size, size_t start)
 {
 	
-	t_token 		token;
-	t_ast_node 		*node;
-	// t_shant_stack 	*tmp_node;
-	char 			*out;
-	char 			tmp;
-	size_t 			start = 0;
-	
-	while (*index < ft_strlen(sub->token))
+	size_t pos = ft_find(str, '(', start);
+	if ((int)pos < 0)
+		return NULL;
+	size_t end = ft_find_close(str, size, pos);
+	if ((int)end < 0)
+		return (NULL);
+	--end;
+	printf("end = %lu\nstart = %lu\n", end , pos);
+	return (ft_substr(str, pos + 1, end - pos - 1));
+}
+
+
+
+t_ast_node* ft_correct_subshell(t_ast_node* root)
+{
+	if (!root)
+		return root;
+	if (root->token_type == TEXT)
 	{
-		tmp = sub->token[*index];
-		
-		if (tmp == '(')
+		if (ft_strchr(root->token, OPBREK) || ft_strchr(root->token, CLBREK))
 		{
-			++(*index);
-			ft_subshell(sub, index);
-		} else if (tmp == ')')
-		{
-			++(*index);
-			break;
-		} else
-		{
-			start = *index;
-			while (start < ft_strlen(sub->token) && sub->token[*index] != '(' && sub->token[*index] != ')')
-				++(*index);
-			out = ft_substr(sub->token, start, (*index) - start);
-			ft_init_token(&token, TEXT, out);
-			node = ft_create_ast_node(&token);
-			ft_push_shant_stack(sub->subshell, node);
-			free(token.token);
+			char* subshell = get_sub_string(root->token, ft_strlen(root->token), 0);
+			if (subshell)
+			{
+				t_list_token* list = ft_multi_split(subshell, SEPARARTORS, 0);
+				if (list->size != 0){
+					ft_ordering(list);
+				}
+					// ft_push_front(list, 0, ft_strdup("START"));
+				// ft_print_list(*list);
+				ft_split_token(list);
+				t_global_tree* tree = ft_shunting_yard_build_ast(list);
+				ft_push_shant_stack(root->subshell, tree->ast_node);
+				ft_correct_subshell(tree->ast_node);
+				
+			}
 		}
-		++(*index);
 	}
-	sub->token_type = SUBSHELL;
-	// free(sub->token);
-	// sub->token = ft_strdup("SubShell");
-	// ft_init_token(&token, SUBSHELL, ft_strdup("SubShell"));
-	// node = ft_create_ast_node(&token);
-	// tmp_node = sub->subshell->top;
-	// while (tmp_node)
-	// {
-	// 	ft_push_shant_stack(sub->subshell, tmp_node->ast_node);
-	// 	tmp_node = tmp_node->next; 
-	// }
-	// ft_push_shant_stack(sub->subshell, node);
+	return root;
 }
 
 
@@ -158,27 +195,3 @@ void	ft_subshell(t_ast_node* sub, size_t *index)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-// void ft_create_subtree(t_ast_node *tree)
-// {
-// 	if (!tree)
-// 		return ;
-
-// 	if (tree->token_type == SUBSHELL)
-// 	{
-// 		// ft_subtree_TST(tree);
-// 	}
-	
-// 	ft_create_subtree(tree->left);
-// 	ft_create_subtree(tree->right);
-// }
