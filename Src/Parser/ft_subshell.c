@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 20:25:50 by gevorg            #+#    #+#             */
-/*   Updated: 2023/12/23 21:41:16 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/25 21:12:26 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ int	isbrakets(t_list_token *list)
 	return (0);
 }
 
+// Preorder traversal
 void ft_build_subshell(t_ast_node *ast_node)
 {
-	// size_t index;
+	t_shant_stack* node;
 
 	if (!ast_node)
 		return ;
@@ -41,11 +42,9 @@ void ft_build_subshell(t_ast_node *ast_node)
 			ft_correct_subshell(ast_node);
 			free(ast_node->token);
 			ast_node->token = ft_strdup("SubShell");
-			// index = 0;
-			// ft_subshell(ast_node, &index);
 		}
 	}
-	t_shant_stack* node = ast_node->subshell->top;
+	node = ast_node->subshell->top;
 	while (node)
 	{
 		ft_build_subshell(node->ast_node);
@@ -54,6 +53,39 @@ void ft_build_subshell(t_ast_node *ast_node)
 	
 	ft_build_subshell(ast_node->left);
 	ft_build_subshell(ast_node->right);
+}
+
+t_ast_node* ft_correct_subshell(t_ast_node* root)
+{
+	t_global_tree	*tree;
+	t_list_token	*list;
+	char			*subshell;
+
+	if (!root)
+		return root;
+
+	if (root->token_type == TEXT)
+	{
+		if (ft_strchr(root->token, OPBREK) || ft_strchr(root->token, CLBREK))
+		{
+			
+			subshell = get_sub_string(root->token, ft_strlen(root->token), 0);
+			// printf("%s\n", subshell);
+			if (subshell)
+			{
+				list = ft_multi_split(subshell, SEPARARTORS, 0);
+				if (list->size != 0)
+					ft_ordering(list);
+				ft_split_token(list);
+				tree = ft_shunting_yard_build_ast(list);
+				tree->ast_node->parent = root;
+				ft_push_shant_stack(root->subshell, tree->ast_node);
+				ft_correct_subshell(tree->ast_node);
+				
+			}
+		}
+	}
+	return (root);
 }
 
 int	ft_find_close(char* str, size_t size, int openIndex)
@@ -80,118 +112,28 @@ int	ft_find_close(char* str, size_t size, int openIndex)
 
 int ft_find(char* str, char c, size_t pos)
 {
-	size_t i = pos;
-	while(str[i])
+	size_t i;
+	
+	i = pos;
+	while(str && str[i])
 	{
 		if (str[i] == c)
 			return i;
 		++i;
 	}
-	return -1;
+	return (-1);
 }
 
 char* get_sub_string(char *str, size_t size, size_t start)
 {
+	size_t pos;
+	size_t end;
 	
-	size_t pos = ft_find(str, '(', start);
+	pos = ft_find(str, '(', start);
 	if ((int)pos < 0)
 		return NULL;
-	size_t end = ft_find_close(str, size, pos);
+	end = ft_find_close(str, size, pos);
 	if ((int)end < 0)
 		return (NULL);
-	--end;
-	printf("end = %lu\nstart = %lu\n", end , pos);
 	return (ft_substr(str, pos + 1, end - pos - 1));
 }
-
-
-
-t_ast_node* ft_correct_subshell(t_ast_node* root)
-{
-	if (!root)
-		return root;
-	if (root->token_type == TEXT)
-	{
-		if (ft_strchr(root->token, OPBREK) || ft_strchr(root->token, CLBREK))
-		{
-			char* subshell = get_sub_string(root->token, ft_strlen(root->token), 0);
-			if (subshell)
-			{
-				t_list_token* list = ft_multi_split(subshell, SEPARARTORS, 0);
-				if (list->size != 0){
-					ft_ordering(list);
-				}
-					// ft_push_front(list, 0, ft_strdup("START"));
-				// ft_print_list(*list);
-				ft_split_token(list);
-				t_global_tree* tree = ft_shunting_yard_build_ast(list);
-				ft_push_shant_stack(root->subshell, tree->ast_node);
-				ft_correct_subshell(tree->ast_node);
-				
-			}
-		}
-	}
-	return root;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

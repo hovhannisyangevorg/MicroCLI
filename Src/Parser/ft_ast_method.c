@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:52:35 by gevorg            #+#    #+#             */
-/*   Updated: 2023/12/23 17:51:14 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/24 20:50:03 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_ast_node 	*ft_create_ast_node(t_token *token)
 		return (NULL);
 	
     new_node->token_type 	= token->type;
+	new_node->parent		= NULL;
     new_node->token 		= ft_strdup(token->token);
     new_node->quate_type 	= 0;
     new_node->left 			= NULL;

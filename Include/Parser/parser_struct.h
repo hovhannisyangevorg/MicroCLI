@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:44:21 by gevorg            #+#    #+#             */
-/*   Updated: 2023/12/23 17:08:17 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/24 20:48:53 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ struct s_ast_node
     char			*token;
     t_ast_node		*left;
     t_ast_node		*right;
+	t_ast_node		*parent;
 	t_global_stack	*subshell;
 };
 
