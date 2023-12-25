@@ -38,8 +38,8 @@ t_global_tree 	*ft_shunting_yard_build_ast(t_list_token *list);
 
 // ft_subshell.c
 t_ast_node	*ft_correct_subshell(t_ast_node* root);
-char		*get_sub_string(char *str, size_t size, size_t start);
-int			ft_find(char* str, char c, size_t pos);
+char		*get_sub_string(char *str, size_t size, size_t* start);
+int			ft_find(char* str, char c, size_t pos, size_t size);
 int			ft_find_close(char* str, size_t size, int openIndex);
 
 

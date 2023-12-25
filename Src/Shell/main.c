@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/12/25 20:33:35 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/25 21:40:40 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,15 @@ void	ft_program()
 
 int main()
 {
-	t_token t;
-	ft_init_token(&t, TEXT, "(ls | (grep) (hi))");
-	t_ast_node* node = ft_create_ast_node(&t);
-	node = ft_correct_subshell(node);
-	ft_ast_print(node, ft_strdup(""), 0, 1);
+	// t_token t;
+	// ft_init_token(&t, TEXT, "(ls | (grep) (hi))");
+	// t_ast_node* node = ft_create_ast_node(&t);
+	// node = ft_correct_subshell(node);
+	// ft_ast_print(node, ft_strdup(""), 0, 1);
 	// fixaca
 	// myus casenel jogaca hopar
 	// ft_substr("(()()()()()()()()()()()()()()()()()()()()()()()()()()()())")
-	// ft_program();
+	ft_program();
 	return (0);	
 }
 
