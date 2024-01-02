@@ -10,7 +10,6 @@ INC_DIR_LIB		= 	Include
 READ_DIR 		=	Readline
 READ_UPDIR		=	Readline_update
 READ_ARX 		=	lib
-
 OS				=	$(shell uname -s)
 PREFIX			=	$(shell pwd)/$(READ_UPDIR)
 
@@ -25,7 +24,6 @@ TOKS_DIR		=	Tokenizer
 SHELL_DIR 		=	Shell
 BILTIN_DIR 		=	Builtin
 SEMATIC_DIR 	=	Sematic
-
 
 # Hierarchical Directories Name
 SRC_EXEC_DIR		=	$(SRC_DIR)/$(EXEC_DIR)
@@ -84,14 +82,12 @@ endif
 
 LINKERS			+=	 $(READ_FLAG) $(L_FLAG)$(FT_LIB) -lft
 
-
 # # Common Targets Variables
 ALL 			=	all
 CLEAN 			=	clean
 FCLEAN 			=	fclean
 RE 				=	re
 RL 				=	Readline
-
 
 # List of all Source Files
 SRCS_EXEC		=	$(wildcard	$(SRC_EXEC_DIR)/*$(_C))
@@ -111,8 +107,6 @@ OBJS_SHELL		=	$(patsubst 	$(SRC_SHELL_DIR)/%$(_C),$(OBJ_SHELL_DIR)/%$(_O),$(SRCS
 OBJS_BILTIN		=	$(patsubst 	$(SRC_BILTIN_DIR)/%$(_C),$(OBJ_BILTIN_DIR)/%$(_O),$(SRCS_BILTIN))
 OBJS_SEMATIC	=	$(patsubst 	$(SRC_SEMATIC_DIR)/%$(_C),$(OBJ_SEMATIC_DIR)/%$(_O),$(SRCS_SEMATIC))
 
-
-
 # List of all Header Files
 INCS_EXEC		=	$(wildcard 	$(INC_EXEC_DIR)/*$(_H))
 INCS_LEXR		=	$(wildcard 	$(INC_LEXR_DIR)/*$(_H))
@@ -122,12 +116,10 @@ INCS_SHELL 		= 	$(wildcard 	$(INC_SHELL_DIR)/*$(_H))
 INCS_BILTIN 	= 	$(wildcard 	$(INC_BILTIN_DIR)/*$(_H))
 INCS_SEMATIC 	= 	$(wildcard 	$(INC_SEMATIC_DIR)/*$(_H))
 
-
 # Path lists of objects, headers, and source files.
 SRCS_ALL 		=	$(SRCS_EXEC) $(SRCS_LEXR) $(SRCS_PARS) $(SRCS_TOKS) $(SRCS_SHELL) $(SRCS_BILTIN) $(SRCS_SEMATIC)
 OBJS_ALL 		=	$(OBJS_EXEC) $(OBJS_LEXR) $(OBJS_PARS) $(OBJS_TOKS) $(OBJS_SHELL) $(OBJS_BILTIN) $(OBJS_SEMATIC)
 INCS_ALL 		=	$(INCS_EXEC) $(INCS_LEXR) $(INCS_PARS) $(INCS_TOKS) $(INCS_SHELL) $(INCS_BILTIN) $(INCS_SEMATIC)
-
 
 # # All include path
 INCLUDES		=	$(I_FLAG)$(INC_DIR) $(I_FLAG)$(FT_LIB)/$(INC_DIR_LIB) $(I_FLAG)$(INC_EXEC_DIR) $(I_FLAG)$(INC_LEXR_DIR) $(I_FLAG)$(INC_PARS_DIR) $(I_FLAG)$(INC_TOKS_DIR) $(I_FLAG)$(INC_BILTIN_DIR) $(I_FLAG)$(INC_SHELL_DIR) $(I_FLAG)$(INC_SEMATIC_DIR) $(I_FLAG)$(READ_UPDIR)/$(INC_DIR_LIB) 

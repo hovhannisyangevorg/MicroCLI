@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:02:45 by gevorg            #+#    #+#             */
-/*   Updated: 2023/12/17 14:44:56 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/21 14:49:17 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ void	ft_init_list(t_list_token *list)
 
 void	ft_init_token(t_token *node, int type, char *elem)
 {
-	node->quate_flags = 0;
-	node->token = 0;
+	node->quate_type = 0;
 	node->type = type;
 	node->token = elem;
 	node->next = NULL;
@@ -60,7 +59,7 @@ void	ft_push_back(t_list_token *list, int type, const char *token)
 void	ft_push_front(t_list_token *list, int type, const char *token)
 {
 	t_token	*new;
-	t_token *last;
+	// t_token *last;
 
 	if (!list)
 		return ;
@@ -68,13 +67,20 @@ void	ft_push_front(t_list_token *list, int type, const char *token)
 	if (new == NULL)
 		return ;
 	ft_init_token(new, type, ft_strdup(token));
+	if (!list->head)
+	{
+		list->head = new;
+		list->tail = new;
+		++list->size;
+		return;
+	}
 	new->next = list->head;
-	list->head->prev = new->next;
+	list->head->prev = new;
 	list->head = new;
-	last = list->head;
-	while (last && last->next != NULL)
-		last = last->next;
-	list->tail = last;
+	// last = list->head;
+	// while (last && last->next != NULL)
+	// 	last = last->next;
+	// list->tail = last;
 	++list->size;
 }
 
@@ -145,15 +151,14 @@ void	ft_free_list(t_list_token *list)
 	free(list);
 }
 
-void	ft_print_list(t_list_token list)
+void	ft_print_list(t_token* list)
 {
 	t_token* current;
 
-	current = list.head;
-
+	current = list;
 	while (current)
 	{
-		printf("Type: %d, Token: %s\n", current->type, current->token);
+		printf("Type: %u, Token: %s\n", current->type, current->token);
 		current = current->next;
     }
 }

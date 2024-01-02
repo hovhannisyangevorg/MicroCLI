@@ -79,7 +79,7 @@ void	ft_split_token(t_list_token *list)
 	while (token)
 	{
 		if (token->type == TEXT)
-			ft_splitted (token, SEPARARTORS);
+			ft_splitted (token, OPERATORS);
 		token = token->next;
 	}
 }

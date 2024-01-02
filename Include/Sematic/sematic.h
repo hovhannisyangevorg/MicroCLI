@@ -3,8 +3,19 @@
 
 # include "shell.h"
 
-// void		ft_parser(t_list_token *list);
-// int			ft_should_ast_create(t_list_token *list);
-// void		ft_sematic(t_list_token *list, int is_create);
+
+t_status_codes ft_validate_operator(t_ast_node* node);
+
+t_status_codes ft_validate_command(t_ast_node* node);
+
+t_status_codes ft_validate_redirect(t_ast_node* node);
+
+t_status_codes ft_validate_subshell(t_ast_node* node);
+
+t_status_codes ft_validate_argument(t_ast_node* node);
+
+t_status_codes ft_validate(t_ast_node* root);
+
+char*          ft_get_error_message(t_status_codes code);
 
 #endif

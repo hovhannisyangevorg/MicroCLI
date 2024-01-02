@@ -11,6 +11,38 @@
 /* ************************************************************************** */
 #include "shell.h"
 
+
+// t_token_type get_type_map(int type)
+// {
+//     if (type == MOR)
+//         return OR;
+//     else if (type == MAND)
+//         return AND;
+//     else if (type == MJOB)
+//         return JOB;
+//     else if (type == MREAD)
+//         return READ;
+//     else if (type == MAPPEND)
+//         return APPEND;
+//     else if (type == MWRITE)
+//         return WRITE;
+//     else if (type == MHEREDOC)
+//         return HEREDOC;
+//     else if (type == MSEMI)
+//         return SEMI;
+//     else if (type == MSEMITWO)
+//         return SEMITWO;
+//     else if (type == MPIPE)
+//         return PIPE;
+//     else if (type == MOPBREK)
+//         return OPBREK;
+//     else if (type == MCLBREK)
+//         return CLBREK;
+//     else
+//         return NNULL;
+    
+// }
+
 static int ft_hash(int num)
 {
     return (num * (-1));
@@ -84,6 +116,11 @@ static int	ft_find_index(char *expression, int index)
 	return -1;
 }
 
+// void tokenize(char* str, char* delims)
+// {
+
+// }
+
 t_list_token *ft_multi_split(char *str, char *delims, int issub)
 {
 	size_t			i;
@@ -122,7 +159,7 @@ t_list_token *ft_multi_split(char *str, char *delims, int issub)
 			}
 			else
 			{
-				ft_push_back(list, str[i], tmp);
+				ft_push_back(list,  str[i], tmp);
 				while (str[i] && ft_strchr(delims, str[i]))
 					i++;	
 			}

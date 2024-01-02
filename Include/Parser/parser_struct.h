@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:44:21 by gevorg            #+#    #+#             */
-/*   Updated: 2023/11/22 22:49:23 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/24 20:48:53 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,21 @@
  */
 typedef struct	s_ast_node		t_ast_node;
 
+typedef	struct	s_command		t_command;
+typedef	struct	s_argument		t_argument;
+typedef	struct	s_redirect		t_redirect;
+
 /**
  * @typedef t_token_type
  * @brief Enumerates different token types.
  */
 typedef enum	e_token_type	t_token_type;
+
+/**
+ * @typedef t_token_type
+ * @brief Enumerates different token types mapping.
+ */
+typedef enum	e_token_map_type	t_token_map_type;
 
 /**
  * @typedef t_quot_type
@@ -48,6 +58,8 @@ typedef struct	s_global_tree	t_global_tree;
 typedef struct	s_global_stack	t_global_stack;
 typedef struct	s_shant_stack	t_shant_stack;
 
+typedef enum e_redirect_side	t_redirect_side;
+// typedef void (*t_callback)(t_list_token* list);
 
 /**
  * @enum e_token_type
@@ -66,16 +78,49 @@ typedef struct	s_shant_stack	t_shant_stack;
 enum e_token_type
 {
 	NNULL,
-	TEXT		= 1000,
-	PIPE		= 124,
-	OR			= -124,
-	AMP			= 38,
-	AND			= -38,
-	SEMI		= 59,
-	SEMITWO 	= -59,
-	OPBREK		= 40,
-	CLBREK		= 41,
-	SUBSHELL 	= 500
+	TEXT		= 1L << 0,
+	PIPE		= 1L << 1,
+	OR			= 1L << 2,
+	JOB			= 1L << 3,
+	AND			= 1L << 4,
+	SEMI		= 1L << 5,
+	SEMITWO 	= 1L << 6,
+	OPBREK		= 1L << 7,
+	CLBREK		= 1L << 8,
+	WRITE		= 1L << 9,
+	READ		= 1L << 10,
+	APPEND		= 1L << 11,
+	HEREDOC		= 1L << 12,
+	SUBSHELL 	= 1L << 13,
+	COMMAND		= 1L << 14,
+	REDIRECT	= 1L << 15,
+	ARGUMENT	= 1L << 16,
+	ROOT		= 1L << 17
+};
+
+
+enum e_redirect_side
+{
+	NEXT_BRACE = 1L << 0,
+	PREV_BRACE = 1L << 1
+};
+
+enum e_token_map_type
+{
+	MNNULL,
+	MTEXT		= 1000,
+	MPIPE		= 124,
+	MOR			= -124,
+	MJOB		= 38,
+	MAND		= -38,
+	MSEMI		= 59,
+	MSEMITWO 	= -59,
+	MOPBREK		= 40,
+	MCLBREK		= 41,
+	MWRITE		= 62,
+	MREAD		= 60,
+	MAPPEND		= -62,
+	MHEREDOC	= -60
 };
 
 enum e_quot_type
@@ -88,11 +133,32 @@ enum e_quot_type
 struct s_ast_node
 {
     t_token_type	token_type;
-	t_quot_type		quate_flags;
+	t_quot_type		quate_type;
     char			*token;
     t_ast_node		*left;
-	t_ast_node		*midle;
     t_ast_node		*right;
+	t_ast_node		*parent;
+	t_global_stack	*subshell;
+};
+
+struct s_command
+{
+	t_ast_node	base;
+	t_argument	*argument;
+	t_redirect	*redirect;
+};
+
+struct s_argument
+{
+	t_ast_node	base;
+	char**		arguments;
+};
+
+struct s_redirect
+{
+	t_ast_node		base;
+	t_redirect_side	side;
+	char*			argument;
 };
 
 struct s_global_tree

@@ -1,3 +1,4 @@
+# Contains a header file for the makefile.
 include MakeFile.mk
 
 .DEFAULT_GOAL	:=	$(ALL)

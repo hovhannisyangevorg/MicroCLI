@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 14:57:11 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/12/17 15:39:32 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/21 14:45:43 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define	TOKENIZER_STRUCT_H
 
 
-# define 	SUBSHELLSEP 		";|&<>()"
+# define 	SEPARATORS 		";|&<>()"
 //;|&<>
-# define 	SEPARARTORS 		";|&<>"
+# define 	OPERATORS 		";|&"
 # define 	RED 				"\033[31m"
 # define 	BLACK 				"\033[30m"
 # define 	GREEN 				"\033[32m"
@@ -39,16 +39,16 @@ struct s_stack
 
 struct s_token
 {
-	int		type;
-	char	*token;
-	int 	quate_flags;
-	t_token	*next;
-	t_token *prev;
+	t_token_type		type;
+	char				*token;
+	int 				quate_type;
+	t_token				*next;
+	t_token 			*prev;
 };
 
 struct s_list_token
 {
-	t_token *head;
+	t_token	*head;
 	t_token *tail;
 	size_t	size;
 };
