@@ -35,7 +35,7 @@ void	ft_program()
     clear_history();
 }
 
-// typedef struct shape
+typedef struct shape
 // {
 // 	double 	g;		//	8
 // 	int 	x;		//	8
