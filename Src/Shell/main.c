@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/01/03 20:53:41 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/03 21:42:05 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,22 @@ void	ft_program()
     clear_history();
 }
 
-// typedef struct shape
-// {
-// 	double 	g;		//	8
-// 	int 	x;		//	8
-// 	char 	y;		//	8
-// 	short 	t;		
-// 	char 	f;		
-// } t_shape;
+typedef struct shape
+{
+	double 	g;		//	8
+	int 	x;		//	8
+	char 	y;		//	8
+	short 	t;		
+	char 	f;		
+} t_shape;
 
-// typedef struct rect
-// {
-// 	int x;
-// 	// int y;
-// 	// t_shape base;
-// 	// double j;
-// } t_rect;
+typedef struct rect
+{
+	int x;
+	// int y;
+	// t_shape base;
+	// double j;
+} t_rect;
 
 // composition 
 int main()
