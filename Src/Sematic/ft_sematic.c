@@ -6,22 +6,18 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 20:08:20 by gevorg            #+#    #+#             */
-/*   Updated: 2023/12/25 19:52:02 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/03 18:17:52 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-
-
-
 void	ft_sematic(t_list_token *list, int isast)
 {
 	t_global_tree *tree;
 	t_token root;
-
 	
-	if(isast)
+	if (isast)
 	{
 		tree = ft_init_ast_tree();
 		ft_init_token(&root, ROOT, ft_strdup("ROOT"));
@@ -32,7 +28,6 @@ void	ft_sematic(t_list_token *list, int isast)
 		char* str = ft_get_error_message(status);
 		if (str)
 			printf("ERROR: %s\n", str);
-
 		
 		ft_ast_print(tree->ast_node, ft_strdup(""), 0, 1);
 	}

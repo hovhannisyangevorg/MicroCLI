@@ -3,16 +3,15 @@
 
 t_list_token* ft_sublist(t_token* start, t_token* end)
 {
-	t_list_token* lst;
+	t_list_token* list;
 
-	lst = malloc(sizeof(t_list_token));
-	ft_init_list(lst);
+	list = ft_init_list();
 	while (start != end)
 	{
-		ft_push_back(lst, start->type, start->token);
+		ft_push_back(list, start->type, start->token);
 		start = start->next;
 	}
-	return lst;
+	return list;
 }
 
 t_token* ft_find_list(t_token_type type, t_token* start)

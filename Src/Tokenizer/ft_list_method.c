@@ -6,17 +6,23 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:02:45 by gevorg            #+#    #+#             */
-/*   Updated: 2023/12/21 14:49:17 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/03 18:56:01 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	ft_init_list(t_list_token *list)
+t_list_token *ft_init_list()
 {
+	t_list_token *list;
+
+	list = (t_list_token *)malloc(sizeof(t_list_token));
+	if (!list)
+		return (NULL);
 	list->head = NULL;
 	list->tail = NULL;
 	list->size = 0;
+	return (list);
 }
 
 void	ft_init_token(t_token *node, int type, char *elem)
@@ -59,7 +65,6 @@ void	ft_push_back(t_list_token *list, int type, const char *token)
 void	ft_push_front(t_list_token *list, int type, const char *token)
 {
 	t_token	*new;
-	// t_token *last;
 
 	if (!list)
 		return ;
@@ -77,10 +82,6 @@ void	ft_push_front(t_list_token *list, int type, const char *token)
 	new->next = list->head;
 	list->head->prev = new;
 	list->head = new;
-	// last = list->head;
-	// while (last && last->next != NULL)
-	// 	last = last->next;
-	// list->tail = last;
 	++list->size;
 }
 

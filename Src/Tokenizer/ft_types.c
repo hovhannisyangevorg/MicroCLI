@@ -50,7 +50,7 @@ char* ft_get_type(t_token_type type)
     else if (type == SUBSHELL)
         return ft_strdup("SubShell");
     else
-        return "Unknown";
+        return ft_strdup("Unknown");
     
 }
 

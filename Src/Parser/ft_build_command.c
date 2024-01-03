@@ -69,14 +69,15 @@ t_command* ft_handle_command(t_list_token* lst)
 	t_command* cmd;
 	t_ast_node base;
 	t_token comm;
-	(void)lst;
+	t_token* token;
+	t_redirect_side side;
 
 	ft_init_token(&comm, COMMAND, ft_strdup("COMMAND"));
 	ft_init_ast_node(&base, &comm);
 
 	cmd = ft_create_command(NULL, NULL, base);
-	t_token* token = lst->head;
-    t_redirect_side side = PREV_BRACE;
+	token = lst->head;
+    side = PREV_BRACE;
 	while (token && !ft_isoperator(token->type))
 	{
 		if (ft_is_brace(token->type))

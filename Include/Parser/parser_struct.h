@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:44:21 by gevorg            #+#    #+#             */
-/*   Updated: 2023/12/24 20:48:53 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/03 21:00:57 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ struct s_redirect
 {
 	t_ast_node		base;
 	t_redirect_side	side;
-	char*			argument;
+	char			*argument;
 };
 
 struct s_global_tree
