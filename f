@@ -1,0 +1,12 @@
+en.subject.pdf
+f
+Include
+Libft
+Makefile
+MakeFile.mk
+minishell
+Obj
+Readline
+Readline_update
+README.md
+Src
