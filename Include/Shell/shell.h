@@ -6,6 +6,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <signal.h>
+# include <stddef.h>
 
 #ifndef  READLINE_LIBRARY
 #define READLINE_LIBRARY 1

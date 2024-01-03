@@ -1,18 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parenthes_balancer.c                            :+:      :+:    :+:   */
+/*   ft_brackets_balanced.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 17:55:10 by gevorg            #+#    #+#             */
-/*   Updated: 2023/10/29 11:43:07 by gevorg           ###   ########.fr       */
+/*   Updated: 2023/12/18 14:22:07 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static int	ft_parenthes_balancer(char *expression)
+static int	ft_is_balanc(char *expression);
+
+void ft_brackets_balanced(char *expression)
+{
+	char *color;
+
+	if (!ft_is_balanc(expression))
+	{
+		color = RED "Bash Oops! : " BLACK "Syntax error parentheses are not balanced ! `('";
+		ft_panic(color);
+	}
+}
+
+static int	ft_is_balanc(char *expression)
 {
 	int i;
 	int balanced;
@@ -39,16 +52,4 @@ static int	ft_parenthes_balancer(char *expression)
 	ft_free_stack(stack);
 	free(stack);
 	return (balanced);
-}
-
-
-void ft_is_balanc(char *expression)
-{
-	char *color;
-
-	if (!ft_parenthes_balancer(expression))
-	{
-		color = RED "Bash Oops! : " BLACK "Syntax error parentheses are not balanced ! `('";
-		ft_panic(color);
-	}
 }

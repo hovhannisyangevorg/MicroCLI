@@ -53,36 +53,41 @@ int ft_ignor_quot(char *str, char quot, size_t i)
 	return (i);
 }
 
-static int	ft_find_index(char *expression, int index)
+static int	ft_find_index(char *expr, int index)
 {
 	int i;
+	int res;
 	
 	t_stack *stack;
 	stack = ft_initialize_stack();
 	i = 0;
-	while (expression && expression[i])
+	while (expr && expr[i])
 	{
-		if (expression[i] == '(')
+		if (expr[i] == '(')
 		{
 			ft_push_stack(stack, i);
 		}
-		else if (expression[i] == ')')
+		else if (expr[i] == ')')
 		{
 			if (stack->top)
 			{
-				int res = stack->top->data;
+				res = stack->top->data;
 				if (res == index)
 					return i;
 			}
 			ft_pop_stack(stack);
 		}
 		++i;
-	
 	}
 	ft_free_stack(stack);
 	free(stack);
-	return -1;
+	return (-1);
 }
+
+// void tokenize(char* str, char* delims)
+// {
+
+// }
 
 t_list_token *ft_multi_split(char *str, char *delims, int issub)
 {
@@ -93,8 +98,7 @@ t_list_token *ft_multi_split(char *str, char *delims, int issub)
 	int 			token_length;
 	
 
-	list = (t_list_token *)malloc(sizeof(t_list_token));
-	ft_init_list(list);
+	list = ft_init_list();
 	i = -1;
 	int j = 0;
 	token_start = 0;
@@ -122,7 +126,7 @@ t_list_token *ft_multi_split(char *str, char *delims, int issub)
 			}
 			else
 			{
-				ft_push_back(list, str[i], tmp);
+				ft_push_back(list,  str[i], tmp);
 				while (str[i] && ft_strchr(delims, str[i]))
 					i++;	
 			}
