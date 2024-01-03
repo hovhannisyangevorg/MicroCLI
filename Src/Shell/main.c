@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/01/03 20:53:41 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/03 21:54:38 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_program()
     clear_history();
 }
 
-typedef struct shape
+// typedef struct shape
 // {
 // 	double 	g;		//	8
 // 	int 	x;		//	8
