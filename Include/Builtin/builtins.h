@@ -26,7 +26,8 @@ int check_unset(char *argv);
 int echo(int argc, char **argv, char **env);
 int env_m(int argc, char **argv, char **env);
 int pwd(int argc, char **argv, char **env);
-int cd(int argc, char **argv, char **env);
+// int cd(int argc, char **argv, char **env);
+int cd (char **argv, t_env **my_env);
 int	unset(int argc, char **argv, char **env);
 
 
