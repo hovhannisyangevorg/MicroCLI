@@ -1,5 +1,22 @@
 #include "shell.h"
 
+void export_parsing(char **argv)
+{
+    int i;
+
+    i = 1;
+    while (argv[i])
+    {
+        if (argv[i][0] != '_' || (!(argv[i][0] >= 'a' 
+            && argv[i][0] <= 'z') || !(argv[i][0] >= 'A' && argv[i][0] <= 'Z')))
+            {
+                printf("Minishell: export: `%s`: not a valid identifier\n", argv[i]);
+                exit(1);
+            }
+        i++;
+    }
+}
+
 void export_helper(t_env *my_env)
 {
 	t_env *tmp;
@@ -48,7 +65,7 @@ int export(int argc, char **argv, char **env)
 
 	my_env = NULL;
 	my_env = env_init(env, my_env);
-
+    export_parsing(argv);
 	if (argc < 2)
 		export_helper(my_env);
 	else
