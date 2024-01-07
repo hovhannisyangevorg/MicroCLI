@@ -21,6 +21,7 @@ t_global_tree 	*ft_init_ast_tree()
 	tree->tree_size = 0;
 	tree->base.type = SYNTAX_TREE;
 	tree->base.handler = ft_execute_syntax_tree;
+	tree->base.io = ft_init_io_std();
 	return (tree);
 }
 

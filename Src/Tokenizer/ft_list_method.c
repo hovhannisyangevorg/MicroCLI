@@ -24,6 +24,7 @@ t_list_token *ft_init_list()
 	list->size = 0;
 	list->base.type = LIST;
 	list->base.handler = ft_execute_list;
+	list->base.io = ft_init_io_std();
 	return (list);
 }
 

@@ -19,6 +19,15 @@ enum e_container_type
     SYNTAX_TREE
 };
 
+typedef struct s_io t_io;
+
+struct s_io
+{
+	int		in;
+	int		out;
+	int		err;
+};
+
 /*
  * abstraction for executor
  * handle with list or abstract syntax tree
@@ -27,6 +36,7 @@ enum e_container_type
 */
 struct s_container
 {
+    t_io                io;
     t_container_type    type;
     t_execute_handler   handler;
 };

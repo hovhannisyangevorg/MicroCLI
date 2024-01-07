@@ -17,21 +17,40 @@ size_t ft_count_pipes(t_ast_node* root)
     return left + right;
 }
 
-
+/*
+ * function that automatically called when stored as list
+*/
 void ft_execute_list(t_list_token* list)
 {
     (void)list;
     printf("%s\n", "list");
 }
 
+int ft_update_command_io(t_command* cmd, int fd, t_io_type type)
+{
+    if (type == STDIN)
+        return dup2(cmd->io.in, fd);
+    if (type == STDOUT)
+        return dup2(cmd->io.out, fd);
+    return dup2(cmd->io.err, fd);
+}
+
+/*
+ * function that automatically called when stored as syntax tree 
+*/
 void ft_execute_syntax_tree(t_global_tree* tree)
 {
-    // t_global_tree* tree;
 
-    // tree = ft_container_to_tree(cont);
     size_t pipeCount = ft_count_pipes(tree->ast_node);
-    // (void)tree;
-    printf("pc: %lu\n", pipeCount);
+
+    int fd2 = open("hello.txt", O_CREAT | O_RDWR, 0777);
+    int fd = dup(STDOUT_FILENO);
+    // dup2(fd2, STDOUT_FILENO);
+    // dup2(fd2, STDIN_FILENO);
+    dup2(fd2, STDERR_FILENO);
+    // close(STDOUT_FILENO);
+    (void)fd;
+    fprintf(stderr, "pc: %lu\n", pipeCount);
 }
 
 void ft_executor(t_container* cont)

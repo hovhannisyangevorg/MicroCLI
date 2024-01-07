@@ -14,6 +14,8 @@
 # define 	PARSER_STRUCT_H
 
 
+#include "executor_struct.h"
+
 /**
  * @typedef t_ast_node
  * @brief Represents a node in the abstract syntax tree (AST).
@@ -58,6 +60,8 @@ typedef struct	s_global_tree	t_global_tree;
 typedef struct	s_global_stack	t_global_stack;
 typedef struct	s_shant_stack	t_shant_stack;
 
+
+typedef	enum e_io_type			t_io_type;
 typedef enum e_redirect_side	t_redirect_side;
 // typedef void (*t_callback)(t_list_token* list);
 
@@ -105,6 +109,13 @@ enum e_redirect_side
 	PREV_BRACE = 1L << 1
 };
 
+enum e_io_type
+{
+	STDIN = 1L << 0,
+	STDOUT = 1L << 1,
+	STDERR = 1L << 2
+};
+
 enum e_token_map_type
 {
 	MNNULL,
@@ -141,11 +152,14 @@ struct s_ast_node
 	t_global_stack	*subshell;
 };
 
+
+
 struct s_command
 {
 	t_ast_node	base;
 	t_argument	*argument;
 	t_redirect	*redirect;
+	t_io		io;
 };
 
 struct s_argument

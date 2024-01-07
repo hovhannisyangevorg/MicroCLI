@@ -1,15 +1,45 @@
 #include "shell.h"
 
 
-t_argument* ft_create_argument(char** args, t_ast_node base)
+t_argument* ft_create_argument(char** av, t_ast_node base)
 {
-	t_argument* command;
+	t_argument* arg;
 
-	command = malloc(sizeof(t_argument));
+	arg = malloc(sizeof(t_argument));
 
-	command->arguments = args;
-	command->base = base;
-	return command;
+	arg->arguments = av;
+	arg->base = base;
+	return arg;
+}
+
+t_io	ft_init_io()
+{
+	t_io io;
+
+	io.in = -1;
+	io.out = -1;
+	io.err = -1;
+	return io;
+}
+
+t_io	ft_init_io_std()
+{
+	t_io io;
+
+	io.in = dup(STDIN_FILENO);
+	io.out = dup(STDOUT_FILENO);
+	io.err = dup(STDERR_FILENO);
+	return io;
+}
+
+void ft_update_command_fd(t_command* cmd, int fd, t_io_type type)
+{
+	if (type == STDIN)
+		cmd->io.in = dup(fd);
+	else if (type == STDOUT)
+		cmd->io.out = dup(fd);
+	else
+		cmd->io.err = dup(fd);
 }
 
 t_command* ft_create_command(t_argument* arg, t_redirect* redirect, t_ast_node base)
@@ -21,6 +51,7 @@ t_command* ft_create_command(t_argument* arg, t_redirect* redirect, t_ast_node b
 	command->argument = arg;
 	command->redirect = redirect;
 	command->base = base;
+	command->io = ft_init_io();
 	return command;
 }
 
