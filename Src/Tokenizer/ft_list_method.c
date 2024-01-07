@@ -22,6 +22,8 @@ t_list_token *ft_init_list()
 	list->head = NULL;
 	list->tail = NULL;
 	list->size = 0;
+	list->base.type = LIST;
+	list->base.handler = ft_execute_list;
 	return (list);
 }
 

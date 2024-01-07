@@ -48,9 +48,10 @@ struct s_token
 
 struct s_list_token
 {
-	t_token	*head;
-	t_token *tail;
-	size_t	size;
+	t_container		base;
+	t_token			*head;
+	t_token			*tail;
+	size_t			size;
 };
 
 #endif

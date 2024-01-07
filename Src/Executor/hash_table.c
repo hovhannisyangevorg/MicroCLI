@@ -79,8 +79,6 @@ void ft_push_entity(t_hash_entity_list* lst, char* key, void* data, t_hash_type 
 		++lst->size;
 		return;
 	}
-    // lst->tail->next = node;
-    // lst->tail = node;
 	node->next = lst->head;
 	lst->head = node;
 	++lst->size;
@@ -168,7 +166,6 @@ char* ft_get_env(t_hash_table* table, char* key)
 
 void print_env(t_hash_table* env)
 {
-    // printf("%lu\n", env->size);
     size_t i = 0;
     while(i < env->capacity)
     {
@@ -182,4 +179,33 @@ void print_env(t_hash_table* env)
         }
         ++i;
     }
+}
+
+
+t_hash_table* ft_create_env(char** env)
+{
+	t_hash_table* table;
+
+	table = ft_init_hash_table(0, ENV);
+	size_t i = 0;
+	while (env && env[i])
+	{
+		char* assign = ft_strchr(env[i], '=');
+		char* value;
+		size_t len;
+		if (assign)
+		{
+			len = assign - env[i];
+			value = assign + 1;
+		}
+		else
+		{
+			len = ft_strlen(env[i]);
+			value = "";
+		}
+		char *key = ft_substr(env[i], 0, len);
+		ft_insert_entity(table, key, value);
+		++i;
+	}
+	return table;
 }

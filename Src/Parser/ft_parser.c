@@ -14,7 +14,7 @@
 
 int ft_should_ast_created(t_list_token *list);
 
-void	ft_parser(t_list_token *list)
+t_container	*ft_parser(t_list_token *list)
 {
-	ft_sematic(list, ft_should_ast_created(list));
+	return ft_sematic(list, ft_should_ast_created(list));
 }

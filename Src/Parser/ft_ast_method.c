@@ -19,6 +19,8 @@ t_global_tree 	*ft_init_ast_tree()
 		return (NULL);
 	tree->ast_node = NULL;
 	tree->tree_size = 0;
+	tree->base.type = SYNTAX_TREE;
+	tree->base.handler = ft_execute_syntax_tree;
 	return (tree);
 }
 

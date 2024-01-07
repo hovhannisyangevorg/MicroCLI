@@ -163,6 +163,7 @@ struct s_redirect
 
 struct s_global_tree
 {
+	t_container		base;
 	t_ast_node 		*ast_node;
 	size_t 			tree_size;
 };

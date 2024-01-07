@@ -51,3 +51,23 @@ t_hash_entity* ft_env_to_entity(t_env_entity* env)
 {
 	return (t_hash_entity* )env;
 }
+
+t_list_token* ft_container_to_list(t_container* cont)
+{
+	return (t_list_token* )cont;
+}
+
+t_global_tree* ft_container_to_tree(t_container* cont)
+{
+	return (t_global_tree* )cont;
+}
+
+t_container* ft_tree_to_container(t_global_tree* tree)
+{
+	return (t_container* )tree;
+}
+
+t_container* ft_list_to_container(t_list_token* list)
+{
+	return (t_container* )list;
+}
