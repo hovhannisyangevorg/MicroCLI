@@ -17,6 +17,7 @@
 
 
 # include 	"global_struct.h"
+# include   "hash_table.h"
 # include 	"libft.h"
 # include 	"executor.h"
 # include 	"lexer.h"
