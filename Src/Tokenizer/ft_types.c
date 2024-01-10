@@ -1,87 +1,92 @@
 #include "shell.h"
 
 
-int ft_is_redirection(t_token_type type)
+int 	ft_is_redirection(t_token_type type)
 {
 	return (type == READ || type == WRITE || type == HEREDOC || type == APPEND);
 }
 
-int ft_is_brace(t_token_type type)
+int 	ft_is_breckets(t_token_type type)
 {
 	return (type == OPBREK || type == CLBREK);
 }
 
-int ft_is_special_node(t_token_type type)
+int 	ft_is_special_node(t_token_type type)
 {
     return (type == ROOT || type == SUBSHELL || type == ARGUMENT || type == REDIRECT);
 }
 
-int ft_isoperator(t_token_type type)
+int 	ft_isoperator(t_token_type type)
 {
-	return (type != TEXT && !ft_is_redirection(type) && !ft_is_brace(type));
+	return (type == PIPE || type == AND || type == OR || type == SEMI) ;
+}
+
+int		ft_iscommand(t_token_type type)
+{
+	return (type == TEXT || ft_is_redirection(type) || ft_is_breckets(type));
 }
 
 char* ft_get_type(t_token_type type)
 {
     if (type == OR)
-        return ft_strdup("||");
+        return (ft_strdup("||"));
     else if (type == AND)
-        return ft_strdup("&&");
+        return (ft_strdup("&&"));
     else if (type == JOB)
-        return ft_strdup("&");
+        return (ft_strdup("&"));
     else if (type == READ)
-        return ft_strdup("<");
+        return (ft_strdup("<"));
     else if (type == APPEND)
-        return ft_strdup(">>");
+        return (ft_strdup(">>"));
     else if (type == WRITE)
-        return ft_strdup(">");
+        return (ft_strdup(">"));
     else if (type == HEREDOC)
-        return ft_strdup("<<");
+        return (ft_strdup("<<"));
     else if (type == SEMI)
-        return ft_strdup(";");
+        return (ft_strdup(";"));
     else if (type == SEMITWO)
-        return ft_strdup(";;");
+        return (ft_strdup(";;"));
     else if (type == PIPE)
-        return ft_strdup("|");
+        return (ft_strdup("|"));
     else if (type == OPBREK)
-        return ft_strdup("(");
+        return (ft_strdup("("));
     else if (type == CLBREK)
-        return ft_strdup(")");
+        return (ft_strdup(")"));
     else if (type == SUBSHELL)
-        return ft_strdup("SubShell");
+        return (ft_strdup("SubShell"));
     else
-        return ft_strdup("Unknown");
+        return (ft_strdup("Unknown"));
     
 }
 
 t_token_type ft_get_type_map(int type)
 {
     if (type == MOR)
-        return OR;
+        return (OR);
     else if (type == MAND)
-        return AND;
+        return (AND);
     else if (type == MJOB)
-        return JOB;
+        return (JOB);
     else if (type == MREAD)
-        return READ;
+        return (READ);
     else if (type == MAPPEND)
-        return APPEND;
+        return (APPEND);
     else if (type == MWRITE)
-        return WRITE;
+        return (WRITE);
     else if (type == MHEREDOC)
-        return HEREDOC;
+        return (HEREDOC);
     else if (type == MSEMI)
-        return SEMI;
+        return (SEMI);
     else if (type == MSEMITWO)
-        return SEMITWO;
+        return (SEMITWO);
     else if (type == MPIPE)
-        return PIPE;
+        return (PIPE);
     else if (type == MOPBREK)
-        return OPBREK;
+        return (OPBREK);
     else if (type == MCLBREK)
-        return CLBREK;
+        return (CLBREK);
     else if (type == MTEXT)
-        return TEXT;
+        return (TEXT);
     else
-        return NNULL;
+        return (NNULL);
 }

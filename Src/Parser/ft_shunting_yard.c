@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 21:00:12 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/03 18:13:42 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/09 13:23:24 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ t_ast_node *ft_shunting_yard_build_ast(t_list_token *list)
 	{
 		ft_init_token(&token, list->head->type, ft_strdup(list->head->token));
 		ft_pop_front(list);
-		if (ft_isoperator(token.type))
+		if (!ft_iscommand(token.type))
 		{
-			while (stack_opre->size && ft_isoperator(stack_opre->top->ast_node->token_type))
+			while (stack_opre->size && !ft_iscommand(stack_opre->top->ast_node->token_type))
 			{
 				if (stack_oute->size)
 					ast_right = stack_oute->top->ast_node;
@@ -72,7 +72,7 @@ t_ast_node *ft_shunting_yard_build_ast(t_list_token *list)
 		{
 			ft_push_front(list, token.type, ft_strdup(token.token));
 			command = ft_handle_command(list);
-			node = ft_command_to_ast_node(command);
+			node 	= ft_command_to_ast_node(command);
 			ft_push_shant_stack(stack_oute, node);
 		}
 		free(token.token);

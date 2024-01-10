@@ -72,7 +72,7 @@ CD 				=	cd
 RM				=	rm -rf
 MK				=	mkdir -p
 HARD_FLAG		=	-Wall -Wextra -Werror
-SANIT_FLAG		=	-g3 #-fsanitize=address
+SANIT_FLAG		=	-g3 #ls-fsanitize=address
 READ_FLAG		=	-lreadline -lhistory
 CFLAGS			=	$(HARD_FLAG) $(SANIT_FLAG)
 
@@ -82,7 +82,7 @@ endif
 
 LINKERS			+=	 $(READ_FLAG) $(L_FLAG)$(FT_LIB) -lft
 
-# # Common Targets Variables
+# Common Targets Variables
 ALL 			=	all
 CLEAN 			=	clean
 FCLEAN 			=	fclean
@@ -98,7 +98,7 @@ SRCS_SHELL		=	$(wildcard	$(SRC_SHELL_DIR)/*$(_C))
 SRCS_BILTIN		=	$(wildcard	$(SRC_BILTIN_DIR)/*$(_C))
 SRCS_SEMATIC	=	$(wildcard	$(SRC_SEMATIC_DIR)/*$(_C))
 
-# # List of all Object Files
+# List of all Object Files
 OBJS_EXEC		=	$(patsubst 	$(SRC_EXEC_DIR)/%$(_C),$(OBJ_EXEC_DIR)/%$(_O),$(SRCS_EXEC))
 OBJS_LEXR		=	$(patsubst 	$(SRC_LEXR_DIR)/%$(_C),$(OBJ_LEXR_DIR)/%$(_O),$(SRCS_LEXR))
 OBJS_PARS		=	$(patsubst 	$(SRC_PARS_DIR)/%$(_C),$(OBJ_PARS_DIR)/%$(_O),$(SRCS_PARS))
@@ -121,5 +121,5 @@ SRCS_ALL 		=	$(SRCS_EXEC) $(SRCS_LEXR) $(SRCS_PARS) $(SRCS_TOKS) $(SRCS_SHELL) $
 OBJS_ALL 		=	$(OBJS_EXEC) $(OBJS_LEXR) $(OBJS_PARS) $(OBJS_TOKS) $(OBJS_SHELL) $(OBJS_BILTIN) $(OBJS_SEMATIC)
 INCS_ALL 		=	$(INCS_EXEC) $(INCS_LEXR) $(INCS_PARS) $(INCS_TOKS) $(INCS_SHELL) $(INCS_BILTIN) $(INCS_SEMATIC)
 
-# # All include path
+# All include path
 INCLUDES		=	$(I_FLAG)$(INC_DIR) $(I_FLAG)$(FT_LIB)/$(INC_DIR_LIB) $(I_FLAG)$(INC_EXEC_DIR) $(I_FLAG)$(INC_LEXR_DIR) $(I_FLAG)$(INC_PARS_DIR) $(I_FLAG)$(INC_TOKS_DIR) $(I_FLAG)$(INC_BILTIN_DIR) $(I_FLAG)$(INC_SHELL_DIR) $(I_FLAG)$(INC_SEMATIC_DIR) $(I_FLAG)$(READ_UPDIR)/$(INC_DIR_LIB) 

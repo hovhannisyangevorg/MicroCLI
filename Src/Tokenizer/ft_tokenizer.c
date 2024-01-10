@@ -34,8 +34,9 @@ char *ft_tokenize_with_delims(char *str,  char *delim, int* type)
 	}
 	while(token_start[i])
 	{
-		if (ft_strchr(delim, token_start[i])) {
-			if (token_start[i] && token_start[i + 1] && token_start[i] == token_start[i + 1] && !ft_is_brace(ft_get_type_map(token_start[i])))
+		if (ft_strchr(delim, token_start[i])) 
+		{
+			if (token_start[i] && token_start[i + 1] && token_start[i] == token_start[i + 1] && !ft_is_breckets(ft_get_type_map(token_start[i])))//////////
 			{
 				is_one_sym = 0;
 				*type = -token_start[i];
@@ -60,7 +61,7 @@ char *ft_tokenize_with_delims(char *str,  char *delim, int* type)
     return (token_start);
 }
 
-char *ft_tokenize_with_space(char *expr, int* type) // is a strtok 
+char *ft_tokenize_with_space(char *expr, int* type)
 {
 	int 		i;
     static char	*next_token;
@@ -131,7 +132,7 @@ t_list_token	*ft_tokenize(char *input, char *delims)
 	while(head)
 	{
 		token = ft_tokenize_with_delims(head->token, delims, &type);
-		while (token != NULL)
+		while (token)
 		{
 			if (type != MTEXT && type)
 			{
@@ -145,5 +146,6 @@ t_list_token	*ft_tokenize(char *input, char *delims)
 		}
 		head = head->next;
 	}
+	// ft_print_list(list->head);
 	return (list);
 }

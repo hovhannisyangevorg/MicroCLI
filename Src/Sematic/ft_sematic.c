@@ -6,17 +6,18 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 20:08:20 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/03 18:17:52 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/10 18:05:35 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	ft_sematic(t_list_token *list, int isast)
+t_global_tree *ft_sematic(t_list_token *list, int isast)
 {
-	t_global_tree *tree;
-	t_token root;
-	
+	t_global_tree 	*tree;
+	t_token 		root;
+	t_status_codes	status;
+
 	if (isast)
 	{
 		tree = ft_init_ast_tree();
@@ -24,7 +25,7 @@ void	ft_sematic(t_list_token *list, int isast)
 		tree->ast_node = ft_create_ast_node(&root);
 		tree->ast_node->left = ft_shunting_yard_build_ast(list);
 		tree->tree_size = ft_ast_len(tree->ast_node);
-		t_status_codes status = ft_validate(tree->ast_node);
+		status = ft_validate(tree->ast_node);
 		char* str = ft_get_error_message(status);
 		if (str)
 			printf("ERROR: %s\n", str);
@@ -36,7 +37,7 @@ void	ft_sematic(t_list_token *list, int isast)
 		// ft_sematic_with_list();
 		printf("\n/**\n * Pipe Validation\n * \n */\n// ft_sematic_with_list(t);\n");
 	}
-	
+	return (tree);
 }
 
 

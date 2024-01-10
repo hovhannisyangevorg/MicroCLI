@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 14:57:11 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/12/21 14:45:43 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/03 22:40:35 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct	s_stack			t_stack;
 typedef struct	s_node			t_node;
 typedef struct	s_token			t_token;
 typedef struct	s_list_token	t_list_token;
+
 
 struct s_node
 {

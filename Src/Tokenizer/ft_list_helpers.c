@@ -29,15 +29,16 @@ t_token* ft_find_list(t_token_type type, t_token* start)
 }
 
 
-t_token*	ft_find_close_list(t_token* open)
+t_token		*ft_find_close_list(t_token *open_brac)
 {
-	if (!open)
-		return (NULL);
-	int count;
-	t_token* node;
+	int 		count;
+	t_token		*node;
 
-	node = open->next;
-	count = 1;
+	if (!open_brac)
+		return (NULL);
+
+	node	= open_brac->next;
+	count	= 1;
 	while (node)
 	{
 		if (node->type == OPBREK)

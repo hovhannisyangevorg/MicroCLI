@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:44:21 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/03 21:00:57 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/10 19:38:24 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,17 @@
  */
 typedef struct	s_ast_node		t_ast_node;
 
+/**
+ * t_ast_node	base;
+ * t_argument	*argument;
+ * t_redirect	*redirect;
+*/
 typedef	struct	s_command		t_command;
+
+/**
+ * t_ast_node	base;
+ * char			**arguments;
+*/
 typedef	struct	s_argument		t_argument;
 typedef	struct	s_redirect		t_redirect;
 
@@ -28,7 +38,7 @@ typedef	struct	s_redirect		t_redirect;
  * @typedef t_token_type
  * @brief Enumerates different token types.
  */
-typedef enum	e_token_type	t_token_type;
+typedef enum	e_token_type		t_token_type;
 
 /**
  * @typedef t_token_type
@@ -40,13 +50,13 @@ typedef enum	e_token_map_type	t_token_map_type;
  * @typedef t_quot_type
  * @brief Enumerates different quotation types.
  */
-typedef enum	e_quot_type		t_quot_type;
+typedef enum	e_quot_type			t_quot_type;
 
 /**
  * @typedef t_global_tree
  * @brief Represents the global abstract syntax tree (AST).
  */
-typedef struct	s_global_tree	t_global_tree;
+typedef struct	s_global_tree		t_global_tree;
 
 /**
  * 
@@ -55,49 +65,43 @@ typedef struct	s_global_tree	t_global_tree;
  * This structs introduces two stack structures for 
  * handling abstract syntax trees (AST) during expression parsing.
 */
-typedef struct	s_global_stack	t_global_stack;
-typedef struct	s_shant_stack	t_shant_stack;
+typedef struct	s_global_stack		t_global_stack;
 
-typedef enum e_redirect_side	t_redirect_side;
-// typedef void (*t_callback)(t_list_token* list);
+typedef struct	s_shant_stack		t_shant_stack;
 
 /**
- * @enum e_token_type
- * @brief Enumerates different token types.
- * 
- * Values:
- * - NNULL: Null token type.
- * - TEXT: Text token type.
- * - PIPE: Pipe token type.
- * - OR: Logical OR token type.
- * - AMP: Ampersand token type.
- * - AND: Logical AND token type.
- * - SEMI: Semi token type.
- * - SEMITWO: Two semi token type.
- */
+ * 	NEXT_BRACE = 1L << 0,
+ *	PREV_BRACE = 1L << 1
+*/
+typedef enum 	e_redirect_side		t_redirect_side;
+// typedef void (*t_callback)(t_list_token* list);
+
+
+
+
 enum e_token_type
 {
-	NNULL,
-	TEXT		= 1L << 0,
-	PIPE		= 1L << 1,
-	OR			= 1L << 2,
-	JOB			= 1L << 3,
-	AND			= 1L << 4,
-	SEMI		= 1L << 5,
-	SEMITWO 	= 1L << 6,
-	OPBREK		= 1L << 7,
-	CLBREK		= 1L << 8,
-	WRITE		= 1L << 9,
-	READ		= 1L << 10,
-	APPEND		= 1L << 11,
-	HEREDOC		= 1L << 12,
-	SUBSHELL 	= 1L << 13,
-	COMMAND		= 1L << 14,
-	REDIRECT	= 1L << 15,
-	ARGUMENT	= 1L << 16,
-	ROOT		= 1L << 17
+	NNULL,						// NULL 
+	TEXT		= 1L << 0,		//	Text
+	PIPE		= 1L << 1,		//	|
+	OR			= 1L << 2,		//	||
+	JOB			= 1L << 3,		//	&
+	AND			= 1L << 4,		//	&&
+	SEMI		= 1L << 5,		//	;
+	SEMITWO 	= 1L << 6,		//	;;
+	OPBREK		= 1L << 7,		// 	(
+	CLBREK		= 1L << 8,		// 	)
+	WRITE		= 1L << 9, 		// 	>
+	READ		= 1L << 10, 	// 	<
+	APPEND		= 1L << 11, 	// >>
+	HEREDOC		= 1L << 12, 	// <<
+	
+	REDIRECT	= 1L << 13,
+	ROOT		= 1L << 14,		// 	(AST) Root Node
+	SUBSHELL 	= 1L << 15,		//	Subshell Root Node
+	COMMAND		= 1L << 16,		//	Command
+	ARGUMENT	= 1L << 17		//	Argument
 };
-
 
 enum e_redirect_side
 {
@@ -130,6 +134,17 @@ enum e_quot_type
 	DOUBLE		= 22
 };
 
+
+struct s_global_tree
+{
+	t_ast_node 		*ast_node;
+	size_t 			tree_size;
+};
+
+/**
+ * 
+ * AST (Abstract syntax tree)
+ */
 struct s_ast_node
 {
     t_token_type	token_type;
@@ -141,6 +156,13 @@ struct s_ast_node
 	t_global_stack	*subshell;
 };
 
+/**
+ * 
+
+ * 	t_ast_node		base;
+ * 	t_argument		*argument;
+ * 	t_redirect		*redirect;
+*/
 struct s_command
 {
 	t_ast_node	base;
@@ -151,7 +173,7 @@ struct s_command
 struct s_argument
 {
 	t_ast_node	base;
-	char**		arguments;
+	char		**arguments; 
 };
 
 struct s_redirect
@@ -159,12 +181,6 @@ struct s_redirect
 	t_ast_node		base;
 	t_redirect_side	side;
 	char			*argument;
-};
-
-struct s_global_tree
-{
-	t_ast_node 		*ast_node;
-	size_t 			tree_size;
 };
 
 struct s_global_stack

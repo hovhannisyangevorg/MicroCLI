@@ -4,5 +4,7 @@
 # include 	"shell.h"
 
 
+void ft_executor(t_container cont);
+
 
 #endif

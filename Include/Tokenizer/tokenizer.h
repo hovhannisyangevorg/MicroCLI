@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 22:23:33 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/01/03 16:55:19 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/08 20:40:05 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ t_token_type    ft_get_type_map(int type);
 
 int             ft_isoperator(t_token_type type);
 
+int				ft_iscommand(t_token_type type);
+
 int             ft_is_redirection(t_token_type type);
 
-int             ft_is_brace(t_token_type type);
+int             ft_is_breckets(t_token_type type);
 
 int             ft_is_special_node(t_token_type type);
 

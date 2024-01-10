@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 20:41:20 by gevorg            #+#    #+#             */
-/*   Updated: 2023/12/25 19:52:29 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/08 21:37:36 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_status_codes ft_validate(t_ast_node* root)
 		status = ft_callback(status, ft_validate_command, root);
 	else if (root->token_type == REDIRECT)
 		status = ft_callback(status, ft_validate_redirect, root);
-	else if (ft_isoperator(root->token_type) && !ft_is_special_node(root->token_type))
+	else if (ft_isoperator(root->token_type))
 		status = ft_callback(status, ft_validate_operator, root);
 	status = ft_callback(status, ft_validate_subshell, root);
 	node = root->subshell->top;

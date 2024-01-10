@@ -6,13 +6,13 @@
 
 
 // ft_parser.c
-void		ft_parser(t_list_token *list);
+t_container			ft_parser(t_list_token *list);
 
 // ft_helper.c
-int			ft_should_ast_create(t_list_token *list);
+int					ft_should_ast_create(t_list_token *list);
 
 // ft_sematic.c
-void			ft_sematic(t_list_token *list, int isast);
+t_global_tree		*ft_sematic(t_list_token *list, int isast);
 
 // void			ft_subtree_TST(t_ast_node *tree);
 
@@ -50,9 +50,9 @@ t_ast_node*     ft_get_subshell(t_token* lst);
 
 
 // ft_build_command.c
-t_argument*     ft_create_argument(char** args, t_ast_node base);
+t_argument*     ft_create_argument(char** argument, t_ast_node base);
 
-t_command*      ft_create_command(t_argument* arg, t_redirect* redirect, t_ast_node base);
+t_command*      ft_create_command(t_argument* argument, t_redirect* redirect, t_ast_node base);
 
 t_redirect*     ft_create_redirect(char* arg, t_ast_node base, t_redirect_side side);
 
@@ -81,7 +81,7 @@ t_redirect* ft_ast_to_redirect(t_ast_node* ast);
 // int			ft_find(char* str, char c, size_t pos, size_t size);
 // int			ft_find_close(char* str, size_t size, int openIndex);
 
-
+int 		ft_should_ast_created(t_list_token *list);
 
 
 
