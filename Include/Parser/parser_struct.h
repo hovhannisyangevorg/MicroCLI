@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:44:21 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/10 19:38:24 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/13 11:53:37 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,6 @@ struct s_ast_node
 
 /**
  * 
-
  * 	t_ast_node		base;
  * 	t_argument		*argument;
  * 	t_redirect		*redirect;
@@ -182,6 +181,10 @@ struct s_redirect
 	t_redirect_side	side;
 	char			*argument;
 };
+
+
+
+
 
 struct s_global_stack
 {

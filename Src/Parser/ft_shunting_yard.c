@@ -6,13 +6,13 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 21:00:12 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/09 13:23:24 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/16 15:43:00 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_ast_node *ft_shunting_yard_build_ast(t_list_token *list)
+t_ast_node	*ft_shunting_yard_build_ast(t_list_token *list)
 {
 	t_ast_node			*node;
 	t_ast_node			*ast_node;
@@ -52,7 +52,7 @@ t_ast_node *ft_shunting_yard_build_ast(t_list_token *list)
 					ast_left = NULL;
 
 				ft_pop_shant_stack(stack_oute);
-				
+
 				ft_init_token(&tmp_token, stack_opre->top->ast_node->token_type, ft_strdup(stack_opre->top->ast_node->token));
 				ast_node 		= ft_create_ast_node(&tmp_token);
 				if (ast_left)
@@ -71,8 +71,8 @@ t_ast_node *ft_shunting_yard_build_ast(t_list_token *list)
 		else
 		{
 			ft_push_front(list, token.type, ft_strdup(token.token));
-			command = ft_handle_command(list);
-			node 	= ft_command_to_ast_node(command);
+			command		= ft_handle_command(list);
+			node		= ft_command_to_ast_node(command);
 			ft_push_shant_stack(stack_oute, node);
 		}
 		free(token.token);

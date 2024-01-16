@@ -36,13 +36,13 @@ t_ast_node 	    *ft_shunting_yard_build_ast(t_list_token *list);
 
 
 // ft_subshell.c
-void            ft_handle_subshell(t_list_token* lst, t_command* cmd);
+void            ft_handle_subshell(t_list_token* lst, t_command* command);
 
 t_list_token*   ft_get_subshell_list(t_token* start);
 
 void            ft_remove_subshell(t_list_token* lst);
 
-void            ft_remove_cmd_redirect(t_list_token* lst);
+void            ft_remove_command_redirect(t_list_token* lst);
 
 t_token*        ft_skip_subshell(t_token* lst);
 
@@ -56,15 +56,15 @@ t_command*      ft_create_command(t_argument* argument, t_redirect* redirect, t_
 
 t_redirect*     ft_create_redirect(char* arg, t_ast_node base, t_redirect_side side);
 
-void            ft_push_redirect(t_command* cmd, char* arg, t_token_type type, t_redirect_side side);
+void            ft_push_redirect(t_command* command, char* arg, t_token_type type, t_redirect_side side);
 
 t_command*      ft_handle_command(t_list_token* lst);
 
-void            ft_handle_argument(t_list_token* lst, t_command* cmd);
+void            ft_handle_argument(t_list_token* lst, t_command* command);
 
 
 // ft_casts.c
-t_ast_node* ft_command_to_ast_node(t_command* cmd);
+t_ast_node* ft_command_to_ast_node(t_command* command);
 
 t_ast_node* ft_redirect_to_ast_node(t_redirect* rd);
 

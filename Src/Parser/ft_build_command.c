@@ -23,14 +23,14 @@ t_argument *ft_create_argument(char **argument, t_ast_node base)
 	return (command);
 }
 
-t_redirect	*ft_create_redirect(char *arg, t_ast_node base, t_redirect_side side)
+t_redirect	*ft_create_redirect(char *file_name, t_ast_node base, t_redirect_side side)
 {
 	t_redirect	*redirect;
 
 	redirect = (t_redirect *)malloc(sizeof(t_redirect));
 
-	if (arg)
-		redirect->argument = ft_strdup(arg);
+	if (file_name != NULL)
+		redirect->argument = ft_strdup(file_name);
 	else
 		redirect->argument = NULL;
 	redirect->base = base;
@@ -39,43 +39,42 @@ t_redirect	*ft_create_redirect(char *arg, t_ast_node base, t_redirect_side side)
 }
 
 
-void ft_push_redirect(t_command *cmd, char *arg, t_token_type type, t_redirect_side side)
+void ft_push_redirect(t_command *command, char *file_name, t_token_type type, t_redirect_side side)
 {
 	t_token		token;
-	t_ast_node	base;
+	t_ast_node	base_node;
+	t_ast_node	*tmp_node;
 	t_redirect	*new;
-	t_ast_node	*tmp;
 
-	if (!cmd)
+	if (!command)
 		return ;
+	ft_init_token(&token, type, ft_get_type(type));
+	ft_init_ast_node(&base_node, &token);
+	new 	= ft_create_redirect(file_name, base_node, side);
 
-	ft_init_token(&token, REDIRECT, ft_get_type(type));
-	ft_init_ast_node(&base, &token);
-	new = ft_create_redirect(arg, base, side);
-
-	if (!cmd->redirect)
+	if (command->redirect == NULL)
 	{
-		cmd->redirect = new;
+		command->redirect = new;
 		return ;
 	}
-	tmp = &cmd->redirect->base;
-	while (tmp && tmp->left)
-		tmp = tmp->left;
-	tmp->left 			= ft_redirect_to_ast_node(new);
-	new->base.parent 	= tmp;
+	tmp_node = &command->redirect->base;
+	while (tmp_node && tmp_node->left)
+		tmp_node = tmp_node->left;
+	tmp_node->left 			= ft_redirect_to_ast_node(new);
+	new->base.parent 		= tmp_node;
 }
 
-void ft_handle_argument(t_list_token* lst, t_command* cmd)
+void ft_handle_argument(t_list_token *lsit, t_command *command)
 {
-	t_ast_node		base;
-	t_token			*token;
-	t_token			arg;
 	size_t			i;
+	t_ast_node		base;
+	t_token			arg;
+	t_token			*token;
 	char			**args;
 
-	i = 0;
-	args = NULL;
-	token = lst->head;
+	i		= 0;
+	args	= NULL;
+	token	= lsit->head;
 	while (token && ft_iscommand(token->type))
 	{
 		if (ft_is_breckets(token->type))
@@ -84,16 +83,17 @@ void ft_handle_argument(t_list_token* lst, t_command* cmd)
 			if (!token || !ft_iscommand(token->type))
 				break;
 		}
-		if (token->type == TEXT && (token->prev == NULL || !ft_is_redirection(token->prev->type)))
+		if (token->type == TEXT && (token->prev == NULL || !ft_is_redirection(token->prev->type))) // i don't undestend "token->prev"
 			++i;
 		token = token->next;
 	}
+	
 	if (i)
 	{
-		args = malloc(sizeof(char*) * (i + 1));
+		args = malloc(sizeof(char *) * (i + 1));
 		args[i] = NULL;
 		i = 0;
-		token = lst->head;
+		token = lsit->head;
 		while (token && ft_iscommand(token->type))
 		{
 			if (ft_is_breckets(token->type))
@@ -112,23 +112,17 @@ void ft_handle_argument(t_list_token* lst, t_command* cmd)
 	}
 	ft_init_token(&arg, ARGUMENT, ft_strdup("ARGUMENT"));
 	ft_init_ast_node(&base, &arg);
-	cmd->argument = ft_create_argument(args, base);
+	command->argument = ft_create_argument(args, base);
 }
 
-t_command	*ft_handle_command(t_list_token *list)
+void	ft_handle_redirect(t_list_token *list, t_command *command)
 {
-	t_ast_node 			base;
 	t_token				*token;
-	t_token 			temp_node;
-	t_command			*comd;
-	t_redirect_side 	side;
+	t_redirect_side		side;
 
-	ft_init_token(&temp_node, COMMAND, ft_strdup("COMMAND"));
-	ft_init_ast_node(&base, &temp_node);
-	comd 	= ft_create_command(NULL, NULL, base);
 
-	token 	= list->head;
-	side 	= PREV_BRACE;
+	token	= list->head;
+	side	= PREV_BRACE;
 	while (token && ft_iscommand(token->type))
 	{
 		if (ft_is_breckets(token->type))
@@ -136,19 +130,34 @@ t_command	*ft_handle_command(t_list_token *list)
 			token = ft_skip_subshell(token);
 			if (!token || !ft_iscommand(token->type))
 				break ;
-            side = NEXT_BRACE;
+			side = NEXT_BRACE;
 		}
 		if (ft_is_redirection(token->type))
 		{
 			if (token->next != NULL && token->next->type == TEXT)
-				ft_push_redirect(comd, token->next->token, token->type, side);
+				ft_push_redirect(command, token->next->token, token->type, side);
             else
-                ft_push_redirect(comd, NULL, token->type, side);
+                ft_push_redirect(command, NULL, token->type, side);
 		}
 		token = token->next;
 	}
-	ft_handle_subshell(list, comd);
-	ft_handle_argument(list, comd);
-	ft_remove_cmd_redirect(list);
-	return (comd);
+}
+
+t_command	*ft_handle_command(t_list_token *list)
+{
+	t_ast_node 			base;
+	
+	t_token 			temp_node;
+	t_command			*command;
+
+	ft_init_token(&temp_node, COMMAND, ft_strdup("COMMAND"));
+	ft_init_ast_node(&base, &temp_node);
+	command 	= ft_create_command(NULL, NULL, base);
+
+	ft_handle_redirect(list, command); //
+	ft_handle_subshell(list, command); //
+	ft_handle_argument(list, command);
+
+	ft_remove_command_redirect(list);
+	return (command);
 }
