@@ -10,7 +10,7 @@ t_env *env_init(char **env, t_env *my_env)
         my_env = lst_push_back(&my_env, new_list(env[i]));
         i++;
         if (env[i] == NULL)
-            my_env = lst_push_back(&my_env, new_list("$?=0"));   
+            my_env = lst_push_back(&my_env, new_list("$?=0"));
     }
     return (my_env);
 }

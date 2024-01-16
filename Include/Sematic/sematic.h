@@ -12,7 +12,10 @@ t_status_codes ft_validate_redirect(t_ast_node* node);
 
 t_status_codes ft_validate_subshell(t_ast_node* node);
 
-t_status_codes ft_validate_argument(t_ast_node* node);
+/*
+ * maybe we will use it
+*/
+// t_status_codes ft_validate_argument(t_ast_node* node);
 
 t_status_codes ft_validate(t_ast_node* root);
 

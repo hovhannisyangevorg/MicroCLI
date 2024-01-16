@@ -21,13 +21,6 @@ void  ft_init_entity_list(t_hash_entity_list* lst)
 	lst->tail = NULL;
 }
 
-void  ft_init_entity_list2(t_hash_entity_list* lhs, t_hash_entity_list* rhs)
-{
-    lhs->size = rhs->size;
-	lhs->head = rhs->head;
-	lhs->tail = rhs->tail;
-}
-
 size_t ft_hash_entity(size_t capacity, char* key)
 {
     size_t hashValue = 0;

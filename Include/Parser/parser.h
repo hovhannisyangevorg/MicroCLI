@@ -3,6 +3,7 @@
 
 
 # include "shell.h"
+# include "parser_casts.h"
 
 
 // ft_parser.c
@@ -13,8 +14,6 @@ int			ft_should_ast_create(t_list_token *list);
 
 // ft_sematic.c
 t_container *ft_sematic(t_list_token *list, int isast);
-
-// void			ft_subtree_TST(t_ast_node *tree);
 
 // ft_ast_functions.c
 t_global_tree 	*ft_init_ast_tree();
@@ -61,38 +60,6 @@ void            ft_push_redirect(t_command* cmd, char* arg, t_token_type type, t
 t_command*      ft_handle_command(t_list_token* lst);
 
 void            ft_handle_argument(t_list_token* lst, t_command* cmd);
-
-
-// ft_casts.c
-t_ast_node* ft_command_to_ast_node(t_command* cmd);
-
-t_ast_node* ft_redirect_to_ast_node(t_redirect* rd);
-
-t_ast_node* ft_argument_to_ast_node(t_argument* arg);
-
-t_command* ft_ast_to_command(t_ast_node* ast);
-
-t_argument* ft_ast_to_argument(t_ast_node* ast);
-
-t_redirect* ft_ast_to_redirect(t_ast_node* ast);
-
-
-t_list_token* ft_container_to_list(t_container* cont);
-
-t_global_tree* ft_container_to_tree(t_container* cont);
-
-t_container* ft_tree_to_container(t_global_tree* tree);
-
-t_container* ft_list_to_container(t_list_token* list);
-
-
-
-// t_ast_node	*ft_correct_subshell(t_ast_node* root);
-// char		*get_sub_string(char *str, size_t size, size_t* start);
-// int			ft_find(char* str, char c, size_t pos, size_t size);
-// int			ft_find_close(char* str, size_t size, int openIndex);
-
-
 
 
 

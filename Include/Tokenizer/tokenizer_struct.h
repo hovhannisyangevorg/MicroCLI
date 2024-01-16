@@ -17,9 +17,9 @@
 # define 	SEPARATORS 		";|&<>()"
 //;|&<>
 # define 	OPERATORS 		";|&"
-# define 	RED 				"\033[31m"
-# define 	BLACK 				"\033[30m"
-# define 	GREEN 				"\033[32m"
+# define 	RED 			"\033[31m"
+# define 	BLACK 			"\033[30m"
+# define 	GREEN 			"\033[32m"
 
 typedef struct	s_stack			t_stack;
 typedef struct	s_node			t_node;

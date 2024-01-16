@@ -31,6 +31,7 @@ struct s_io
 /*
  * abstraction for executor
  * handle with list or abstract syntax tree
+ * tokenizer_struct.h and parser_struct.h
  * handler set in list or syntax tree structure
  * ft_ast_methods.c or ft_list_mothods.c
 */

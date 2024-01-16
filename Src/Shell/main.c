@@ -13,7 +13,7 @@
 #include "shell.h"
 #include <stddef.h>
 
-void	ft_program()
+void	ft_program(char** env)
 {
 	char 			*line;
 	t_list_token	*list;
@@ -21,6 +21,12 @@ void	ft_program()
 
 	signal(SIGINT, sig_handler_c);
 	rl_catch_signals = 0;
+	t_hash_table* table;
+
+	table = ft_init_hash_table(0, ENV);
+
+	table = ft_create_env(env);
+	print_env(table);
 	while (1)
 	{
 		line = ft_get_line();
@@ -144,13 +150,9 @@ int main(int ac, char** av, char** env)
 	(void)ac;
 	(void)av;
 	(void)env;
-	t_hash_table* table;
-
-	table = ft_init_hash_table(0, ENV);
-
-	table = ft_create_env(env);
-	(void)table;
-	ft_program();
+	
+	// (void)table;
+	ft_program(env);
 	return (0);	
 }
 

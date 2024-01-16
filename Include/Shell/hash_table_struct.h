@@ -24,8 +24,8 @@ typedef struct s_env_entity             t_env_entity;
 
 struct s_hash_entity
 {
-    char*                   key;
-    struct s_hash_entity*   next;
+    char*            key;
+    t_hash_entity*   next;
 };
 
 struct s_hash_entity_list
@@ -45,7 +45,11 @@ struct s_hash_table
 };
 
 
-
+/*
+ * types of hash table values
+ * 1 function table 
+ * 2 envirement table
+*/
 struct s_function_entity
 {
     t_hash_entity           base;

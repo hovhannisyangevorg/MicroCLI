@@ -5,6 +5,9 @@ typedef enum e_status_codes t_status_codes;
 
 typedef t_status_codes (*t_callback)(t_ast_node*);
 
+/*
+ * status codes of syntax validation
+*/
 enum e_status_codes
 {
     SUCCESS_CODE    = 0,
