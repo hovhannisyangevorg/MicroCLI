@@ -7,24 +7,17 @@
 # include 	"sematic_struct.h"
 # include 	"tokenizer_struct.h"
 
+typedef struct 	s_container			t_container;
 
-typedef void (*t_function_callback)();
-
-typedef struct s_function_entity    t_function_entity;
-typedef struct s_function_table     t_function_table;
-
-struct s_function_entity
+struct s_container
 {
-    char						*key;
-    t_function_callback 		function;
-    struct s_function_entity	*next;
-};
-
-struct s_function_table
-{
-    t_function_entity	**table;
-    size_t 				size;
-    size_t 				capacity;
+	t_exec_type 	exec_type;
+	t_io 			fd;
+	union
+	{
+		t_global_tree 	*tree;
+		t_list_token	*list;
+	};
 };
 
 #endif

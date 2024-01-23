@@ -72,7 +72,7 @@ CD 				=	cd
 RM				=	rm -rf
 MK				=	mkdir -p
 HARD_FLAG		=	-Wall -Wextra -Werror
-SANIT_FLAG		=	-g3 #ls-fsanitize=address
+SANIT_FLAG		=	-g3 #-fsanitize=address
 READ_FLAG		=	-lreadline -lhistory
 CFLAGS			=	$(HARD_FLAG) $(SANIT_FLAG)
 

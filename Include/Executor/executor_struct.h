@@ -4,8 +4,23 @@
 #include "parser_struct.h"
 #include "tokenizer_struct.h"
 
-typedef enum 	e_exec_type		t_exec_type;
-typedef struct 	s_container		t_container;
+
+typedef enum 	e_exec_type			t_exec_type;
+typedef struct	s_hash_entity		t_hash_entity;
+typedef struct	s_hash_entity_list	t_hash_entity_list;
+typedef struct	s_hash_table		t_hash_table;
+typedef enum	e_hash_type			t_hash_type;
+typedef struct 	s_vector			t_vector;
+
+
+typedef void (*t_function_callback)();
+
+typedef struct s_function_entity        t_function_entity;
+
+typedef struct s_env_entity             t_env_entity;
+
+
+
 
 enum e_exec_type
 {
@@ -13,16 +28,53 @@ enum e_exec_type
 	TREE = 1L << 1
 };
 
-struct s_container
+enum e_hash_type
 {
-	t_exec_type 	exec_type;
-	union 
-	{
-		t_global_tree 	*tree;
-		t_list_token	*list;
-	};
+    FUNCTION,
+    ENV
+};
+
+struct s_hash_entity
+{
+    char			*key;
+    t_hash_entity	*next;
+};
+
+struct s_hash_entity_list
+{
+    t_hash_entity*  head;
+    t_hash_entity*  tail;
+    size_t          size;
 };
 
 
+struct s_hash_table
+{
+    t_hash_type         type;
+    t_hash_entity_list* table;
+    size_t              size;
+    size_t              capacity;
+};
+
+struct s_function_entity
+{
+    t_hash_entity           base;
+    t_function_callback     function;
+};
+
+struct s_env_entity
+{
+    t_hash_entity           base;
+    char*                   value;
+};
+
+
+
+struct s_vector
+{
+	int			*arr;
+	size_t		size;
+	size_t		capacity;
+};
 
 #endif

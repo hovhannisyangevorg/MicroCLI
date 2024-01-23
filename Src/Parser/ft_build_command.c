@@ -9,6 +9,7 @@ t_command	*ft_create_command(t_argument *argument, t_redirect *redirect, t_ast_n
 	command->argument	= argument;
 	command->redirect	= redirect;
 	command->base 		= base;
+	command->io 		= ft_init_io();
 	return (command);
 }
 

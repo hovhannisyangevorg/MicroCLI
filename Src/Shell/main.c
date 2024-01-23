@@ -6,14 +6,13 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/01/10 19:31:17 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/20 17:42:07 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-
-void	ft_program()
+void	ft_program(char **env)
 {
 	t_container		container;
 	char 			*line;
@@ -21,15 +20,21 @@ void	ft_program()
 
 	signal(SIGINT, sig_handler_c);
 	rl_catch_signals = 0;
+	t_hash_table *table = ft_create_env(env);
 	while (1)
 	{
 		line = ft_get_line();
 		if (!line)
 			return ;
-		ft_brackets_balanced(line);
+		if (!(*line))
+		{
+			free(line);
+			continue;
+		}
+		ft_balanced(line);
         list = ft_tokenize(line, SEPARATORS);
 		container = ft_parser(list);
-		ft_executor(container);
+		ft_executor(table, container);
 
 		// ft_print_list(list->head);
 		ft_free_list(list);
@@ -40,9 +45,11 @@ void	ft_program()
 
 
 
-int main()
+int main(int ac, char **av, char **env)
 {
-	ft_program();
+	(void)ac;
+	(void)av;
+	ft_program(env);
 	return (0);	
 }
 
@@ -58,3 +65,367 @@ int main()
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// #include <stdio.h>
+
+// int main() {
+//     FILE *file = fopen("example.txt", "r");
+//     if (file == NULL) {
+//         perror("Error opening file");
+//         return 1;
+//     }
+
+//     int c;
+
+//     // Loop to read characters until EOF is encountered
+//     while ((c = fgetc(file)) != EOF) {
+//         // Process the character, for example, print it
+//         putchar(c);
+//     }
+
+//     // Check for EOF using feof
+//     if (feof(file)) {
+//         printf("\nEnd of file reached.\n");
+//     } else {
+//         printf("\nError reading file.\n");
+//     }
+
+//     // Close the file
+//     fclose(file);
+
+//     return 0;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// #include <sys/mman.h>
+// #include <fcntl.h>
+// #include <stdio.h>
+// #include <unistd.h>
+// #include <sys/mman.h>
+// #include <fcntl.h>
+// #include <stdio.h>
+// #include <unistd.h>
+
+// int main()
+// {
+//     int fd = open("example.txt", O_RDONLY);
+//     off_t file_size = lseek(fd, 0, SEEK_END);
+
+//     // Map the file into memory
+//     void *mapped_data = mmap(NULL, file_size, PROT_READ, MAP_PRIVATE, fd, 0);
+
+// 	if (mapped_data == MAP_FAILED) {
+// 		perror("mmap");
+// 		return (1);
+//     }
+
+//     // Use the mapped data...
+//     printf("Contents of the mapped file:\n%s\n", (char*)mapped_data);
+
+// 	(*(char*)mapped_data) = 'A';
+//     // Unmap the file from memory
+//     if (munmap(mapped_data, file_size) == -1) {
+//         perror("munmap");
+//         return 1;
+//     }
+
+//     // Close the file descriptor
+//     close(fd);
+
+//     return 0;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// #include <unistd.h>
+// #include <stdio.h>
+// #include <fcntl.h>
+// #include <fcntl.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+// #include <unistd.h>
+// #include <errno.h>
+
+// void	ft_can_reade(int fd)
+// {
+	
+// }
+
+// void	ft_can_write(int fd)
+// {
+	
+// }
+
+// ft_can_write_and_read(int fd)
+// {
+	
+// }
+
+// void ft_punic(const char *errorMessig)
+// {
+// 	if (errno == EACCES)
+// 		perror("Permission denied Expands to: 13");
+// 	else
+// 		perror(errorMessig);
+//     exit(EXIT_FAILURE);
+// }
+
+// int main(int ac, char **av)
+// {
+// 	int fd;
+// 	int file_flag;
+	
+// 	fd = open(av[1], O_RDWR | O_TRUNC | O_CREAT, 0664);
+// 	if (fd == -1)
+// 		ft_punic("Error: Opening file Flags.");
+// 	file_flag = fcntl(fd, F_GETFL);
+// 	if (file_flag == -1)
+// 		ft_panic("Error: Getting file flags");
+
+// 	if (file_flag & O_RDONLY)
+// 	{
+// 		ft_can_reade(fd);
+// 	}
+// 	else if (file_flag & O_WRONLY)
+// 	{
+// 		ft_can_write(fd);
+// 	}
+// 	else if (file_flag & O_RDWR)
+// 	{
+// 		ft_can_write_and_read(fd);
+// 	}
+
+
+// 	//printf(EACCES);
+	
+	
+// }
+
+// #include <stdio.h>
+// #include <dirent.h>
+
+// int main()
+// {
+//     DIR *dir = opendir("/home/gevorg/Desktop/Minishell/Src/Executor");
+
+//     if (dir == NULL)
+// 	{
+//         perror("Error opening directory");
+//         return (1);
+//     }
+
+//     struct dirent *entry;
+// 	// printf("###########################################################\n");
+//     while ((entry = readdir(dir)) != NULL) {
+//         // printf("%ld\n", entry->d_ino);
+// 		printf("Name: %s, Offset: %ld\n", entry->d_name, (long)entry->d_off);
+//     }
+// 	// printf("###########################################################\n");
+// 	// while ((entry = readdir(dir)) != NULL) {
+//     //     printf("%s\n", entry->d_name);
+//     // }
+// 	// printf("###########################################################\n");
+// 	// while ((entry = readdir(dir)) != NULL) {
+//     //     printf("%ld\n", entry->d_off);
+//     // }
+// 	// printf("###########################################################\n");
+// 	// while ((entry = readdir(dir)) != NULL) {
+//     //     printf("%d\n", entry->d_reclen);
+//     // }
+// 	// printf("###########################################################\n");
+// 	// while ((entry = readdir(dir)) != NULL) {
+//     //     printf("%d\n", entry->d_type);
+//     // }
+// 	// printf("###########################################################\n");
+
+//     closedir(dir);
+//     return 0;
+// }
+
+
+// #include <stdio.h>
+// #include <dirent.h>
+
+// int main() {
+//     const char *directory_path = "/path/to/your/directory";
+
+//     DIR *dir = opendir(directory_path);
+
+//     if (dir == NULL) {
+//         perror("Error opening directory");
+//         return 1;
+//     }
+
+//     struct dirent *entry;
+
+//     // Read the first entry
+//     entry = readdir(dir);
+
+//     while (entry != NULL) {
+//         printf("Name: %s, Offset: %ld\n", entry->d_name, (long)entry->d_off);
+
+//         // Read the next entry using the offset
+//         entry = readdir(dir);
+//     }
+
+//     closedir(dir);
+
+//     return 0;
+// }

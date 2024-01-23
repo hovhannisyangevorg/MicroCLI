@@ -6,13 +6,14 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:44:21 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/13 11:53:37 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/16 22:19:05 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef 	PARSER_STRUCT_H
 # define 	PARSER_STRUCT_H
 
+// #include "global_struct.h"
 
 /**
  * @typedef t_ast_node
@@ -75,6 +76,25 @@ typedef struct	s_shant_stack		t_shant_stack;
 */
 typedef enum 	e_redirect_side		t_redirect_side;
 // typedef void (*t_callback)(t_list_token* list);
+
+
+typedef struct 	s_io 				t_io;
+typedef enum 	e_io_type 			t_io_type;
+
+struct s_io 
+{
+	int input;
+	int output;
+	int error;
+};
+
+enum e_io_type
+{
+	STDIN,
+	STDOUT,
+	STDERR
+};
+
 
 
 
@@ -167,6 +187,7 @@ struct s_command
 	t_ast_node	base;
 	t_argument	*argument;
 	t_redirect	*redirect;
+	t_io 		io;
 };
 
 struct s_argument
@@ -182,10 +203,6 @@ struct s_redirect
 	char			*argument;
 };
 
-
-
-
-
 struct s_global_stack
 {
 	t_shant_stack	*top;
@@ -197,5 +214,6 @@ struct s_shant_stack
 	t_ast_node		*ast_node;
 	t_shant_stack 	*next;
 };
+
 
 #endif

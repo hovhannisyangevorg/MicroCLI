@@ -82,7 +82,8 @@ t_redirect* ft_ast_to_redirect(t_ast_node* ast);
 // int			ft_find_close(char* str, size_t size, int openIndex);
 
 int 		ft_should_ast_created(t_list_token *list);
-
+t_io		ft_init_io();
+void		ft_init_io_fd(t_io *io, t_io_type io_type, int fd);
 
 
 #endif
