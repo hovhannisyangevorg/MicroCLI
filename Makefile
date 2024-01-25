@@ -1,5 +1,5 @@
 # Contains a header file for the makefile.
-include MakeFile.mk
+include Makefile.mk
 
 .DEFAULT_GOAL	:=	$(ALL)
 

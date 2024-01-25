@@ -33,4 +33,7 @@ t_hash_table		*ft_create_env(char **env);
 void				ft_init_arrey(t_vector *tab, size_t size);
 void				ft_push_arrey(t_vector *tab, int val);
 int					ft_isquot(const char *exit_key);
+
+t_vector			ft_open_pipe_fd(size_t pipe_count);
+void				ft_assign_pipe_fd(t_ast_node *tree, t_vector *pipe_fd);
 #endif

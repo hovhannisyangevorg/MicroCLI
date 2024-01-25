@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:21:12 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/23 21:11:21 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/25 23:25:15 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void ft_replace_all(char **line, char *src_env, char *chang_env)
 	char	*start_offset;
 	char	*end_offset;
 	
-	token_tmp	= ft_strstr(*line, src_env);
 	token_size	= ft_strlen(src_env); 
 	start_offset	= ft_strdup(*line);
+	token_tmp	= ft_strstr(start_offset, src_env);
 	while (token_tmp)
 	{
 		if (token_size)
@@ -52,7 +52,7 @@ void ft_replace_all(char **line, char *src_env, char *chang_env)
 			free(end_offset);
 		}
 		if (*token_tmp)
-			token_tmp = ft_strstr(token_tmp + 1, src_env);
+			token_tmp = ft_strstr(start_offset, src_env);
 		else
 			token_tmp = NULL;
 	}
@@ -69,7 +69,7 @@ char	*ft_substr_c(char *line, char c)
 	start = i;
 	if (line[i])
 		++i;
-	while (line && line[i] && line[i] != c && !ft_isspace(line[i]))
+	while (line && line[i] && line[i] != c && !ft_isspace(line[i]) && line[i] != '\'' && line[i] != '\"')
 		++i;
 	return (ft_substr(line, start, i - start));
 }
@@ -91,7 +91,6 @@ void	ft_hendle_env_variable(char **line, t_hash_table *env)
 			value = ft_get_env(env, token_env);
 		else
 			value = ft_get_env(env, token_env + 1);
-		(void)value;
 		if (value)
 			ft_replace_all(line, token_env, value);
 		if (*start_env)
@@ -195,14 +194,15 @@ int open_heredoc(t_redirect	*red, t_hash_table *env)
 	end_of_file = ft_ignor_EOF_quots(red->argument);
 	if (ft_isquot(red->argument))
 		flag = 1;
-	while (ft_getline(STDIN, &line) > 0)
+	while (1)
 	{
-		if (!ft_strcmp(line, end_of_file))
+		line = readline(">");
+		if (!line || !ft_strcmp(line, end_of_file))
 			break ;
-		if (flag)
+		if (!flag)
 			ft_hendle_env_variable(&line, env);
-		ft_putstr_fd(line, fd);
-		ft_putstr_fd("\n", fd);
+		printf ("%s\n", line);
+		ft_putendl_fd(line, fd);
 		free(line);
 	}
 	free(end_of_file);
@@ -274,7 +274,6 @@ void	ft_open_all_fd(t_ast_node *ast_node, t_hash_table *env)
 		node		= ft_redirect_to_ast_node(command->redirect);
 		while (node)
 		{
-			// printf("\n---->>%s<<----\n", ft_ast_to_redirect(node)->argument);
 			ft_open_type(ft_ast_to_redirect(node), command, &fd_vector, env);
 			node = node->left;
 		}
@@ -287,7 +286,7 @@ void	ft_open_all_fd(t_ast_node *ast_node, t_hash_table *env)
 
 void ft_executor(t_hash_table *table_env, t_container cont)
 {
-
+	t_vector pipe_fd;
 	size_t pipe_count;
 
 	if (cont.exec_type == LIST)
@@ -298,6 +297,10 @@ void ft_executor(t_hash_table *table_env, t_container cont)
 	{
 		pipe_count = ft_pipe_count_tree(cont.tree->ast_node);
 		ft_open_all_fd(cont.tree->ast_node, table_env);
+		pipe_fd = ft_open_pipe_fd(pipe_count);
+		ft_assign_pipe_fd(cont.tree->ast_node, &pipe_fd);
+		ft_ast_print(cont.tree->ast_node, ft_strdup(""), 0, 1);
+
 	}
 	
 	(void)pipe_count;

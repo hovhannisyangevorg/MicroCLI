@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:52:35 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/15 16:33:20 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/25 23:22:22 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,8 @@ void print_argument(t_ast_node* arg)
 
 void print_command(t_ast_node* command, char *prefix, int is_root, int is_left)
 {
-	printf("COMMAND { type: %d, token: %s", command->token_type, command->token);
 	t_command* cmd = ft_ast_to_command(command);
+	printf("COMMAND { type: %d, token: %s, fds: [in: %d, out: %d, err: %d]", command->token_type, command->token, cmd->io.input, cmd->io.output, cmd->io.error);
 	t_ast_node* args = ft_argument_to_ast_node(cmd->argument);
 	t_ast_node* red = ft_redirect_to_ast_node(cmd->redirect);
 	if ( is_root == 0 )
