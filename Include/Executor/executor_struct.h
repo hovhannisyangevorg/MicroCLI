@@ -8,8 +8,9 @@
 typedef enum 	e_exec_type			t_exec_type;
 typedef struct	s_hash_entity		t_hash_entity;
 typedef struct	s_hash_entity_list	t_hash_entity_list;
-typedef struct	s_hash_table		t_hash_table;
+typedef struct	s_entity_table		t_entity_table;
 typedef enum	e_hash_type			t_hash_type;
+typedef struct 	s_hash_table 		t_hash_table;
 typedef struct 	s_vector			t_vector;
 
 
@@ -48,12 +49,17 @@ struct s_hash_entity_list
 };
 
 
-struct s_hash_table
+struct s_entity_table
 {
     t_hash_type         type;
-    t_hash_entity_list* table;
+    t_hash_entity_list* entity;
     size_t              size;
     size_t              capacity;
+};
+
+struct s_hash_table
+{
+	t_entity_table* table;
 };
 
 struct s_function_entity

@@ -6,42 +6,79 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/01/20 17:42:07 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/29 22:26:40 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
+// size_t numofrec;
+
+// void ft(t_ast_node *tree)
+// {
+// 	if (!tree)
+// 		return ;
+// 	printf("-------------------->%s\n", ft_get_type( tree->token_type));
+// 	ft(tree->left);
+// 	ft(tree->right);
+// }
+
 void	ft_program(char **env)
 {
-	t_container		container;
-	char 			*line;
-	t_list_token	*list;
+	// t_container		container;
+	// char 			*line;
+	// t_list_token	*list;
 
-	signal(SIGINT, sig_handler_c);
-	rl_catch_signals = 0;
+	// signal(SIGINT, sig_handler_c);
+	// rl_catch_signals = 0;
 	t_hash_table *table = ft_create_env(env);
-	while (1)
-	{
-		line = ft_get_line();
-		if (!line)
-			return ;
-		if (!(*line))
-		{
-			free(line);
-			continue;
-		}
-		ft_balanced(line);
-        list = ft_tokenize(line, SEPARATORS);
-		container = ft_parser(list);
-		ft_executor(table, container);
 
-		// ft_print_list(list->head);
-		ft_free_list(list);
-		free(line);
-    }
-    clear_history();
+	print_env(table);
+	ft_free_hash_table(table);
+	ft_clear_hash_table(table);
+	// ft_pop_entity(table, "PWD");
+	// print_env(table);
+	// while (1)
+	// {
+	// 	line = ft_get_line();
+	// 	if (!line)
+	// 		return ;
+	// 	if (!(*line))
+	// 	{
+	// 		free(line);
+	// 		continue;
+	// 	}
+	// 	ft_balanced(line);
+    //     list = ft_tokenize(line, SEPARATORS);
+	// 	container = ft_parser(list);
+	// 	ft_executor(table, container);
+
+
+
+
+		
+	// 	// ft(container.tree->ast_node);
+	// 	// ft_print_list(list->head);
+	// 	ft_free_list(list);
+	// 	free(line);
+    // }
+    // clear_history();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -49,6 +86,43 @@ int main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
+	// (void)env;
+
+
+
+
+	// t_list_token *list = ft_init_list();
+
+	// ft_push_back(list, TEXT, "ls");
+	// ft_push_back(list, PIPE, "|");
+	// ft_push_back(list, TEXT, "pwd");
+	// ft_push_back(list, PIPE, "|");
+	// ft_push_back(list, TEXT, "grep");
+	// ft_push_back(list, WRITE, ">");
+	// ft_push_back(list, TEXT, "hello");
+
+	// t_ast_node *tree = ft_shunting_yard_build_ast(list);
+
+	// printf("trrr = %s\n", tree->token);
+
+
+	// ft_print_list(list->head);
+	// char* s = ft_strdup("");
+	// ft_ast_print(tree,s, 0, 1);
+	// free(s);
+	
+	
+	// ft_free_list(list);
+
+	// free(tree->token);
+	// free(tree->subshell);
+	// free(tree);
+	
+	// free(tree->left)
+	// ft_free_tree(tree);
+
+	
+
 	ft_program(env);
 	return (0);	
 }
@@ -429,3 +503,37 @@ int main(int ac, char **av, char **env)
 
 //     return 0;
 // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

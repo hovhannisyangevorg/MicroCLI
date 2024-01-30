@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:54 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/16 22:15:09 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/28 18:24:58 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,22 @@ t_container ft_parser(t_list_token *list)
 	ft_print_list(list->head);
 	int 			is_ast;
 	t_container 	container;
+
+	// (void)container;
 	t_global_tree	*tree;
 
 	is_ast 	= ft_should_ast_created(list);
+	tree = NULL;
 	if (is_ast)
 	{
 		tree 	= ft_sematic(list, is_ast);
 		container.exec_type = TREE;
 		container.tree = tree;
+		// char *leak = ft_strdup("");
+		// ft_ast_print(tree->ast_node, leak, 0, 1);
+		// free(leak);
+		// ft_free_tree(tree->ast_node);
+		// container.tree = NULL;
 	}
 	else
 	{

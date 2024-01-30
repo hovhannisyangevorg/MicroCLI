@@ -6,32 +6,42 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:42:38 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/19 19:59:06 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/29 22:26:22 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 
-t_hash_table *ft_init_hash_table(size_t initialCapacity, t_hash_type type)
+t_entity_table *ft_init_entity_table(size_t initialCapacity, t_hash_type type)
 {
 	size_t			i;
-    t_hash_table	*table;
+    t_entity_table	*table;
 
-	table = (t_hash_table *)malloc(sizeof(t_hash_table));
+	// table = (t_hash_table *)malloc(sizeof(t_hash_table));
+	table = (t_entity_table*)malloc(sizeof(t_entity_table));
     table->size = 0;
     table->capacity = initialCapacity;
     if (!initialCapacity)
-	    table->table = NULL;
+	    table->entity = NULL;
     else
 	{
 		i = 0;
-		table->table = malloc(initialCapacity * sizeof(t_hash_entity_list));
+		table->entity = malloc(initialCapacity * sizeof(t_hash_entity_list));
 		while (i < initialCapacity)
-			ft_init_entity_list(&table->table[i++]);
+			ft_init_entity_list(&table->entity[i++]);
 	}
     table->type = type;
     return (table);
+}
+
+t_hash_table *ft_init_hash_table(size_t initialCapacity, t_hash_type type)
+{
+	t_hash_table* table;
+
+	table = malloc(sizeof(t_hash_table));
+	table->table = ft_init_entity_table(initialCapacity, type);
+	return table;
 }
 
 void  ft_init_entity_list(t_hash_entity_list* list)
@@ -101,33 +111,33 @@ void ft_resize_entity(t_hash_table *table, size_t new_capacity)
 {
 	size_t			i;
 	t_hash_entity	*node;
-    t_hash_table	*hash_table;
+    t_entity_table	*hash_table;
 	char			*key;
 	void			*data;
 	size_t			index;
 
     i = 0;
-    hash_table = ft_init_hash_table(new_capacity, table->type);
-    while (i < table->capacity)
+    hash_table = ft_init_entity_table(new_capacity, table->table->type);
+    while (i < table->table->capacity)
     {
-        node = table->table[i].head;
+        node = table->table->entity[i].head;
         while (node)
         {
             key = node->key;
-            index = ft_hash_entity(new_capacity, key);
-            if (table->type == FUNCTION)
+            if (table->table->type == FUNCTION)
 				data = ft_entity_to_function(node)->function;
             else
 				data = ft_entity_to_env(node)->value;
-            ft_push_entity(&hash_table->table[index], key, data, table->type);
+			index = ft_hash_entity(new_capacity, key);
+            ft_push_entity(&hash_table->entity[index], key, data, table->table->type);
             node = node->next;
+			++hash_table->size;
         }
         ++i;
     }
-    free(table->table);
-    table->table = hash_table->table;
-    table->capacity = new_capacity;
-    free(hash_table);
+	ft_free_hash_table(table);
+	table->table = hash_table;
+	// *table = hash_table;
 }
 
 void	ft_insert_entity(t_hash_table *table, char *key, void *data)
@@ -137,18 +147,18 @@ void	ft_insert_entity(t_hash_table *table, char *key, void *data)
 
     if (!table)
         return ;
-    if (table->size >= table->capacity)
+    if (table->table->size >= table->table->capacity)
 	{
-		if (!table->capacity)
+		if (!table->table->capacity)
 			newCapacity = 10;
         else
-            newCapacity = table->capacity * 2;
+            newCapacity = table->table->capacity * 2;
         ft_resize_entity(table, newCapacity);
     }
 
-    index = ft_hash_entity(table->capacity, key);
-	ft_push_entity(&table->table[index], key, data, table->type);
-    table->size++;
+    index = ft_hash_entity(table->table->capacity, key);
+	ft_push_entity(&table->table->entity[index], key, data, table->table->type);
+    ++table->table->size;
 }
 
 t_function_callback	ft_get_function(t_hash_table *table, char *key)
@@ -156,12 +166,47 @@ t_function_callback	ft_get_function(t_hash_table *table, char *key)
     size_t			index;
 	t_hash_entity	*entry;
 
-	index = ft_hash_entity(table->capacity, key);
-    entry = table->table[index].head;
+	index = ft_hash_entity(table->table->capacity, key);
+    entry = table->table->entity[index].head;
     while (entry != NULL)
 	{
         if (!ft_strcmp(entry->key, key))
             return (ft_entity_to_function(entry)->function);
+        entry = entry->next;
+    }
+    return (NULL);
+}
+
+
+t_function_entity	*ft_get_function_entity(t_hash_table *table, char *key)
+{
+    size_t			index;
+	t_hash_entity	*entry;
+
+	index = ft_hash_entity(table->table->capacity, key);
+    entry = table->table->entity[index].head;
+    while (entry != NULL)
+	{
+        if (!ft_strcmp(entry->key, key))
+            return (ft_entity_to_function(entry));
+        entry = entry->next;
+    }
+    return (NULL);
+}
+
+
+
+t_env_entity	*ft_get_env_entity(t_hash_table *table, char *key)
+{
+    size_t			index;
+	t_hash_entity	*entry;
+
+	index = ft_hash_entity(table->table->capacity, key);
+    entry = table->table->entity[index].head;
+    while (entry != NULL)
+	{
+        if (!ft_strcmp(entry->key, key))
+            return (ft_entity_to_env(entry));
         entry = entry->next;
     }
     return (NULL);
@@ -172,8 +217,8 @@ char* ft_get_env(t_hash_table *table, char *key)
     size_t			index;
     t_hash_entity	*entry;
 
-	index = ft_hash_entity(table->capacity, key);
-	entry = table->table[index].head;
+	index = ft_hash_entity(table->table->capacity, key);
+	entry = table->table->entity[index].head;
     while (entry != NULL)
 	{
         if (!ft_strcmp(entry->key, key))
@@ -190,8 +235,8 @@ void	ft_set_env(t_hash_table *table, char *key, char *val)
     t_hash_entity	*entry;
 	t_env_entity	*ent_tmp;
 
-	index = ft_hash_entity(table->capacity, key);
-	entry = table->table[index].head;
+	index = ft_hash_entity(table->table->capacity, key);
+	entry = table->table->entity[index].head;
     while (entry != NULL)
 	{
         if (!ft_strcmp(entry->key, key))
@@ -214,10 +259,10 @@ void	print_env(t_hash_table* env)
 	t_env_entity	*node;
 
 	i = 0;
-    while(i < env->capacity)
+    while(i < env->table->capacity)
     {
 
-        entry = env->table[i].head;
+        entry = env->table->entity[i].head;
         while (entry != NULL)
         {
             node	= ft_entity_to_env(entry);
@@ -239,7 +284,7 @@ t_hash_table *ft_create_env(char **env)
 	char			*key;
 
 	i = 0;
-	table = ft_init_hash_table(0, ENV);
+	table = ft_init_hash_table(10, ENV);
 	while (env && env[i])
 	{
 		assign = ft_strchr(env[i], '=');
@@ -255,7 +300,107 @@ t_hash_table *ft_create_env(char **env)
 		}
 		key = ft_substr(env[i], 0, len);
 		ft_insert_entity(table, key, value);
+		free(key);
 		++i;
 	}
 	return (table);
 }
+
+
+
+void	ft_pop_entity(t_hash_table *table, char *key)
+{
+	size_t index;
+	if (!table)
+		return;
+	t_hash_entity		*node;
+	t_hash_entity		*tmp;
+	t_hash_entity_list	*lst;
+	t_hash_entity		*entry;
+	index = ft_hash_entity(table->table->capacity, key);
+
+	lst = &table->table->entity[index];
+	
+	if (!lst || !lst->head)
+		return ;
+	if (!ft_strcmp(lst->head->key, key))
+	{
+		free(lst->head->key);
+		if (table->table->type == ENV)
+		{
+			free(ft_entity_to_env(lst->head)->value);
+			free(ft_entity_to_env(lst->head));
+		}
+		else
+			free(ft_entity_to_function(lst->head));
+		lst->head = NULL;
+		lst->tail = NULL;
+	}
+	else
+	{
+		entry = lst->head;
+		node = lst->head;
+		while (entry)
+		{
+			if (!ft_strcmp(entry->key, key))
+				break;
+			node = entry;
+			entry = entry->next;
+		}
+		if (entry && !ft_strcmp(entry->key, key))
+		{
+			tmp = entry;
+			node->next = tmp->next;
+			if (tmp == lst->tail)
+				lst->tail = node;
+			free(tmp->key);
+			if (table->table->type == ENV)
+			{
+				free(ft_entity_to_env(tmp)->value);
+				free(ft_entity_to_env(tmp));
+			}
+			else
+				free(ft_entity_to_function(tmp));
+		}
+	}
+	--lst->size;
+}
+
+void ft_free_hash_table(t_hash_table* table)
+{
+	size_t 			i;
+	t_hash_entity 	*entry;
+	t_hash_entity	*entity;
+
+	if (!table)
+		return;
+	i = 0;
+    while(i < table->table->capacity)
+    {
+
+        entry = table->table->entity[i].head;
+        while (entry != NULL)
+        {
+			entity = entry->next;
+			free(entry->key);
+			if (table->table->type == ENV)
+			{
+				free(ft_entity_to_env(entry)->value);
+				free(ft_entity_to_env(entry));
+			}
+			else
+				free(ft_entity_to_function(entry));
+            entry = entity;
+        }
+        ++i;
+    }
+	free(table->table->entity);
+	free(table->table);
+	table->table = NULL;
+}
+
+void ft_clear_hash_table(t_hash_table* table)
+{
+	free(table);
+}
+

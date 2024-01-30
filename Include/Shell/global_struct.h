@@ -20,4 +20,6 @@ struct s_container
 	};
 };
 
+// extern size_t numofrec;
+
 #endif

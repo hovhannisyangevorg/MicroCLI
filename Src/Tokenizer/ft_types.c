@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 18:05:00 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/20 18:05:01 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/27 22:36:48 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ char* ft_get_type(t_token_type type)
         return (ft_strdup(")"));
     else if (type == SUBSHELL)
         return (ft_strdup("SubShell"));
+	else if (type == COMMAND)
+        return (ft_strdup("Command"));
     else
         return (ft_strdup("Unknown"));
     

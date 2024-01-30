@@ -30,6 +30,7 @@ t_shant_stack	*ft_push_shant_stack(t_global_stack *stack, t_ast_node *ast_node);
 int				ft_is_shant_stack_empty(t_global_stack *stack);
 void			ft_pop_shant_stack(t_global_stack *stack);
 void			ft_free_shant_stack(t_global_stack *stack);
+void 			ft_print_shat_steak(t_global_stack *stack);
 
 // ft_shanting_yard.c
 t_ast_node 	    *ft_shunting_yard_build_ast(t_list_token *list);

@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 20:25:50 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/16 15:46:57 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/29 13:49:51 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_handle_subshell(t_list_token *list, t_command *command)
 	{
 		if (token->type == OPBREK)
 		{
-			node	= ft_get_subshell(token);
+			node			= ft_get_subshell(token);
 			ast_node		= ft_command_to_ast_node(command);
 			if (node)
 				ft_push_shant_stack(ast_node->subshell, node);
@@ -96,6 +96,7 @@ t_ast_node *ft_get_subshell(t_token *open_brek)
 		node = ft_create_ast_node(&token);
 		if (sub_list->head)
 			node->left = ft_shunting_yard_build_ast(sub_list);
+		free(token.token);
 	}
 	return (node);
 }

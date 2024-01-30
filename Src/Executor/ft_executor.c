@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:21:12 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/25 23:25:15 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/29 14:04:47 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,22 +174,35 @@ char *ft_ignor_EOF_quots(char *end_of_file)
 	return (eof_key);
 }
 
+char *ft_generate_filename()
+{
+	static size_t	i;
+	char 			*id;
+	char			*filename;
+
+	filename	= ft_strdup("/tmp/.heredoc");
+	if (i == 0)
+	{
+		i++;	
+		return (filename);
+	}
+	id			= ft_itoa(i++);
+	filename	= ft_gnl_strjoin(filename, id);
+	free(id);
+	return (filename);
+}
+
 
 int open_heredoc(t_redirect	*red, t_hash_table *env)
 {
-	static int i = 1;
-	char	*filename;
-	char	*id;
 	int 	fd;
-	char	*line;
-	char	*end_of_file;
 	int		flag;
+	char	*line;
+	char	*filename;
+	char	*end_of_file;
 	
 	flag 		= 0;
-	filename	= ft_strdup("/tmp/.heredoc");
-	id			= ft_itoa(i);
-	filename	= ft_gnl_strjoin(filename, id);
-	free(id);
+	filename	= ft_generate_filename();
 	fd = open(filename, O_TRUNC | O_WRONLY | O_CREAT, 0664);
 	end_of_file = ft_ignor_EOF_quots(red->argument);
 	if (ft_isquot(red->argument))
@@ -286,8 +299,10 @@ void	ft_open_all_fd(t_ast_node *ast_node, t_hash_table *env)
 
 void ft_executor(t_hash_table *table_env, t_container cont)
 {
+	(void)table_env;
 	t_vector pipe_fd;
 	size_t pipe_count;
+	size_t pipe_iter;
 
 	if (cont.exec_type == LIST)
 	{
@@ -296,13 +311,25 @@ void ft_executor(t_hash_table *table_env, t_container cont)
 	else
 	{
 		pipe_count = ft_pipe_count_tree(cont.tree->ast_node);
-		ft_open_all_fd(cont.tree->ast_node, table_env);
+		// ft_open_all_fd(cont.tree->ast_node, table_env);
 		pipe_fd = ft_open_pipe_fd(pipe_count);
-		ft_assign_pipe_fd(cont.tree->ast_node, &pipe_fd);
-		ft_ast_print(cont.tree->ast_node, ft_strdup(""), 0, 1);
+		pipe_iter = 0;
+		ft_assign_pipe_fd(cont.tree->ast_node->left, &pipe_fd, &pipe_iter);
 
+		// print tree
+		char *leak = ft_strdup("");
+		ft_ast_print(cont.tree->ast_node, leak, 0, 1);
+		free(leak);
+
+	
+		free(pipe_fd.arr);
+		
+		ft_free_tree(cont.tree->ast_node);
+
+		free(cont.tree);
+		cont.tree = NULL;
 	}
 	
 	(void)pipe_count;
-	print_env(table_env);
+	// print_env(table_env);
 }

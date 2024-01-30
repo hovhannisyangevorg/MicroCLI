@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:54:42 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/08 21:31:32 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/29 15:43:17 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,49 @@ t_shant_stack	*ft_push_shant_stack(t_global_stack *stack, t_ast_node *ast_node)
 	if (new_stack == NULL)
 		return (NULL);
 
-	new_stack->ast_node = ast_node;
-	new_stack->next = stack->top;
-	stack->top = new_stack;
+	new_stack->ast_node	= ast_node;
+	new_stack->next		= stack->top;
+	stack->top			= new_stack;
 	++stack->size;
 	return (new_stack);
 }
 
 void	ft_pop_shant_stack(t_global_stack *stack)
 {
+	t_shant_stack *tmp;
+
 	if (!stack || !stack->top)
 		return ;
- 	t_shant_stack *tmp = stack->top;
+ 	tmp = stack->top;
 	stack->top = stack->top->next;
-	--stack->size;
 	free(tmp);
+	--stack->size;
 }
 
 void	ft_free_shant_stack(t_global_stack *stack)
 {
-	if (!stack || !stack->top)
+	if (!stack)
 		return ;
+	if (!stack->top)
+	{
+		free(stack);
+		return ;
+	}
 	while (stack->size)
-		ft_pop_shant_stack(stack);	
+		ft_pop_shant_stack(stack);
+	free(stack);
+}
+
+
+
+void ft_print_shat_steak(t_global_stack *stack)
+{
+	t_shant_stack *tmp = stack->top;
+	while (tmp)
+	{
+		printf("shating token =>%s\n", tmp->ast_node->token);
+		tmp = tmp->next;
+	}	
 }
 
 

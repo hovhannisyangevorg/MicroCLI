@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 18:04:57 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/20 18:04:58 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/28 16:05:45 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ t_list_token	*ft_tokenize_string_space(char *input)
     token = ft_tokenize_with_space(input, &type);
     while (token != NULL)
     {
-        ft_push_back(list, type, ft_strdup(token));
+        ft_push_back(list, type, token);
         token = ft_tokenize_with_space(NULL, &type);
     }
     return (list);
@@ -134,29 +134,40 @@ t_list_token	*ft_tokenize_string_space(char *input)
 t_list_token	*ft_tokenize(char *input, char *delims)
 {
     t_list_token	*list;
+	t_list_token	*space_list;
+	t_token			*tmp;
 	t_token			*head;
     char 			*token;
+	char			*tmp_token;
     int 			type;
 
 	type = 0;
 	list = ft_init_list();
-	head = ft_tokenize_string_space(input)->head;
+	space_list = ft_tokenize_string_space(input);
+	head = space_list->head;
 	while(head)
 	{
+		tmp = head->next;
 		token = ft_tokenize_with_delims(head->token, delims, &type);
 		while (token)
 		{
 			if (type != MTEXT && type)
 			{
 				if (*token)
-					ft_push_back(list, TEXT, ft_strdup(token));
-				ft_push_back(list, ft_get_type_map(type), ft_get_type(ft_get_type_map(type)));
+					ft_push_back(list, TEXT, token);
+				tmp_token = ft_get_type(ft_get_type_map(type));
+				ft_push_back(list, ft_get_type_map(type), tmp_token);
+				free(tmp_token);
 			}
 			else if (type)
-				ft_push_back(list, ft_get_type_map(type), ft_strdup(token));
+				ft_push_back(list, ft_get_type_map(type), token);
 			token = ft_tokenize_with_delims(NULL, delims, &type);
 		}
-		head = head->next;
+		free(head->token);
+		free(head);
+		head = tmp;
+		// head = head->next;
 	}
+	free(space_list);
 	return (list);
 }
