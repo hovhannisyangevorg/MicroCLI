@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:21:12 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/29 14:04:47 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/04 19:59:54 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,13 +296,13 @@ void	ft_open_all_fd(t_ast_node *ast_node, t_hash_table *env)
 	ft_open_all_fd(ast_node->right, env);
 }
 
-
+// TODO expand env in command argument 
 void ft_executor(t_hash_table *table_env, t_container cont)
 {
-	(void)table_env;
-	t_vector pipe_fd;
-	size_t pipe_count;
-	size_t pipe_iter;
+	t_vector	pipe_fd;
+	size_t 		pipe_count;
+	size_t		pipe_iter;
+
 
 	if (cont.exec_type == LIST)
 	{
@@ -311,23 +311,36 @@ void ft_executor(t_hash_table *table_env, t_container cont)
 	else
 	{
 		pipe_count = ft_pipe_count_tree(cont.tree->ast_node);
-		// ft_open_all_fd(cont.tree->ast_node, table_env);
+		ft_open_all_fd(cont.tree->ast_node, table_env);
 		pipe_fd = ft_open_pipe_fd(pipe_count);
 		pipe_iter = 0;
-		ft_assign_pipe_fd(cont.tree->ast_node->left, &pipe_fd, &pipe_iter);
-
-		// print tree
+		
 		char *leak = ft_strdup("");
 		ft_ast_print(cont.tree->ast_node, leak, 0, 1);
 		free(leak);
-
-	
-		free(pipe_fd.arr);
 		
-		ft_free_tree(cont.tree->ast_node);
+		ft_execute_part(cont.tree->ast_node, table_env, &pipe_fd, &pipe_iter);
+		
+		for (size_t i = 0; i < pipe_fd.size; i++)
+		{
+			close(pipe_fd.arr[i]);
+		}
+		for (size_t i = 0; i < pipe_count + 1; i++)
+		{
+			wait(NULL);
+			// close(pipe_fd.arr[i]);
+		}
+		
+		
+		
+		
+		// ft_assign_pipe_fd(cont.tree->ast_node->left, &pipe_fd, &pipe_iter);
 
+
+
+		ft_free_tree(cont.tree->ast_node);	
 		free(cont.tree);
-		cont.tree = NULL;
+		// printf("aaaaaa\n");
 	}
 	
 	(void)pipe_count;

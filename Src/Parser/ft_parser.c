@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:56:54 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/28 18:24:58 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/01 18:45:11 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@ t_io	ft_init_io()
 {
 	t_io io;
 
-	io.input	= -1;
-	io.output	= -1;
-	io.error	= -1;
+	io.input	= 0;
+	io.output	= 1;
+	io.error	= 2;
 	return (io);
 }
 
-void	ft_init_io_fd(t_io *io, t_io_type io_type, int fd)
-{
-	if (io_type == STDIN)
-		io->input = dup(fd);
-	else if (io_type == STDOUT)
-		io->output = dup(fd);
-	else if (io_type == STDERR)
-		io->error = dup(fd);
-}
+// void	ft_init_io_fd(t_io *io, t_io_type io_type, int fd)
+// {
+// 	if (io_type == STDIN)
+// 		io->input = dup(fd);
+// 	else if (io_type == STDOUT)
+// 		io->output = dup(fd);
+// 	else if (io_type == STDERR)
+// 		io->error = dup(fd);
+// }
 
 t_container ft_parser(t_list_token *list)
 {
@@ -38,7 +38,6 @@ t_container ft_parser(t_list_token *list)
 	int 			is_ast;
 	t_container 	container;
 
-	// (void)container;
 	t_global_tree	*tree;
 
 	is_ast 	= ft_should_ast_created(list);

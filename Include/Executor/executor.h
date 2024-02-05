@@ -14,6 +14,7 @@ t_function_entity	*ft_entity_to_function(t_hash_entity *hash);
 t_env_entity		*ft_entity_to_env(t_hash_entity *hash);
 t_hash_entity		*ft_function_to_entity(t_function_entity *func);
 t_hash_entity		*ft_env_to_entity(t_env_entity *env);
+void				ft_set_env(t_hash_table *table, char *key, char *val);
 
 // ft_hash_table.c
 void				ft_pop_entity(t_hash_table *table, char *key);
@@ -39,6 +40,11 @@ int					ft_isquot(const char *exit_key);
 
 t_vector			ft_open_pipe_fd(size_t pipe_count);
 void				ft_assign_pipe_fd(t_ast_node *tree, t_vector *pipe_fd, size_t* pipe_iter);
+
+void				ft_execute_part(t_ast_node *tree, t_hash_table *env, t_vector *pipe_fd, size_t* pipe_iter);
+
+
+
 
 void				ft_free_tree(t_ast_node *tree);
 

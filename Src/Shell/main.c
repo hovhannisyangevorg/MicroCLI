@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/01/29 22:26:40 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/03 18:47:36 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,46 +23,47 @@
 // 	ft(tree->right);
 // }
 
+
+// 0924
+
 void	ft_program(char **env)
 {
-	// t_container		container;
-	// char 			*line;
-	// t_list_token	*list;
+	t_container		container;
+	char 			*line;
+	t_list_token	*list;
 
 	// signal(SIGINT, sig_handler_c);
 	// rl_catch_signals = 0;
 	t_hash_table *table = ft_create_env(env);
 
-	print_env(table);
+	while (1)
+	{
+		line = ft_get_line();
+		if (!line)
+			return ;
+		if (!(*line))
+		{
+			free(line);
+			continue;
+		}
+		ft_balanced(line);
+        list = ft_tokenize(line, SEPARATORS);
+		container = ft_parser(list);
+		ft_executor(table, container);
+
+
+		ft_free_list(list);
+		free(line);
+    }
+    clear_history();
 	ft_free_hash_table(table);
 	ft_clear_hash_table(table);
-	// ft_pop_entity(table, "PWD");
-	// print_env(table);
-	// while (1)
-	// {
-	// 	line = ft_get_line();
-	// 	if (!line)
-	// 		return ;
-	// 	if (!(*line))
-	// 	{
-	// 		free(line);
-	// 		continue;
-	// 	}
-	// 	ft_balanced(line);
-    //     list = ft_tokenize(line, SEPARATORS);
-	// 	container = ft_parser(list);
-	// 	ft_executor(table, container);
+}
 
-
-
-
-		
-	// 	// ft(container.tree->ast_node);
-	// 	// ft_print_list(list->head);
-	// 	ft_free_list(list);
-	// 	free(line);
-    // }
-    // clear_history();
+int main(int, char **, char **env)
+{
+	ft_program(env);
+	return (0);	
 }
 
 
@@ -82,14 +83,135 @@ void	ft_program(char **env)
 
 
 
-int main(int ac, char **av, char **env)
-{
-	(void)ac;
-	(void)av;
-	// (void)env;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// int main()
+// {
+// 	int fd = open("./valgrind.out", O_WRONLY);
+
+// 	dup2(fd, 1);
+
+// 	// system("ls");
+// 	// printf("fileeeeee\n");
+
+	
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// (void)env;
 
 	// t_list_token *list = ft_init_list();
 
@@ -121,11 +243,83 @@ int main(int ac, char **av, char **env)
 	// free(tree->left)
 	// ft_free_tree(tree);
 
-	
 
-	ft_program(env);
-	return (0);	
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -191,120 +385,6 @@ int main(int ac, char **av, char **env)
 
 //     return 0;
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -6,15 +6,11 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 18:18:13 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/29 17:31:59 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/01 19:14:56 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-// ft_free_shant_stack()
-// static int iiiiiiiiiiiiiii;
-// int arrrrrrrrrr[10];
 
 void	ft_collect_ast_to_q(t_ast_node *tree, t_global_stack *q_node)
 {
@@ -76,20 +72,20 @@ void ft_free_arguments(t_argument *argument)
 
 void ft_close_command_fd(t_io io)
 {
-	if (io.input != -1)
+	if (io.input > 2)
 	{
 		close(io.input);
-		io.input = -1;
+		io.input = STDIN;
 	}
-	if (io.output != -1)
+	if (io.output > 2)
 	{
 		close(io.output);
-		io.output = -1;
+		io.output = STDOUT;
 	}
-	if (io.error != -1)
+	if (io.error > 2)
 	{
 		close(io.error);
-		io.error = -1;
+		io.error = STDERR;
 	}
 }
 
@@ -128,7 +124,6 @@ void ft_free_tree(t_ast_node *tree)
 		}
 		else
 		{
-			// free(tmp_node->subshell);
 			free(tmp_node->token);
 			free(tmp_node);
 		}	

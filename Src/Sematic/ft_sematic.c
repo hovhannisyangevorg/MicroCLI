@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 20:08:20 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/29 17:14:15 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/03 16:12:58 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,15 @@ t_global_tree *ft_sematic(t_list_token *list, int isast)
 		str						= ft_get_error_message(status);
 		if (str)
 			printf("ERROR: %s\n", str);
+		
+		
 		free(root.token);
 		// free(tree->ast_node->subshell);
 		free(str);
 	}						
 	else
 	{
+		printf("hhhhhhhhhhhhh\n");
 		// ft_sematic_with_list();
 		printf("\n/**\n * Pipe Validation\n * \n */\n// ft_sematic_with_list(t);\n");
 	}

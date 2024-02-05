@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 21:00:12 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/29 17:00:23 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/01 18:44:56 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ t_ast_node	*ft_shunting_yard_build_ast(t_list_token *list)
 	t_ast_node 			*ast_right;
 
 	t_token 			token;
-	// t_token				tmp_token;
-
 	t_command			*command;	
 	t_global_stack 		*stack_opre;
 	t_global_stack 		*stack_oute;
@@ -30,8 +28,6 @@ t_ast_node	*ft_shunting_yard_build_ast(t_list_token *list)
 	stack_oute			= ft_init_shant_stack();
 	
 	ast_node 			= NULL;
-	// int flag = 0;
-
 	
 
 	while (list->head)
@@ -57,8 +53,6 @@ t_ast_node	*ft_shunting_yard_build_ast(t_list_token *list)
 				ft_pop_shant_stack(stack_oute);
 
 				ast_node = stack_opre->top->ast_node;
-				// ft_init_token(&tmp_token, stack_opre->top->ast_node->token_type, ft_strdup(stack_opre->top->ast_node->token));
-				// ast_node 		= ft_create_ast_node(&tmp_token);
 				
 				if (ast_left)
 					ast_left->parent = ast_node;
@@ -70,7 +64,6 @@ t_ast_node	*ft_shunting_yard_build_ast(t_list_token *list)
 				
 				ft_push_shant_stack(stack_oute, ast_node);
 				ft_pop_shant_stack(stack_opre);
-				// free(tmp_token.token);
 			}
 
 			t_ast_node *ttttt  = ft_create_ast_node(&token);
@@ -89,7 +82,7 @@ t_ast_node	*ft_shunting_yard_build_ast(t_list_token *list)
 	while (stack_opre->size)
 	{
 		if (stack_oute->size)
-			ast_right = stack_oute->top->ast_node; // | >0x22222
+			ast_right = stack_oute->top->ast_node;
 		else
 			ast_right = NULL;
 		
@@ -103,9 +96,6 @@ t_ast_node	*ft_shunting_yard_build_ast(t_list_token *list)
 		ft_pop_shant_stack(stack_oute);
 
 		ast_node = stack_opre->top->ast_node;
-		// ft_init_token(&tmp_token, stack_opre->top->ast_node->token_type, ft_strdup(stack_opre->top->ast_node->token));
-		// ast_node = ft_create_ast_node(&tmp_token); // | >0x11111
-
 		if (ast_left)
 			ast_left->parent = ast_node;
 		if (ast_right)
@@ -116,7 +106,6 @@ t_ast_node	*ft_shunting_yard_build_ast(t_list_token *list)
 		
 		ft_push_shant_stack(stack_oute, ast_node);
 		ft_pop_shant_stack(stack_opre);
-		// free(tmp_token.token);
 	}
 	if (list->size)
 		ft_pop_front(list);
