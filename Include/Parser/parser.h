@@ -6,13 +6,13 @@
 
 
 // ft_parser.c
-void		ft_parser(t_list_token *list);
+t_container			ft_parser(t_list_token *list);
 
 // ft_helper.c
-int			ft_should_ast_create(t_list_token *list);
+int					ft_should_ast_create(t_list_token *list);
 
 // ft_sematic.c
-void			ft_sematic(t_list_token *list, int isast);
+t_global_tree		*ft_sematic(t_list_token *list, int isast);
 
 // void			ft_subtree_TST(t_ast_node *tree);
 
@@ -30,19 +30,20 @@ t_shant_stack	*ft_push_shant_stack(t_global_stack *stack, t_ast_node *ast_node);
 int				ft_is_shant_stack_empty(t_global_stack *stack);
 void			ft_pop_shant_stack(t_global_stack *stack);
 void			ft_free_shant_stack(t_global_stack *stack);
+void 			ft_print_shat_steak(t_global_stack *stack);
 
 // ft_shanting_yard.c
 t_ast_node 	    *ft_shunting_yard_build_ast(t_list_token *list);
 
 
 // ft_subshell.c
-void            ft_handle_subshell(t_list_token* lst, t_command* cmd);
+void            ft_handle_subshell(t_list_token* lst, t_command* command);
 
 t_list_token*   ft_get_subshell_list(t_token* start);
 
 void            ft_remove_subshell(t_list_token* lst);
 
-void            ft_remove_cmd_redirect(t_list_token* lst);
+void            ft_remove_command_redirect(t_list_token* lst);
 
 t_token*        ft_skip_subshell(t_token* lst);
 
@@ -50,21 +51,21 @@ t_ast_node*     ft_get_subshell(t_token* lst);
 
 
 // ft_build_command.c
-t_argument*     ft_create_argument(char** args, t_ast_node base);
+t_argument*     ft_create_argument(char** argument, t_ast_node base);
 
-t_command*      ft_create_command(t_argument* arg, t_redirect* redirect, t_ast_node base);
+t_command*      ft_create_command(t_argument* argument, t_redirect* redirect, t_ast_node base);
 
 t_redirect*     ft_create_redirect(char* arg, t_ast_node base, t_redirect_side side);
 
-void            ft_push_redirect(t_command* cmd, char* arg, t_token_type type, t_redirect_side side);
+void            ft_push_redirect(t_command* command, char* arg, t_token_type type, t_redirect_side side);
 
 t_command*      ft_handle_command(t_list_token* lst);
 
-void            ft_handle_argument(t_list_token* lst, t_command* cmd);
+void            ft_handle_argument(t_list_token* lst, t_command* command);
 
 
 // ft_casts.c
-t_ast_node* ft_command_to_ast_node(t_command* cmd);
+t_ast_node* ft_command_to_ast_node(t_command* command);
 
 t_ast_node* ft_redirect_to_ast_node(t_redirect* rd);
 
@@ -81,8 +82,9 @@ t_redirect* ft_ast_to_redirect(t_ast_node* ast);
 // int			ft_find(char* str, char c, size_t pos, size_t size);
 // int			ft_find_close(char* str, size_t size, int openIndex);
 
-
-
+int 		ft_should_ast_created(t_list_token *list);
+t_io		ft_init_io();
+void		ft_init_io_fd(t_io *io, t_io_type io_type, int fd);
 
 
 #endif

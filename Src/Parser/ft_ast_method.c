@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:52:35 by gevorg            #+#    #+#             */
-/*   Updated: 2023/12/24 20:50:03 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/28 17:07:01 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_ast_node 	*ft_create_ast_node(t_token *token)
 	new_node = (t_ast_node *)malloc(sizeof(t_ast_node));
     if (!new_node)
 		return (NULL);
-	
+
     new_node->token_type 	= token->type;
 	new_node->parent		= NULL;
     new_node->token 		= ft_strdup(token->token);
@@ -116,8 +116,8 @@ void print_argument(t_ast_node* arg)
 
 void print_command(t_ast_node* command, char *prefix, int is_root, int is_left)
 {
-	printf("COMMAND { type: %d, token: %s", command->token_type, command->token);
 	t_command* cmd = ft_ast_to_command(command);
+	printf("COMMAND { type: %d, token: %s, fds: [in: %d, out: %d, err: %d]", command->token_type, command->token, cmd->io.input, cmd->io.output, cmd->io.error);
 	t_ast_node* args = ft_argument_to_ast_node(cmd->argument);
 	t_ast_node* red = ft_redirect_to_ast_node(cmd->redirect);
 	if ( is_root == 0 )

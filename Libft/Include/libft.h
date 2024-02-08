@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:10:28 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/10/01 13:11:01 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/19 16:13:36 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int		ft_isadd_overflow(int a, int b, int sign);
 void	ft_strdel(char **str);
 void	ft_vecstrdel(char ***vecptr);
 void	ft_threestrdel(char ****vecptr);
+char	*ft_strstr(const char *haystack, const char *needle);
 
 typedef struct s_list
 {

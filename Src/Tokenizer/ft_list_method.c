@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:02:45 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/03 18:56:01 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/01/29 14:51:53 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,13 @@ void	ft_free_list(t_list_token *list)
 	t_token	*tmp;
 	t_token	*next;
 
-	if (list == NULL || list->head == NULL)
+	if (list == NULL)
 		return ;
+	if (list->head == NULL)
+	{
+		free(list);
+		return;
+	}
 	tmp = list->head;
 	while (tmp != NULL)
 	{
@@ -165,31 +170,31 @@ void	ft_print_list(t_token* list)
 }
 
 
-void 	ft_ordering(t_list_token *list)
-{
-	t_token *root;
-	t_token *new;
+// void 	ft_ordering(t_list_token *list)
+// {
+// 	t_token *root;
+// 	t_token *new;
 
-	if (list->size == 0)
-		return ;
-	root = list->head;
+// 	if (list->size == 0)
+// 		return ;
+// 	root = list->head;
 
-	while (root)
-	{
-		t_token* next;
+// 	while (root)
+// 	{
+// 		t_token* next;
 
-		next = root->next;
-		new = (t_token *)malloc(sizeof(t_token));
-		if (new == NULL)
-			return ;
-		ft_init_token(new, root->type, ft_strdup("NULL"));
-		root->type = TEXT;
-		new->next = root->next;
-		new->prev = root;
-		if (root->next)
-			root->next->prev = new;
-		root->next = new;	
-		list->size++;
-		root = next;
-	}
-}
+// 		next = root->next;
+// 		new = (t_token *)malloc(sizeof(t_token));
+// 		if (new == NULL)
+// 			return ;
+// 		ft_init_token(new, root->type, ft_strdup("NULL"));
+// 		root->type = TEXT;
+// 		new->next = root->next;
+// 		new->prev = root;
+// 		if (root->next)
+// 			root->next->prev = new;
+// 		root->next = new;	
+// 		list->size++;
+// 		root = next;
+// 	}
+// }
