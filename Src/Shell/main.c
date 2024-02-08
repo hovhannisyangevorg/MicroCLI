@@ -26,6 +26,18 @@
 
 // 0924
 
+void print_env_args(char** env)
+{
+	int i = -1;
+	printf("-------------args----------\n");
+	while (env && env[++i])
+	{
+		printf("%s\n", env[i]);
+	}
+	printf("-------------end args----------\n");
+	
+}
+
 void	ft_program(char **env)
 {
 	t_container		container;
@@ -35,7 +47,8 @@ void	ft_program(char **env)
 	// signal(SIGINT, sig_handler_c);
 	// rl_catch_signals = 0;
 	t_hash_table *table = ft_create_env(env);
-
+	char** env1 = ft_convert_env_to_args(table);
+	print_env_args(env1);
 	while (1)
 	{
 		line = ft_get_line();

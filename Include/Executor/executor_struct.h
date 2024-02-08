@@ -71,6 +71,7 @@ struct s_function_entity
 struct s_env_entity
 {
     t_hash_entity           base;
+    int                     hidden;
     char*                   value;
 };
 

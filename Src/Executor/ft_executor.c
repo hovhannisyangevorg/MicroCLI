@@ -344,5 +344,5 @@ void ft_executor(t_hash_table *table_env, t_container cont)
 	}
 	
 	(void)pipe_count;
-	// print_env(table_env);
+	// print_env(table_env, 0);
 }
