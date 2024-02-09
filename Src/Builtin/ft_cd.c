@@ -1,11 +1,14 @@
 #include "shell.h"
 
     
-// int cd(int argc, char **argv, char **env)
-// {
-//     (void)argc;
+int ft_cd(t_command* command, t_hash_table* env)
+{
+    (void)command;
+    (void)env;
+    return 0;
+
     
-// }
+}
 
 // int  main(int argc, char **argv, char **envp)
 // {

@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:21:12 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/04 19:59:54 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/08 23:14:16 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,7 @@ void	ft_open_type(t_redirect *redirect, t_command *cmd, t_vector *fd_vector, t_h
 	}
 	else if (redirect->base.token_type == APPEND)
 	{
-		fd = open(redirect->argument, O_APPEND | O_WRONLY | O_CREAT);
+		fd = open(redirect->argument, O_APPEND | O_WRONLY | O_CREAT, 0664);
 		if (cmd->io.output < fd)
 			cmd->io.output = fd;
 		else
@@ -275,38 +275,30 @@ void ft_close_fd(t_vector *fd_vector)
 
 void	ft_open_all_fd(t_ast_node *ast_node, t_hash_table *env)
 {
-	t_command	*command;
-	t_ast_node	*node;
 	t_vector fd_vector;
 	if (!ast_node)
 		return ;
 	ft_init_arrey(&fd_vector, 0);
 	if (ast_node->token_type == COMMAND)
-	{
-		command		= ft_ast_to_command(ast_node);
-		node		= ft_redirect_to_ast_node(command->redirect);
-		while (node)
-		{
-			ft_open_type(ft_ast_to_redirect(node), command, &fd_vector, env);
-			node = node->left;
-		}
-		ft_close_fd(&fd_vector);
-	}
+		ft_open_file(ft_ast_to_command(ast_node), env, &fd_vector);
 	ft_open_all_fd(ast_node->left, env);
 	ft_open_all_fd(ast_node->right, env);
 }
 
 // TODO expand env in command argument 
-void ft_executor(t_hash_table *table_env, t_container cont)
+void ft_executor(t_hash_table *table_env, t_hash_table *func_table, t_container cont)
 {
 	t_vector	pipe_fd;
 	size_t 		pipe_count;
 	size_t		pipe_iter;
+	int			status;
 
 
 	if (cont.exec_type == LIST)
 	{
+		// printf("aaaa\n");
 		pipe_count = 0;
+		cont.exit_status = ft_executor_with_list(cont.fd, cont.command, table_env, func_table);
 	}
 	else
 	{
@@ -315,11 +307,11 @@ void ft_executor(t_hash_table *table_env, t_container cont)
 		pipe_fd = ft_open_pipe_fd(pipe_count);
 		pipe_iter = 0;
 		
-		char *leak = ft_strdup("");
-		ft_ast_print(cont.tree->ast_node, leak, 0, 1);
-		free(leak);
+		// char *leak = ft_strdup("");
+		// ft_ast_print(cont.tree->ast_node, leak, 0, 1);
+		// free(leak);
 		
-		ft_execute_part(cont.tree->ast_node, table_env, &pipe_fd, &pipe_iter);
+		ft_execute_part(cont.fd, cont.tree->ast_node, table_env, func_table, &pipe_fd, &pipe_iter);
 		
 		for (size_t i = 0; i < pipe_fd.size; i++)
 		{
@@ -327,22 +319,25 @@ void ft_executor(t_hash_table *table_env, t_container cont)
 		}
 		for (size_t i = 0; i < pipe_count + 1; i++)
 		{
-			wait(NULL);
-			// close(pipe_fd.arr[i]);
+			wait(&status);
 		}
-		
-		
-		
-		
-		// ft_assign_pipe_fd(cont.tree->ast_node->left, &pipe_fd, &pipe_iter);
-
-
-
+		if (WIFEXITED(status))
+			cont.exit_status = WEXITSTATUS(status);
 		ft_free_tree(cont.tree->ast_node);	
 		free(cont.tree);
 		// printf("aaaaaa\n");
 	}
+
+	// close(cont.fd.output);
+	// close(cont.fd.input);
+	// close(cont.fd.error);
+	// dup2(cont.fd.output, STDOUT);
+	// // close(cont.fd.output);
+	// dup2(cont.fd.input, STDIN);
+	// // close(cont.fd.input);
+	// dup2(cont.fd.error, STDERR);
+	// close(cont.fd.error);
 	
 	(void)pipe_count;
-	// print_env(table_env);
+	// print_env(table_env, 0);
 }

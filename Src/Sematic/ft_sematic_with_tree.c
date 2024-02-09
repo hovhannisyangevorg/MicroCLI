@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_validate.c                                      :+:      :+:    :+:   */
+/*   ft_sematic_with_tree.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 20:41:20 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/16 16:02:21 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/08 21:41:16 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ t_status_codes ft_validate_empty(t_ast_node *node)
 	return (SUCCESS_CODE);
 }
 
-
-t_status_codes ft_validate(t_ast_node *root)
+t_status_codes ft_sematic_with_tree(t_ast_node *root)
 {
 	t_shant_stack	*node;
 	t_status_codes	status;
@@ -93,7 +92,7 @@ t_status_codes ft_validate(t_ast_node *root)
 	if (!root)
 		return (SUCCESS_CODE);
 	if (root->token_type == ROOT)
-		return (ft_validate(root->left));
+		return (ft_sematic_with_tree(root->left));
 	if (root->token_type == COMMAND)
 		status = ft_callback(status, ft_validate_command, root);
 	else if (root->token_type == REDIRECT)
@@ -105,10 +104,10 @@ t_status_codes ft_validate(t_ast_node *root)
 	while (node)
 	{
 		status	= ft_callback(status, ft_validate_empty, node->ast_node);
-		status	= ft_callback(status, ft_validate, node->ast_node);
+		status	= ft_callback(status, ft_sematic_with_tree, node->ast_node);
 		node	= node->next;
 	}
-	status = ft_callback(status, ft_validate, root->left);
-	status = ft_callback(status, ft_validate, root->right);
+	status = ft_callback(status, ft_sematic_with_tree, root->left);
+	status = ft_callback(status, ft_sematic_with_tree, root->right);
 	return (status);
 }

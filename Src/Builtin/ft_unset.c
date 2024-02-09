@@ -25,17 +25,11 @@
 // 	return (0);
 // }
 
-int	unset(int argc, char **argv, char **env)
+int	ft_unset(t_command* command, t_hash_table* env)
 {
-	(void)argc;
-	(void)argv;
-
-	t_env *my_env;
-
-	my_env = NULL;
-	my_env = env_init(env, my_env);
-	if (unset_helper(argv, my_env) == 0)
-		return (1);
+	(void)command;
+	(void)env;
+	ft_pop_entity(env, command->argument->arguments[1]);
 	return(0);
 }
 

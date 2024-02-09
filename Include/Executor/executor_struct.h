@@ -14,11 +14,13 @@ typedef struct 	s_hash_table 		t_hash_table;
 typedef struct 	s_vector			t_vector;
 
 
-typedef void (*t_function_callback)();
+typedef int (*t_function_callback)();
 
 typedef struct s_function_entity        t_function_entity;
 
 typedef struct s_env_entity             t_env_entity;
+
+typedef struct s_hash_table_arr         t_hash_table_arr;
 
 
 
@@ -71,9 +73,16 @@ struct s_function_entity
 struct s_env_entity
 {
     t_hash_entity           base;
+    int                     hidden;
     char*                   value;
 };
 
+
+struct s_hash_table_arr
+{
+    char**  table;
+    size_t  size;
+};
 
 
 struct s_vector

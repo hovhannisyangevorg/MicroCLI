@@ -6,11 +6,12 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/02/03 18:47:36 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/08 23:15:49 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include <termio.h>
 
 // size_t numofrec;
 
@@ -26,6 +27,38 @@
 
 // 0924
 
+void print_env_args(char** env)
+{
+	int i = -1;
+	printf("-------------args----------\n");
+	while (env && env[++i])
+	{
+		printf("%s\n", env[i]);
+	}
+	printf("-------------end args----------\n");
+	
+}
+
+void	ft_get_pid(t_container cont, t_hash_table *env)
+{
+	(void)cont;
+	pid_t pid;
+
+    pid = fork();
+
+    if (pid < 0)
+        return ;
+    else if (pid == 0)
+		exit(EXIT_SUCCESS);
+    else
+	{
+		wait(NULL);
+		char* p_id = ft_itoa(pid - 1);
+		ft_set_env(env, "$", p_id, 1);
+		free(p_id);
+    }
+}
+
 void	ft_program(char **env)
 {
 	t_container		container;
@@ -35,7 +68,11 @@ void	ft_program(char **env)
 	// signal(SIGINT, sig_handler_c);
 	// rl_catch_signals = 0;
 	t_hash_table *table = ft_create_env(env);
-
+	t_hash_table* funcs = ft_create_func_table();
+	// test for function table
+	ft_get_pid(container, table);
+	// char** env1 = ft_convert_env_to_args(table);
+	// print_env_args(env1);
 	while (1)
 	{
 		line = ft_get_line();
@@ -49,15 +86,16 @@ void	ft_program(char **env)
 		ft_balanced(line);
         list = ft_tokenize(line, SEPARATORS);
 		container = ft_parser(list);
-		ft_executor(table, container);
-
-
+		if (container.exit_status == SUCCESS_CODE)
+			ft_executor(table, funcs, container);
 		ft_free_list(list);
 		free(line);
     }
     clear_history();
 	ft_free_hash_table(table);
 	ft_clear_hash_table(table);
+	ft_free_hash_table(funcs);
+	ft_clear_hash_table(funcs);
 }
 
 int main(int, char **, char **env)

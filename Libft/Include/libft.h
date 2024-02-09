@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:10:28 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/01/19 16:13:36 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/08 22:13:05 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	*ft_strpbrk(const char *str1, const char *str2);
 int		ft_strfind(const char *str, const char *chars);
 char	*get_next_word(int fd);
 void	ft_panic(char *error);
+void	ft_panic_shell(char *error, char *current);
 int		ft_ismultiply_overflow(int a, int b);
 int		ft_isadd_overflow(int a, int b, int sign);
 void	ft_strdel(char **str);
@@ -101,6 +102,7 @@ int		ft_getline(int fd, char **line);
 size_t	ft_gnl_strlen(const char *s);
 char	*ft_gnl_strjoin(char *s1, char *s2);
 int		ft_gnl_strchr(const char *s, int c);
+
 
 int	ft_strcmp(char *s1, char *s2);
 
