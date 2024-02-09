@@ -2,6 +2,13 @@
 
 // #include "builtins.h"
 
+int ft_echo(t_command *command, t_hash_table* env)
+{
+    (void)env;
+    printf("%s\n", command->argument->arguments[1]);
+    return 0;
+}
+
 static int check_flag(char *arg);
 
 size_t	ft_strlen(const char *str)

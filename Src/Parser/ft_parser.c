@@ -22,22 +22,21 @@ t_io	ft_init_io()
 	return (io);
 }
 
-// void	ft_init_io_fd(t_io *io, t_io_type io_type, int fd)
-// {
-// 	if (io_type == STDIN)
-// 		io->input = dup(fd);
-// 	else if (io_type == STDOUT)
-// 		io->output = dup(fd);
-// 	else if (io_type == STDERR)
-// 		io->error = dup(fd);
-// }
+t_io	ft_init_io_std()
+{
+	t_io io;
+
+	io.error	= dup(STDERR_FILENO);
+	io.input	= dup(STDIN_FILENO);
+	io.output	= dup(STDOUT_FILENO);
+	return io;
+}
 
 t_container ft_parser(t_list_token *list)
 {
-	ft_print_list(list->head);
 	t_container 	container;
 
 	container 		= ft_sematic(list);
-	container.fd	= ft_init_io();
+	container.fd	= ft_init_io_std();
 	return (container);
 }

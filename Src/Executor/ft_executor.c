@@ -247,7 +247,7 @@ void	ft_open_type(t_redirect *redirect, t_command *cmd, t_vector *fd_vector, t_h
 	}
 	else if (redirect->base.token_type == APPEND)
 	{
-		fd = open(redirect->argument, O_APPEND | O_WRONLY | O_CREAT);
+		fd = open(redirect->argument, O_APPEND | O_WRONLY | O_CREAT, 0664);
 		if (cmd->io.output < fd)
 			cmd->io.output = fd;
 		else
@@ -296,9 +296,9 @@ void ft_executor(t_hash_table *table_env, t_hash_table *func_table, t_container 
 
 	if (cont.exec_type == LIST)
 	{
-		printf("aaaa\n");
+		// printf("aaaa\n");
 		pipe_count = 0;
-		cont.exit_status = ft_executor_with_list(cont.command, table_env, func_table);
+		cont.exit_status = ft_executor_with_list(cont.fd, cont.command, table_env, func_table);
 	}
 	else
 	{
@@ -307,11 +307,11 @@ void ft_executor(t_hash_table *table_env, t_hash_table *func_table, t_container 
 		pipe_fd = ft_open_pipe_fd(pipe_count);
 		pipe_iter = 0;
 		
-		char *leak = ft_strdup("");
-		ft_ast_print(cont.tree->ast_node, leak, 0, 1);
-		free(leak);
+		// char *leak = ft_strdup("");
+		// ft_ast_print(cont.tree->ast_node, leak, 0, 1);
+		// free(leak);
 		
-		ft_execute_part(cont.tree->ast_node, table_env, NULL, &pipe_fd, &pipe_iter);
+		ft_execute_part(cont.fd, cont.tree->ast_node, table_env, func_table, &pipe_fd, &pipe_iter);
 		
 		for (size_t i = 0; i < pipe_fd.size; i++)
 		{
@@ -327,6 +327,16 @@ void ft_executor(t_hash_table *table_env, t_hash_table *func_table, t_container 
 		free(cont.tree);
 		// printf("aaaaaa\n");
 	}
+
+	// close(cont.fd.output);
+	// close(cont.fd.input);
+	// close(cont.fd.error);
+	// dup2(cont.fd.output, STDOUT);
+	// // close(cont.fd.output);
+	// dup2(cont.fd.input, STDIN);
+	// // close(cont.fd.input);
+	// dup2(cont.fd.error, STDERR);
+	// close(cont.fd.error);
 	
 	(void)pipe_count;
 	// print_env(table_env, 0);

@@ -71,6 +71,8 @@ static int	ft_is_balanc(char *line)
 	return (balanced);
 }
 
+
+// TODO: do this in same way as sematic validator work
 void ft_balanced(char *line)
 {
 	char *color;
@@ -82,6 +84,6 @@ void ft_balanced(char *line)
 	}else if (!ft_is_quota_balanc(line))
 	{
 		color = RED "Bash Oops! : " BLACK "Syntax error quotes are not balanced ! `\" or `\''";
-		ft_panic(color);
+		ft_panic_shell("", color);
 	}
 }

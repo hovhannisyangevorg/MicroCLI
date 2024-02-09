@@ -20,6 +20,8 @@ typedef struct s_function_entity        t_function_entity;
 
 typedef struct s_env_entity             t_env_entity;
 
+typedef struct s_hash_table_arr         t_hash_table_arr;
+
 
 
 
@@ -75,6 +77,12 @@ struct s_env_entity
     char*                   value;
 };
 
+
+struct s_hash_table_arr
+{
+    char**  table;
+    size_t  size;
+};
 
 
 struct s_vector

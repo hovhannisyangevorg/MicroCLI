@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "shell.h"
+#include <termio.h>
 
 // size_t numofrec;
 
@@ -38,8 +39,9 @@ void print_env_args(char** env)
 	
 }
 
-void	ft_get_pid(t_hash_table *env)
+void	ft_get_pid(t_container cont, t_hash_table *env)
 {
+	(void)cont;
 	pid_t pid;
 
     pid = fork();
@@ -48,7 +50,9 @@ void	ft_get_pid(t_hash_table *env)
         return ;
     else if (pid == 0)
 		exit(EXIT_SUCCESS);
-    else {
+    else
+	{
+		wait(NULL);
 		char* p_id = ft_itoa(pid - 1);
 		ft_set_env(env, "$", p_id, 1);
 		free(p_id);
@@ -64,7 +68,9 @@ void	ft_program(char **env)
 	// signal(SIGINT, sig_handler_c);
 	// rl_catch_signals = 0;
 	t_hash_table *table = ft_create_env(env);
-	ft_get_pid(table);
+	t_hash_table* funcs = ft_create_func_table();
+	// test for function table
+	ft_get_pid(container, table);
 	// char** env1 = ft_convert_env_to_args(table);
 	// print_env_args(env1);
 	while (1)
@@ -81,15 +87,15 @@ void	ft_program(char **env)
         list = ft_tokenize(line, SEPARATORS);
 		container = ft_parser(list);
 		if (container.exit_status == SUCCESS_CODE)
-			ft_executor(table, NULL, container);
-
-
+			ft_executor(table, funcs, container);
 		ft_free_list(list);
 		free(line);
     }
     clear_history();
 	ft_free_hash_table(table);
 	ft_clear_hash_table(table);
+	ft_free_hash_table(funcs);
+	ft_clear_hash_table(funcs);
 }
 
 int main(int, char **, char **env)

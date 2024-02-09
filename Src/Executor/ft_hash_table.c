@@ -12,6 +12,58 @@
 
 #include "shell.h"
 
+// Comparison function for qsort
+// int compare_strings(const void *a, const void *b)
+// {
+//     return ft_strcmp(*(char **)a, *(char **)b);
+// }
+
+// Swap two strings
+void swap_strings(char **a, char **b)
+{
+    char *temp;
+	
+	temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Partition function for quicksort
+int ft_partition(char **arr, int low, int high)
+{
+    char *pivot = arr[high];  // Pivot element
+    int i = low - 1;  // Index of smaller element
+
+    for (int j = low; j < high; j++)
+	{
+        if (ft_strcmp(arr[j], pivot) < 0)
+		{
+            i++;
+            swap_strings(&arr[i], &arr[j]);
+        }
+    }
+    swap_strings(&arr[i + 1], &arr[high]);
+    return i + 1;
+}
+
+// Quicksort algorithm
+void ft_quicksort(char **arr, int low, int high)
+{
+    if (low < high)
+	{
+        int pi = ft_partition(arr, low, high);
+        ft_quicksort(arr, low, pi - 1);
+        ft_quicksort(arr, pi + 1, high);
+    }
+}
+
+t_hash_table_arr ft_sort_env(t_hash_table* table)
+{
+	t_hash_table_arr env_arr = ft_convert_env_to_args(table);
+	ft_quicksort(env_arr.table, 0, env_arr.size - 1);
+	return env_arr;
+}
+
 
 t_entity_table *ft_init_entity_table(size_t initialCapacity, t_hash_type type)
 {
@@ -316,6 +368,21 @@ t_hash_table *ft_create_env(char **env)
 	return (table);
 }
 
+t_hash_table* ft_create_func_table()
+{
+	t_hash_table* funcs;
+
+	funcs = ft_init_hash_table(7, FUNCTION);
+	ft_insert_entity(funcs, "exit",		ft_exit,	0);
+	ft_insert_entity(funcs, "echo",		ft_echo,	0);
+	ft_insert_entity(funcs, "cd",		ft_cd,		0);
+	ft_insert_entity(funcs, "pwd",		ft_pwd,		0);
+	ft_insert_entity(funcs, "export",	ft_export,	0);
+	ft_insert_entity(funcs, "env",		ft_env,		0);
+	ft_insert_entity(funcs, "unset",	ft_unset,	0);
+	return funcs;
+}
+
 
 
 void	ft_pop_entity(t_hash_table *table, char *key)
@@ -376,17 +443,20 @@ void	ft_pop_entity(t_hash_table *table, char *key)
 	--lst->size;
 }
 
-char** ft_convert_env_to_args(t_hash_table* env)
-{
-	char** copy = ft_calloc(env->table->size + 1, sizeof(char*));
 
-	size_t 			i;
-	size_t			j;
-	t_hash_entity 	*entry;
-	t_env_entity	*node;
+
+t_hash_table_arr ft_convert_env_to_args(t_hash_table* env)
+{
+	t_hash_table_arr	arr;
+	size_t 				i;
+	size_t				j;
+	t_hash_entity 		*entry;
+	t_env_entity		*node;
 
 	i = 0;
 	j = 0;
+
+	arr.table = ft_calloc(env->table->size + 1, sizeof(char*));
     while(i < env->table->capacity)
     {
 
@@ -396,9 +466,9 @@ char** ft_convert_env_to_args(t_hash_table* env)
             node	= ft_entity_to_env(entry);
 			if (!node->hidden)
 			{
-				copy[j] = ft_strdup(node->base.key);
-				copy[j] = ft_gnl_strjoin(copy[j], "=");
-				copy[j] = ft_gnl_strjoin(copy[j], node->value);
+				arr.table[j] = ft_strdup(node->base.key);
+				arr.table[j] = ft_gnl_strjoin(arr.table[j], "=");
+				arr.table[j] = ft_gnl_strjoin(arr.table[j], node->value);
 				++j;
 
 			}
@@ -406,7 +476,8 @@ char** ft_convert_env_to_args(t_hash_table* env)
         }
         ++i;
     }
-	return copy;
+	arr.size = j;
+	return arr;
 }
 
 void ft_free_hash_table(t_hash_table* table)
@@ -440,6 +511,20 @@ void ft_free_hash_table(t_hash_table* table)
 	free(table->table->entity);
 	free(table->table);
 	table->table = NULL;
+}
+
+
+void                print_env_table(t_hash_table_arr arr)
+{
+	size_t i = 0;
+	while (arr.table && arr.table[i])
+	{
+		ft_putstr_fd("declare -X ", STDOUT_FILENO);
+		ft_putstr_fd(arr.table[i], STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		++i;
+	}
+	
 }
 
 void ft_clear_hash_table(t_hash_table* table)

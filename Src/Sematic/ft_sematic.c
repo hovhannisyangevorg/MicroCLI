@@ -21,6 +21,7 @@ t_container ft_sematic(t_list_token *list)
 	char			*str;
 
 	tree = NULL;
+	// container.fd = ft_init_io_std();
 	if (ft_should_ast_created(list))
 	{
 		tree = ft_init_ast_tree();

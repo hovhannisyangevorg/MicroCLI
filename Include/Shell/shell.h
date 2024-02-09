@@ -8,6 +8,7 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <stddef.h>
+# include <fcntl.h>
 # include <errno.h>
 
 #ifndef  READLINE_LIBRARY
@@ -26,5 +27,9 @@
 # include 	"sematic.h"
 # include 	"tokenizer.h"
 # include	"builtins.h"
+
+
+void lock_file(int fd, short type);
+void unlock_file(int fd);
 
 #endif
