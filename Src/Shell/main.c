@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/02/03 18:47:36 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/08 23:15:49 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,23 @@ void print_env_args(char** env)
 	
 }
 
+void	ft_get_pid(t_hash_table *env)
+{
+	pid_t pid;
+
+    pid = fork();
+
+    if (pid < 0)
+        return ;
+    else if (pid == 0)
+		exit(EXIT_SUCCESS);
+    else {
+		char* p_id = ft_itoa(pid - 1);
+		ft_set_env(env, "$", p_id, 1);
+		free(p_id);
+    }
+}
+
 void	ft_program(char **env)
 {
 	t_container		container;
@@ -47,8 +64,9 @@ void	ft_program(char **env)
 	// signal(SIGINT, sig_handler_c);
 	// rl_catch_signals = 0;
 	t_hash_table *table = ft_create_env(env);
-	char** env1 = ft_convert_env_to_args(table);
-	print_env_args(env1);
+	ft_get_pid(table);
+	// char** env1 = ft_convert_env_to_args(table);
+	// print_env_args(env1);
 	while (1)
 	{
 		line = ft_get_line();
@@ -62,7 +80,8 @@ void	ft_program(char **env)
 		ft_balanced(line);
         list = ft_tokenize(line, SEPARATORS);
 		container = ft_parser(list);
-		ft_executor(table, container);
+		if (container.exit_status == SUCCESS_CODE)
+			ft_executor(table, NULL, container);
 
 
 		ft_free_list(list);

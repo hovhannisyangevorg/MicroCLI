@@ -11,8 +11,7 @@ t_container			ft_parser(t_list_token *list);
 // ft_helper.c
 int					ft_should_ast_create(t_list_token *list);
 
-// ft_sematic.c
-t_global_tree		*ft_sematic(t_list_token *list, int isast);
+
 
 // void			ft_subtree_TST(t_ast_node *tree);
 

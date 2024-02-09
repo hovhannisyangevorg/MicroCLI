@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_panic.c                                         :+:      :+:    :+:   */
+/*   ft_sematic_with_list.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/01 15:06:27 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/02/08 22:14:16 by gevorg           ###   ########.fr       */
+/*   Created: 2024/02/08 21:39:37 by gevorg            #+#    #+#             */
+/*   Updated: 2024/02/08 22:07:51 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "shell.h"
 
-void	ft_panic(char *error)
+
+
+t_status_codes ft_sematic_with_list(t_command* cmd)
 {
-	write (2, error, ft_strlen(error));
-	write (2, "\n", 1);
-	exit (1);
+	return (ft_validate_command(ft_command_to_ast_node(cmd)));
 }
-
-void	ft_panic_shell(char *error, char *current)
-{
-	if (error)
-		write (2, error, ft_strlen(error));
-	if (current)
-		write (2, current, ft_strlen(current));
-	write(2, "\n", 1);
-}
-

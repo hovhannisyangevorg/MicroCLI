@@ -4,9 +4,13 @@
 # include 	"shell.h"
 
 
-void ft_executor(t_hash_table *table, t_container cont);
+void ft_executor(t_hash_table *table_env, t_hash_table *func_table, t_container cont);
 
-
+void	ft_open_file(t_command *command, t_hash_table *env, t_vector* fd_vector);
+int		ft_executor_with_list(t_command *command, t_hash_table* env, t_hash_table* function_table);
+int		ft_command_fron_PATH(t_command *command, t_hash_table *env);
+void	ft_open_type(t_redirect *redirect, t_command *cmd, t_vector *fd_vector, t_hash_table *env);
+void	ft_close_fd(t_vector *fd_vector);
 
 
 // ft_casts.c
@@ -41,7 +45,7 @@ int					ft_isquot(const char *exit_key);
 t_vector			ft_open_pipe_fd(size_t pipe_count);
 void				ft_assign_pipe_fd(t_ast_node *tree, t_vector *pipe_fd, size_t* pipe_iter);
 
-void				ft_execute_part(t_ast_node *tree, t_hash_table *env, t_vector *pipe_fd, size_t* pipe_iter);
+void				ft_execute_part(t_ast_node *tree, t_hash_table *env, t_hash_table * func_table, t_vector *pipe_fd, size_t* pipe_iter);
 char**              ft_convert_env_to_args(t_hash_table* env);
 
 

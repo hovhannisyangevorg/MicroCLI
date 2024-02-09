@@ -8,6 +8,7 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <stddef.h>
+# include <errno.h>
 
 #ifndef  READLINE_LIBRARY
 #define READLINE_LIBRARY 1

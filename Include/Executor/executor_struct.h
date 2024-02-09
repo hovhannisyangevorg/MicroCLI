@@ -14,7 +14,7 @@ typedef struct 	s_hash_table 		t_hash_table;
 typedef struct 	s_vector			t_vector;
 
 
-typedef void (*t_function_callback)();
+typedef int (*t_function_callback)();
 
 typedef struct s_function_entity        t_function_entity;
 

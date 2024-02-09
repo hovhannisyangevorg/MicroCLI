@@ -13,10 +13,11 @@ struct s_container
 {
 	t_exec_type 	exec_type;
 	t_io 			fd;
+	t_status_codes	exit_status;
 	union
 	{
 		t_global_tree 	*tree;
-		t_list_token	*list;
+		t_command		*command;
 	};
 };
 
