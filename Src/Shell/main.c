@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: armhakob <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/02/08 23:15:49 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/10 22:39:22 by armhakob         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-#include <termio.h>
+// #include <termio.h>
 
 // size_t numofrec;
 
@@ -101,8 +101,10 @@ void	ft_program(char **env)
 	ft_clear_symbol_table(container.table);
 }
 
-int main(int, char **, char **env)
+int main(int ac, char **av, char **env)
 {
+	(void)ac;
+	(void)av;
 	ft_program(env);
 	return (0);	
 }

@@ -1,4 +1,4 @@
-prefix=/home/gevorg/Desktop/Minishell/Readline_update
+prefix=/home/Desktop/Minishell/Readline_update
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
