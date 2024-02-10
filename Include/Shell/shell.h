@@ -29,7 +29,4 @@
 # include	"builtins.h"
 
 
-void lock_file(int fd, short type);
-void unlock_file(int fd);
-
 #endif

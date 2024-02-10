@@ -6,7 +6,7 @@
 
 
 // ft_parser.c
-t_container			ft_parser(t_list_token *list);
+t_container			ft_parser(t_container cont, t_list_token *list);
 
 t_io                ft_init_io_std();
 

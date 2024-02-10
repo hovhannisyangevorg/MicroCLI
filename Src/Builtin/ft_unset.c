@@ -25,11 +25,11 @@
 // 	return (0);
 // }
 
-int	ft_unset(t_command* command, t_hash_table* env)
+int	ft_unset(t_command* command, t_symbol_table* table)
 {
 	(void)command;
-	(void)env;
-	ft_pop_entity(env, command->argument->arguments[1]);
+	(void)table;
+	ft_pop_entity(table->env, command->argument->arguments[1]);
 	return(0);
 }
 

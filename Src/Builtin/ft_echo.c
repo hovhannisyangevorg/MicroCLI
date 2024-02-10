@@ -2,9 +2,9 @@
 
 // #include "builtins.h"
 
-int ft_echo(t_command *command, t_hash_table* env)
+int ft_echo(t_command *command, t_symbol_table* table)
 {
-    (void)env;
+    (void)table;
     printf("%s\n", command->argument->arguments[1]);
     return 0;
 }

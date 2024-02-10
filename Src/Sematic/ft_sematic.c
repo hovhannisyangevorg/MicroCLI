@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-t_container ft_sematic(t_list_token *list)
+t_container ft_sematic(t_container cont, t_list_token *list)
 {
 	t_container		container;
 	t_global_tree 	*tree;
@@ -21,7 +21,7 @@ t_container ft_sematic(t_list_token *list)
 	char			*str;
 
 	tree = NULL;
-	// container.fd = ft_init_io_std();
+	container = cont;
 	if (ft_should_ast_created(list))
 	{
 		tree = ft_init_ast_tree();

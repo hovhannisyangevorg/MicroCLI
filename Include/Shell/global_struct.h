@@ -14,6 +14,7 @@ struct s_container
 	t_exec_type 	exec_type;
 	t_io 			fd;
 	t_status_codes	exit_status;
+	t_symbol_table*	table;
 	union
 	{
 		t_global_tree 	*tree;

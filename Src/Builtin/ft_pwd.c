@@ -1,10 +1,10 @@
 #include "shell.h"
 
 
-int	ft_pwd(t_command* command, t_hash_table* env)
+int	ft_pwd(t_command* command, t_symbol_table* table)
 {
 	(void)command;
-	(void)env;
+	(void)table;
 	return(0);
 }
 

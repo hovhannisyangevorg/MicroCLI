@@ -286,7 +286,7 @@ void	ft_open_all_fd(t_ast_node *ast_node, t_hash_table *env)
 }
 
 // TODO expand env in command argument 
-void ft_executor(t_hash_table *table_env, t_hash_table *func_table, t_container cont)
+void ft_executor(t_symbol_table* table, t_container cont)
 {
 	t_vector	pipe_fd;
 	size_t 		pipe_count;
@@ -298,12 +298,12 @@ void ft_executor(t_hash_table *table_env, t_hash_table *func_table, t_container 
 	{
 		// printf("aaaa\n");
 		pipe_count = 0;
-		cont.exit_status = ft_executor_with_list(cont.fd, cont.command, table_env, func_table);
+		cont.exit_status = ft_executor_with_list(cont.fd, cont.command, table);
 	}
 	else
 	{
 		pipe_count = ft_pipe_count_tree(cont.tree->ast_node);
-		ft_open_all_fd(cont.tree->ast_node, table_env);
+		ft_open_all_fd(cont.tree->ast_node, table->env);
 		pipe_fd = ft_open_pipe_fd(pipe_count);
 		pipe_iter = 0;
 		
@@ -311,7 +311,7 @@ void ft_executor(t_hash_table *table_env, t_hash_table *func_table, t_container 
 		// ft_ast_print(cont.tree->ast_node, leak, 0, 1);
 		// free(leak);
 		
-		ft_execute_part(cont.fd, cont.tree->ast_node, table_env, func_table, &pipe_fd, &pipe_iter);
+		ft_execute_part(cont.fd, cont.tree->ast_node, table, &pipe_fd, &pipe_iter);
 		
 		for (size_t i = 0; i < pipe_fd.size; i++)
 		{
@@ -339,5 +339,5 @@ void ft_executor(t_hash_table *table_env, t_hash_table *func_table, t_container 
 	// close(cont.fd.error);
 	
 	(void)pipe_count;
-	// print_env(table_env, 0);
+	// print_env(table->env, 0);
 }

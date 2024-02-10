@@ -32,11 +32,11 @@ t_io	ft_init_io_std()
 	return io;
 }
 
-t_container ft_parser(t_list_token *list)
+t_container ft_parser(t_container cont, t_list_token *list)
 {
 	t_container 	container;
 
-	container 		= ft_sematic(list);
+	container 		= ft_sematic(cont, list);
 	container.fd	= ft_init_io_std();
 	return (container);
 }

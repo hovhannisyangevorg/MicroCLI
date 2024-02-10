@@ -1,11 +1,11 @@
 #include "shell.h"
 
-int	ft_env(t_command* command, t_hash_table* env)
+int	ft_env(t_command* command, t_symbol_table* table)
 {
 
     (void)command;
-    (void)env;
-	print_env(env, 0);
+    (void)table;
+	print_env(table->env, VENV);
 	return(0);
 }
 

@@ -54,7 +54,7 @@ void	ft_get_pid(t_container cont, t_hash_table *env)
 	{
 		wait(NULL);
 		char* p_id = ft_itoa(pid - 1);
-		ft_set_env(env, "$", p_id, 1);
+		ft_set_env(env, (t_hash_data){"$", p_id, HIDDEN});
 		free(p_id);
     }
 }
@@ -67,10 +67,16 @@ void	ft_program(char **env)
 
 	// signal(SIGINT, sig_handler_c);
 	// rl_catch_signals = 0;
-	t_hash_table *table = ft_create_env(env);
-	t_hash_table* funcs = ft_create_func_table();
+	container.table = ft_create_symbol_table(env);
+	//finished testing of sort functionality of hash table!!!
+	
+	// ft_set_env(container.table->env, (t_hash_data){"a", "b", NORMAL});
+	// ft_set_env(container.table->env, (t_hash_data){"d", "d", NORMAL});
+	// ft_set_env(container.table->env, (t_hash_data){"v", "g", NORMAL});
+	// ft_set_env(container.table->env, (t_hash_data){"b", NULL, NORMAL});
+	// print_env(table, 1);
 	// test for function table
-	ft_get_pid(container, table);
+	ft_get_pid(container, container.table->env);
 	// char** env1 = ft_convert_env_to_args(table);
 	// print_env_args(env1);
 	while (1)
@@ -85,17 +91,14 @@ void	ft_program(char **env)
 		}
 		ft_balanced(line);
         list = ft_tokenize(line, SEPARATORS);
-		container = ft_parser(list);
+		container = ft_parser(container, list);
 		if (container.exit_status == SUCCESS_CODE)
-			ft_executor(table, funcs, container);
+			ft_executor(container.table, container);
 		ft_free_list(list);
 		free(line);
     }
     clear_history();
-	ft_free_hash_table(table);
-	ft_clear_hash_table(table);
-	ft_free_hash_table(funcs);
-	ft_clear_hash_table(funcs);
+	ft_clear_symbol_table(container.table);
 }
 
 int main(int, char **, char **env)

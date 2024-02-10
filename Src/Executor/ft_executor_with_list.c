@@ -45,7 +45,7 @@ void	ft_open_file(t_command *command, t_hash_table *env, t_vector* fd_vector)
 int ft_handle_external(t_io io, t_command* command, t_hash_table* env_table)
 {
 	(void)io;
-	t_hash_table_arr env = ft_convert_env_to_args(env_table);
+	t_hash_table_arr env = ft_convert_env_to_args(env_table, 1);
 	int status = 0;
 	int pid = fork();
 	if (pid == -1)
@@ -71,41 +71,40 @@ int ft_handle_external(t_io io, t_command* command, t_hash_table* env_table)
 	return(status);
 }
 
-int	ft_executor_with_list(t_io io, t_command *command, t_hash_table* env, t_hash_table* function_table)
+int	ft_executor_with_list(t_io io, t_command *command, t_symbol_table* table)
 {
-	(void)function_table;
 	int			status;
 	// char		*st_str;
 	t_vector	fd_vector;
 
 
 	ft_init_arrey(&fd_vector, 0);
-	ft_open_file(command, env, &fd_vector);
-	t_function_callback biltin_func =  ft_get_function(function_table, command->argument->arguments[0]);
+	ft_open_file(command, table->env, &fd_vector);
+	t_function_callback biltin_func =  ft_get_function(table->function, command->argument->arguments[0]);
 	if (biltin_func)
 	{
 		// printf("%d\n", io.output);
 		// t_io io_res = ft_init_io_restore(io);
 
 		// int f = dup(STDOUT_FILENO);
-		// // int f = dup(io.input);
-		// // ft_restore_std_io(io_res);
-		// // ft_init_io_std()
+		// int f = dup(io.input);
+		// ft_restore_std_io(io_res);
+		// ft_init_io_std()
 		ft_handle_redirect_ios(command->io);
 		// close(command->io.input);
 		// close(command->io.output);
 		// close(command->io.error);
-		status = biltin_func(command, env);
+		status = biltin_func(command, table);
 		// dup2(f, STDOUT_FILENO);
 		ft_restore_std_io(io);
 		return status;
-	// 	// status = biltin_func(command, env);
-	// 	// st_str = ft_itoa(status);
-	// 	// ft_set_env(env, "?", st_str, 1);
-	// 	// free(st_str);
+		// status = biltin_func(command, env);
+		// st_str = ft_itoa(status);
+		// ft_set_env(env, "?", st_str, 1);
+		// free(st_str);
 	}
 	// status 		= ft_handle_external(command, env);
-	return ft_handle_external(io, command, env);
+	return ft_handle_external(io, command, table->env);
 	// st_str 		= ft_itoa(status);
 	// ft_set_env(env, "?", st_str, 1);
 	// free(st_str);

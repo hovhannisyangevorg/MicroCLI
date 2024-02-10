@@ -5,7 +5,7 @@
 
 
 // ft_sematic.c
-t_container		ft_sematic(t_list_token *list);
+t_container		ft_sematic(t_container cont, t_list_token *list);
 
 t_status_codes ft_validate_operator(t_ast_node* node);
 

@@ -1,14 +1,12 @@
 #include "shell.h"
 
-
-int	ft_export(t_command* command, t_hash_table* env)
+int	ft_export(t_command* command, t_symbol_table* table)
 {
 	(void)command;
-	t_hash_table_arr arr = ft_sort_env(env);
+	t_hash_table_arr arr = ft_sort_env(table->env);
 	print_env_table(arr);
 	free(arr.table);
-	// (void)command;
-	// (void)env;
+	(void)command;
 	return(0);
 }
 
