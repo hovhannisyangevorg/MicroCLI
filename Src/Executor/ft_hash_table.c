@@ -59,7 +59,7 @@ void ft_quicksort(char **arr, int low, int high)
 
 t_hash_table_arr ft_sort_env(t_hash_table* table)
 {
-	t_hash_table_arr env_arr = ft_convert_env_to_args(table);
+	t_hash_table_arr env_arr = ft_convert_env_to_args(table, EXPORT);
 	ft_quicksort(env_arr.table, 0, env_arr.size - 1);
 	return env_arr;
 }
@@ -70,7 +70,6 @@ t_entity_table *ft_init_entity_table(size_t initialCapacity, t_hash_type type)
 	size_t			i;
     t_entity_table	*table;
 
-	// table = (t_hash_table *)malloc(sizeof(t_hash_table));
 	table = (t_entity_table*)malloc(sizeof(t_entity_table));
     table->size = 0;
     table->capacity = initialCapacity;
@@ -126,27 +125,30 @@ t_function_entity	*ft_create_function_entity(char *key, void *data)
 	return (node);
 }
 
-t_env_entity	*ft_create_env_entity(char *key, void *data, int hidden)
+t_env_entity	*ft_create_env_entity(t_hash_data data)
 {
 	t_env_entity	*node;
 
 	node			= (t_env_entity *)malloc(sizeof(t_env_entity));
-    node->value		= ft_strdup((char *)data);
-	node->base.key	= ft_strdup(key);
-	node->hidden	= hidden;
+	node->base.key	= ft_strdup(data.key);
+	if ((char*)data.data)
+		node->value		= ft_strdup((char *)data.data);
+	else
+		node->value = NULL;
+	node->visibility = data.type;
 	node->base.next	= NULL;
 	return (node);
 }
 
 
-void	ft_push_entity(t_hash_entity_list *lst, char *key, void *data, t_hash_type type, int hidden)
+void	ft_push_entity(t_hash_entity_list *lst, t_hash_data data, t_hash_type type)
 {
 	t_hash_entity	*node;
 
     if (type == FUNCTION)
-		node = ft_function_to_entity(ft_create_function_entity(key, data));
+		node = ft_function_to_entity(ft_create_function_entity(data.key, data.data));
     else
-		node = ft_env_to_entity(ft_create_env_entity(key, data, hidden));
+		node = ft_env_to_entity(ft_create_env_entity(data));
 
 	if (!lst->head)
 	{
@@ -160,34 +162,34 @@ void	ft_push_entity(t_hash_entity_list *lst, char *key, void *data, t_hash_type 
 	++lst->size;
 }
 
+
+
 void ft_resize_entity(t_hash_table *table, size_t new_capacity)
 {
-	size_t			i;
-	t_hash_entity	*node;
-    t_entity_table	*hash_table;
-	char			*key;
-	void			*data;
-	size_t			index;
-	int				hidden;
+	size_t				i;
+	t_hash_entity		*node;
+    t_entity_table		*hash_table;
+	t_hash_data			data;
+	size_t				index;
 
     i = 0;
-	hidden = 0;
+	data.type = 0;
     hash_table = ft_init_entity_table(new_capacity, table->table->type);
     while (i < table->table->capacity)
     {
         node = table->table->entity[i].head;
         while (node)
         {
-            key = node->key;
+            data.key = node->key;
             if (table->table->type == FUNCTION)
-				data = ft_entity_to_function(node)->function;
+				data.data = ft_entity_to_function(node)->function;
             else
 			{
-				data = ft_entity_to_env(node)->value;
-				hidden =  ft_entity_to_env(node)->hidden;
+				data.data = ft_entity_to_env(node)->value;
+				data.type =  ft_entity_to_env(node)->visibility;
 			}
-			index = ft_hash_entity(new_capacity, key);
-            ft_push_entity(&hash_table->entity[index], key, data, table->table->type, hidden);
+			index = ft_hash_entity(new_capacity, data.key);
+            ft_push_entity(&hash_table->entity[index], data, table->table->type);
             node = node->next;
 			++hash_table->size;
         }
@@ -198,7 +200,7 @@ void ft_resize_entity(t_hash_table *table, size_t new_capacity)
 	// *table = hash_table;
 }
 
-void	ft_insert_entity(t_hash_table *table, char *key, void *data, int hidden)
+void	ft_insert_entity(t_hash_table *table, t_hash_data data)
 {
 	size_t index;
 	size_t newCapacity;
@@ -214,8 +216,8 @@ void	ft_insert_entity(t_hash_table *table, char *key, void *data, int hidden)
         ft_resize_entity(table, newCapacity);
     }
 
-    index = ft_hash_entity(table->table->capacity, key);
-	ft_push_entity(&table->table->entity[index], key, data, table->table->type, hidden);
+    index = ft_hash_entity(table->table->capacity, data.key);
+	ft_push_entity(&table->table->entity[index], data, table->table->type);
     ++table->table->size;
 }
 
@@ -287,31 +289,34 @@ char* ft_get_env(t_hash_table *table, char *key)
 }
 
 
-void	ft_set_env(t_hash_table *table, char *key, char *val, int hidden)
+void	ft_set_env(t_hash_table *table, t_hash_data data)
 {
     size_t			index;
     t_hash_entity	*entry;
 	t_env_entity	*ent_tmp;
 
-	index = ft_hash_entity(table->table->capacity, key);
+	index = ft_hash_entity(table->table->capacity, data.key);
 	entry = table->table->entity[index].head;
     while (entry != NULL)
 	{
-        if (!ft_strcmp(entry->key, key))
+        if (!ft_strcmp(entry->key, data.key))
         {
 			ent_tmp = ft_entity_to_env(entry);
 			free(ent_tmp->value);
-			ent_tmp->value = ft_strdup(val);
-			ent_tmp->hidden = hidden;
+			if (data.data)
+				ent_tmp->value = ft_strdup(data.data);
+			else
+				ent_tmp->value = NULL;
+			ent_tmp->visibility = data.type;
 			return ;
 		}
         entry = entry->next;
     }
-	ft_insert_entity(table, key, val, hidden);
+	ft_insert_entity(table, data);
 }
 
 
-void	print_env(t_hash_table* env, int hidden)
+void	print_env(t_hash_table* env, t_visibility_type visibility)
 {
     size_t 			i;
 	t_hash_entity 	*entry;
@@ -325,10 +330,8 @@ void	print_env(t_hash_table* env, int hidden)
         while (entry != NULL)
         {
             node	= ft_entity_to_env(entry);
-			if (hidden && node->hidden)
+			if (node->visibility == visibility || node->visibility == NORMAL)
             	printf("%s=%s\n", entry->key, node->value);
-			else if (!node->hidden)
-				printf("%s=%s\n", entry->key, node->value);
             entry	= entry->next;
         }
         ++i;
@@ -341,9 +344,8 @@ t_hash_table *ft_create_env(char **env)
 	size_t			i;
 	size_t			len;
 	t_hash_table	*table;
+	t_hash_data		data;
 	char			*assign;
-	char			*value;
-	char			*key;
 
 	i = 0;
 	table = ft_init_hash_table(10, ENV);
@@ -353,16 +355,25 @@ t_hash_table *ft_create_env(char **env)
 		if (assign)
 		{
 			len = assign - env[i];
-			value = assign + 1;
+			data.data = assign + 1;
 		}
 		else
 		{
 			len = ft_strlen(env[i]);
-			value = "";
+			data.data = NULL;
 		}
-		key = ft_substr(env[i], 0, len);
-		ft_insert_entity(table, key, value, 0);
-		free(key);
+		data.key = ft_substr(env[i], 0, len);
+		if (!ft_strcmp(data.key, "_"))
+		{
+			data.type = VENV;
+			ft_insert_entity(table, data);
+		}
+		else
+		{
+			data.type = NORMAL;
+			ft_insert_entity(table, data);
+		}
+		free(data.key);
 		++i;
 	}
 	return (table);
@@ -373,13 +384,14 @@ t_hash_table* ft_create_func_table()
 	t_hash_table* funcs;
 
 	funcs = ft_init_hash_table(7, FUNCTION);
-	ft_insert_entity(funcs, "exit",		ft_exit,	0);
-	ft_insert_entity(funcs, "echo",		ft_echo,	0);
-	ft_insert_entity(funcs, "cd",		ft_cd,		0);
-	ft_insert_entity(funcs, "pwd",		ft_pwd,		0);
-	ft_insert_entity(funcs, "export",	ft_export,	0);
-	ft_insert_entity(funcs, "env",		ft_env,		0);
-	ft_insert_entity(funcs, "unset",	ft_unset,	0);
+	
+	ft_insert_entity(funcs, (t_hash_data){ "exit",		ft_exit,	0});
+	ft_insert_entity(funcs, (t_hash_data){ "cd",		ft_cd,		0});
+	ft_insert_entity(funcs, (t_hash_data){ "echo",		ft_echo,	0});
+	ft_insert_entity(funcs, (t_hash_data){ "env",		ft_env,		0});
+	ft_insert_entity(funcs, (t_hash_data){ "export",	ft_export,	0});
+	ft_insert_entity(funcs, (t_hash_data){ "unset",		ft_unset,	0});
+	ft_insert_entity(funcs, (t_hash_data){ "pwd",		ft_pwd,		0});
 	return funcs;
 }
 
@@ -445,7 +457,7 @@ void	ft_pop_entity(t_hash_table *table, char *key)
 
 
 
-t_hash_table_arr ft_convert_env_to_args(t_hash_table* env)
+t_hash_table_arr ft_convert_env_to_args(t_hash_table* env, t_visibility_type visibility)
 {
 	t_hash_table_arr	arr;
 	size_t 				i;
@@ -464,13 +476,15 @@ t_hash_table_arr ft_convert_env_to_args(t_hash_table* env)
         while (entry != NULL)
         {
             node	= ft_entity_to_env(entry);
-			if (!node->hidden)
+			if (node->visibility == visibility || node->visibility == NORMAL)
 			{
 				arr.table[j] = ft_strdup(node->base.key);
-				arr.table[j] = ft_gnl_strjoin(arr.table[j], "=");
-				arr.table[j] = ft_gnl_strjoin(arr.table[j], node->value);
+				if (node->value)
+				{
+					arr.table[j] = ft_gnl_strjoin(arr.table[j], "=");
+					arr.table[j] = ft_gnl_strjoin(arr.table[j], node->value);
+				}
 				++j;
-
 			}
             entry	= entry->next;
         }

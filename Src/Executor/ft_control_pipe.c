@@ -151,10 +151,9 @@ void ft_handle_redirect_ios(t_io io)
 // lsof -p
 // TODO: write logic for rigt
 // TODO: check file permissions in redirection part
-int		ft_execut_command(t_io io, t_command *command, t_hash_table *env_table, t_hash_table *function_table, t_vector *pipe_fd, size_t pipe_iter)
+int		ft_execut_command(t_io io, t_command *command, t_symbol_table* table, t_vector *pipe_fd, size_t pipe_iter)
 {
-	(void)function_table;
-	t_hash_table_arr env = ft_convert_env_to_args(env_table);
+	t_hash_table_arr env = ft_convert_env_to_args(table->env, 1);
 	int pid = fork();
 	if (pid == -1)
 		return (-1);
@@ -163,16 +162,16 @@ int		ft_execut_command(t_io io, t_command *command, t_hash_table *env_table, t_h
 		ft_handle_redirect_ios(command->io);
 		ft_hendle_pipe(pipe_fd, pipe_iter, command->io);
 		// printf("aaa\n");
-		t_function_callback biltin_func =  ft_get_function(function_table, command->argument->arguments[0]);
+		t_function_callback biltin_func =  ft_get_function(table->function, command->argument->arguments[0]);
 		// printf("found: %d\n", biltin_func == 0);
 		if (biltin_func)
 		{
-			int status = biltin_func(command, env_table);
+			int status = biltin_func(command, table);
 		// 	char* st = ft_itoa(status);
 		// 	// ft_set_env(env_table, "?", st, 1);
 			exit(status);
 		}
-		ft_command_fron_PATH(command, env_table);
+		ft_command_fron_PATH(command, table->env);
 		execve(command->argument->arguments[0], command->argument->arguments, env.table);
 		ft_panic_shell(command->argument->arguments[0], ": command not found");
 		exit(EXIT_FAILURE);
@@ -187,7 +186,7 @@ int		ft_execut_command(t_io io, t_command *command, t_hash_table *env_table, t_h
 }
 
 
-int		ft_open_process_for_pipe(t_io io, t_ast_node *tree, t_hash_table *env, t_hash_table *function_table, t_vector *pipe_fd, size_t* pipe_iter)
+int		ft_open_process_for_pipe(t_io io, t_ast_node *tree, t_symbol_table* table, t_vector *pipe_fd, size_t* pipe_iter)
 {
 	t_ast_node *ast_node;
 
@@ -197,11 +196,11 @@ int		ft_open_process_for_pipe(t_io io, t_ast_node *tree, t_hash_table *env, t_ha
 		ast_node = ft_ast_left_most(tree->left);
 		if (ast_node)
 		{
-			ft_execut_command(io, ft_ast_to_command(ast_node), env, function_table, pipe_fd, *pipe_iter);
+			ft_execut_command(io, ft_ast_to_command(ast_node), table, pipe_fd, *pipe_iter);
 			(*pipe_iter)++;
 		}
 
-		ft_execut_command(io, ft_ast_to_command(tree->right), env, function_table, pipe_fd, *pipe_iter);
+		ft_execut_command(io, ft_ast_to_command(tree->right), table, pipe_fd, *pipe_iter);
 		(*pipe_iter)++;
 	}
 	
@@ -209,19 +208,19 @@ int		ft_open_process_for_pipe(t_io io, t_ast_node *tree, t_hash_table *env, t_ha
 }	
 
 // TODO: open wait for process and close unclosd fd
-void	ft_execute_part(t_io io, t_ast_node *tree, t_hash_table *env, t_hash_table *func_table, t_vector *pipe_fd, size_t* pipe_iter)
+void	ft_execute_part(t_io io, t_ast_node *tree, t_symbol_table* table, t_vector *pipe_fd, size_t* pipe_iter)
 {
 	if (!tree)
 		return ;
 
-	ft_execute_part(io, tree->left, env, func_table, pipe_fd, pipe_iter);
+	ft_execute_part(io, tree->left, table, pipe_fd, pipe_iter);
 	
 	if (tree->token_type == PIPE)
 	{
-		ft_open_process_for_pipe(io, tree, env, func_table, pipe_fd, pipe_iter);
+		ft_open_process_for_pipe(io, tree, table, pipe_fd, pipe_iter);
 		return;
 	}
-	ft_execute_part(io, tree->right, env, func_table, pipe_fd, pipe_iter);
+	ft_execute_part(io, tree->right, table, pipe_fd, pipe_iter);
 }
 
 
