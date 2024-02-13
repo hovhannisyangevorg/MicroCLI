@@ -16,5 +16,10 @@ int	ft_pwd(t_command* command, t_symbol_table* table)
 {
 	(void)command;
 	(void)table;
+	char *pwd;
+
+
+    pwd = getcwd(NULL, 0);
+	ft_putendl_fd(pwd, STDOUT_FILENO);
 	return(0);
 }

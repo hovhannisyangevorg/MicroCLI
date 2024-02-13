@@ -6,81 +6,56 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:49:04 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/11 22:00:03 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/13 20:41:34 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int ft_echo(t_command *command, t_symbol_table* table)
+int ft_echo(t_command *command, t_symbol_table *table)
 {
-    (void)table;
-	size_t i = 0;
-	while (command->argument->arguments && command->argument->arguments[i])
-	{
-		printf("%s ", command->argument->arguments[i]);
-		++i;
-	}
-	printf("\n");
-	
+	(void)table;
+    int is_new_line = 1;
+    int option_n 	= 0;
+    size_t i 		= 0;
+    i = 0;
+    if (command->argument && command->argument->arguments && command->argument->arguments[0])
+    {
+        if (command->argument->arguments[1])
+        {
+            if (command->argument->arguments[1][0] == '-')
+            {
+                ++i;
+                option_n = 0;
+                while (command->argument->arguments[1][i])
+                {
+                    
+                    if (command->argument->arguments[1][i] != 'n')
+                    {
+                        option_n = 1;
+                        break;
+                    }
+                    ++i;
+                }
+                if (!option_n)
+                    is_new_line = 0;
+            }
+        }
+    }
+    if (is_new_line)
+        i = 1;
+    else
+        i = 2;
+    while (command->argument->arguments[i])
+    {
+        ft_putstr_fd(command->argument->arguments[i], STDOUT_FILENO);
+        if (command->argument->arguments[i + 1])
+            ft_putchar_fd(' ', STDOUT_FILENO);
+        ++i;
+    }
+    if (is_new_line)
+        ft_putchar_fd('\n', STDOUT_FILENO);
+
     return 0;
 }
-
-static int check_flag(char *arg);
-
-size_t	ft_strlen(const char *str)
-{
-	const char	*ptr;
-
-	ptr = str;
-	while (ptr && *ptr)
-		ptr++;
-	return (ptr - str);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	if (!s)
-		return ;
-	write(fd, s, ft_strlen(s));
-}
-
-int echo(int argc, char **argv,char **env)
-{
-    (void)env;
-
-    int i;
-    int flag;
-
-    if (!argv[1])
-    {
-        ft_putstr_fd("\n", STDOUT_FILENO);
-        return (1);
-    }
-    i = 2;
-    while (i < argc)
-    {
-        flag = check_flag(argv[i]);
-        ft_putstr_fd(argv[i], STDOUT_FILENO);
-        ft_putstr_fd(" ", STDOUT_FILENO);
-        i++;
-    }
-    if (flag == 1)
-      ft_putstr_fd("\n", STDOUT_FILENO);
-    return (1);
-}
-
-
-static int check_flag(char *arg)
-{
-    int i;
-
-    i = 0;
-    if (arg[i] == '-')
-        i++;
-    while (arg[i] && arg[i] == 'n')
-        i++;
-    if (arg[i] == '\0')
-        return (1);
-    return (0);
-}
+>>>>>>> origin/main
