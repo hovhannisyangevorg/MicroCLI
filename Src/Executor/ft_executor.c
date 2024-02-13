@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:21:12 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/08 23:14:16 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/12 14:42:13 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	ft_hendle_env_variable(char **line, t_hash_table *env)
 
 int	ft_isquot(const char *end_of_file)
 {
-	if (end_of_file && *end_of_file && ft_strchr((char *)end_of_file, '\"') && ft_strchr((char *)end_of_file, '\''))
+	if ((end_of_file && *end_of_file) && (ft_strchr((char *)end_of_file, '\"') || ft_strchr((char *)end_of_file, '\'')))
 		return (1);
 	else
 		return (0);
@@ -183,7 +183,7 @@ char *ft_generate_filename()
 	filename	= ft_strdup("/tmp/.heredoc");
 	if (i == 0)
 	{
-		i++;	
+		i++;
 		return (filename);
 	}
 	id			= ft_itoa(i++);
@@ -214,7 +214,6 @@ int open_heredoc(t_redirect	*red, t_hash_table *env)
 			break ;
 		if (!flag)
 			ft_hendle_env_variable(&line, env);
-		printf ("%s\n", line);
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
@@ -298,6 +297,7 @@ void ft_executor(t_symbol_table* table, t_container cont)
 	{
 		// printf("aaaa\n");
 		pipe_count = 0;
+		// ft_open_all_fd(ft_command_to_ast_node(cont.command), table->env);
 		cont.exit_status = ft_executor_with_list(cont.fd, cont.command, table);
 	}
 	else

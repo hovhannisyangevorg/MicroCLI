@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   ft_strswap.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/11 20:50:10 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/11 20:50:11 by gevorg           ###   ########.fr       */
+/*   Created: 2024/02/11 20:56:47 by gevorg            #+#    #+#             */
+/*   Updated: 2024/02/11 20:57:09 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-int	ft_unset(t_command* command, t_symbol_table* table)
+void ft_strswap(char **a, char **b)
 {
-	(void)command;
-	(void)table;
-	ft_pop_entity(table->env, command->argument->arguments[1]);
-	return(0);
+    char *temp;
+	
+	temp = *a;
+    *a = *b;
+    *b = temp;
 }

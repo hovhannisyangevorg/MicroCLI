@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 21:58:30 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/08 22:47:36 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/12 19:07:19 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,23 +136,44 @@ void ft_handle_redirect_ios(t_io io)
 {
 	if (io.input != STDIN_FILENO)
 	{
+		// printf("fd: %d\n", io.input);
 		dup2(io.input, STDIN_FILENO);
+		// close(io.input);
 	}
 	if (io.output != STDOUT_FILENO)
 	{
 		dup2(io.output, STDOUT_FILENO);
+		// close(io.output);
 	}
 	if (io.error != STDERR_FILENO)
 	{
 		dup2(io.error, STDERR_FILENO);
+		// close(io.error);
 	}
 }
 
-// lsof -p
-// TODO: write logic for rigt
-// TODO: check file permissions in redirection part
+char* ft_count_replace(char *arg, t_symbol_table *symbol_table);
+void ft_expand_env(t_command *command, t_symbol_table* table)
+{
+	size_t i = 0;
+	while (command->argument && command->argument->arguments && command->argument->arguments[i])
+	{
+		char* tmp = ft_count_replace(command->argument->arguments[i], table);
+		printf("expandarg: %s\n", tmp);
+		// free(command->argument->arguments[i]);
+		command->argument->arguments[i] = tmp;
+		++i;
+	}
+	
+}
+
+
+
 int		ft_execut_command(t_io io, t_command *command, t_symbol_table* table, t_vector *pipe_fd, size_t pipe_iter)
 {
+	(void)io;
+	ft_expand_env(command, table);
+	// ft_expand_envirement(command, table);
 	t_hash_table_arr env = ft_convert_env_to_args(table->env, 1);
 	int pid = fork();
 	if (pid == -1)
@@ -179,7 +200,12 @@ int		ft_execut_command(t_io io, t_command *command, t_symbol_table* table, t_vec
 	else
 	{
 		if (command->base.parent && command->base.parent->parent && command->base.parent->parent->token_type != ROOT)
+		{
 			ft_restore_std_io(io);
+			// close(io.input);
+			// close(io.output);
+			// close(io.error);
+		}
 
 	}
 	return(0);
@@ -199,7 +225,7 @@ int		ft_open_process_for_pipe(t_io io, t_ast_node *tree, t_symbol_table* table, 
 			ft_execut_command(io, ft_ast_to_command(ast_node), table, pipe_fd, *pipe_iter);
 			(*pipe_iter)++;
 		}
-
+		
 		ft_execut_command(io, ft_ast_to_command(tree->right), table, pipe_fd, *pipe_iter);
 		(*pipe_iter)++;
 	}
@@ -218,7 +244,7 @@ void	ft_execute_part(t_io io, t_ast_node *tree, t_symbol_table* table, t_vector 
 	if (tree->token_type == PIPE)
 	{
 		ft_open_process_for_pipe(io, tree, table, pipe_fd, pipe_iter);
-		return;
+		return ;
 	}
 	ft_execute_part(io, tree->right, table, pipe_fd, pipe_iter);
 }

@@ -6,12 +6,11 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 18:04:57 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/28 16:05:45 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/12 15:17:21 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
 
 int ft_ignore_quots(char *str, char quot, size_t i)
 {

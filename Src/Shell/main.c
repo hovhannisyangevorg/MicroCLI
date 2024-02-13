@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: armhakob <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/02/10 22:39:22 by armhakob         ###   ########.fr       */
+/*   Updated: 2024/02/11 22:24:28 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 
 // 0924
-
+// $OLDPWD
 void print_env_args(char** env)
 {
 	int i = -1;
@@ -41,9 +41,9 @@ void print_env_args(char** env)
 
 void	ft_get_pid(t_container cont, t_hash_table *env)
 {
-	(void)cont;
 	pid_t pid;
 
+	(void)cont;
     pid = fork();
 
     if (pid < 0)
@@ -108,6 +108,14 @@ int main(int ac, char **av, char **env)
 	ft_program(env);
 	return (0);	
 }
+
+
+
+// int main()
+// {
+	
+// 	return (0);
+// }
 
 
 

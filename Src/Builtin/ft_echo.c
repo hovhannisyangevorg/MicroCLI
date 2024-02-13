@@ -1,11 +1,28 @@
-#include "shell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/11 20:49:04 by gevorg            #+#    #+#             */
+/*   Updated: 2024/02/11 22:00:03 by gevorg           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// #include "builtins.h"
+#include "shell.h"
 
 int ft_echo(t_command *command, t_symbol_table* table)
 {
     (void)table;
-    printf("%s\n", command->argument->arguments[1]);
+	size_t i = 0;
+	while (command->argument->arguments && command->argument->arguments[i])
+	{
+		printf("%s ", command->argument->arguments[i]);
+		++i;
+	}
+	printf("\n");
+	
     return 0;
 }
 
@@ -27,9 +44,6 @@ void	ft_putstr_fd(char *s, int fd)
 		return ;
 	write(fd, s, ft_strlen(s));
 }
-
-
-//
 
 int echo(int argc, char **argv,char **env)
 {
@@ -70,8 +84,3 @@ static int check_flag(char *arg)
         return (1);
     return (0);
 }
-
-// int main(int argc, char **argv, char **env)
-// {
-//     echo(argc, argv,env);
-// }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/11 20:49:26 by gevorg            #+#    #+#             */
+/*   Updated: 2024/02/11 20:49:27 by gevorg           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
 int	ft_env(t_command* command, t_symbol_table* table)
@@ -8,32 +20,3 @@ int	ft_env(t_command* command, t_symbol_table* table)
 	print_env(table->env, VENV);
 	return(0);
 }
-
-// void write_env(t_env **env)
-// {
-// 	t_env *tmp;
-
-// 	tmp = (*env);
-// 	while (tmp != NULL)
-// 	{
-// 		if (tmp->hushir_indz == 1)
-// 			printf("%s=%s\n", tmp->key, tmp->data);
-// 		tmp = tmp->next;
-// 	}
-// }
-
-// int env_m(int argc, char **argv, char **env)
-// {
-//     (void)argc;
-// 	(void)argv;
-
-// 	t_env *my_env;
-
-// 	my_env = NULL;
-// 	my_env = env_init(env, my_env);
-// 	write_env(&my_env);
-	
-// 	return (1);	
-// }
-
-

@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:42:38 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/03 17:24:05 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/11 21:02:36 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,32 +18,22 @@
 //     return ft_strcmp(*(char **)a, *(char **)b);
 // }
 
-// Swap two strings
-void swap_strings(char **a, char **b)
-{
-    char *temp;
-	
-	temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
 // Partition function for quicksort
 int ft_partition(char **arr, int low, int high)
 {
+	int	j;
     char *pivot = arr[high];  // Pivot element
     int i = low - 1;  // Index of smaller element
 
-    for (int j = low; j < high; j++)
+	j = low;
+    while (j < high)
 	{
         if (ft_strcmp(arr[j], pivot) < 0)
-		{
-            i++;
-            swap_strings(&arr[i], &arr[j]);
-        }
+            ft_strswap(&arr[++i], &arr[j]);
+		j++;
     }
-    swap_strings(&arr[i + 1], &arr[high]);
-    return i + 1;
+    ft_strswap(&arr[i + 1], &arr[high]);
+    return (i + 1);
 }
 
 // Quicksort algorithm
@@ -59,9 +49,11 @@ void ft_quicksort(char **arr, int low, int high)
 
 t_hash_table_arr ft_sort_env(t_hash_table* table)
 {
-	t_hash_table_arr env_arr = ft_convert_env_to_args(table, EXPORT);
+	t_hash_table_arr	env_arr;
+	
+	env_arr = ft_convert_env_to_args(table, EXPORT);
 	ft_quicksort(env_arr.table, 0, env_arr.size - 1);
-	return env_arr;
+	return (env_arr);
 }
 
 

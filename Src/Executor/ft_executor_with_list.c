@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:54:14 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/08 23:19:38 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/12 18:04:28 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 void ft_restore_std_io(t_io io)
 {
 	dup2(io.input, STDIN_FILENO);
+	close(io.input);
 	dup2(io.output, STDOUT_FILENO);
+	close(io.output);
 	dup2(io.error, STDERR_FILENO);
+	close(io.error);
 }
 
 t_io ft_init_io_restore(t_io io)
@@ -46,13 +49,13 @@ int ft_handle_external(t_io io, t_command* command, t_hash_table* env_table)
 {
 	(void)io;
 	t_hash_table_arr env = ft_convert_env_to_args(env_table, 1);
+	// ft_handle_redirect_ios(command->io);
 	int status = 0;
 	int pid = fork();
 	if (pid == -1)
 		return (-1);
 	if (pid == 0) 
 	{
-		ft_handle_redirect_ios(command->io);
 		// printf("pid: %s\n", ft_get_env(env_table, "$"));
 		ft_command_fron_PATH(command, env_table);
 		// printf("exec: %s\n", command->argument->arguments[0]);
@@ -67,20 +70,24 @@ int ft_handle_external(t_io io, t_command* command, t_hash_table* env_table)
 		wait(&status);
 		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
+		ft_restore_std_io(io);
 	}
 	return(status);
 }
 
+char* ft_count_replace(char *arg, t_symbol_table *symbol_table);
+void ft_expand_env(t_command *command, t_symbol_table* table);
 int	ft_executor_with_list(t_io io, t_command *command, t_symbol_table* table)
 {
 	int			status;
 	// char		*st_str;
 	t_vector	fd_vector;
 
-
+	ft_expand_env(command, table);
 	ft_init_arrey(&fd_vector, 0);
 	ft_open_file(command, table->env, &fd_vector);
 	t_function_callback biltin_func =  ft_get_function(table->function, command->argument->arguments[0]);
+	ft_handle_redirect_ios(command->io);
 	if (biltin_func)
 	{
 		// printf("%d\n", io.output);
@@ -90,7 +97,6 @@ int	ft_executor_with_list(t_io io, t_command *command, t_symbol_table* table)
 		// int f = dup(io.input);
 		// ft_restore_std_io(io_res);
 		// ft_init_io_std()
-		ft_handle_redirect_ios(command->io);
 		// close(command->io.input);
 		// close(command->io.output);
 		// close(command->io.error);
