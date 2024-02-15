@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/11 20:49:00 by gevorg            #+#    #+#             */
+/*   Updated: 2024/02/13 20:40:18 by gevorg           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
-#include <limits.h>
-    
+
 int ft_cd(t_command* command, t_symbol_table* table)
 {
     (void)command;
@@ -46,23 +57,3 @@ int ft_cd(t_command* command, t_symbol_table* table)
 
     
 }
-
-// int  main(int argc, char **argv, char **envp)
-// {
-//     char *pwd;
-//     char *home;
-//     char *old_pwd;
-
-//     (void)argc;
-//     (void)envp;
-//     pwd = getenv("PWD");
-//     if (!argv[0])
-//     {
-//         home = getenv("HOME");
-//         old_pwd = pwd;
-//         pwd = home;
-//     }
-//     chdir(home);
-//     printf("%s\n", pwd);
-//     return (0);
-// }

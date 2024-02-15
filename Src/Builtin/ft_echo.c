@@ -1,14 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/11 20:49:04 by gevorg            #+#    #+#             */
+/*   Updated: 2024/02/13 20:43:59 by gevorg           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
-// #include "builtins.h"
-
-int ft_echo(t_command *command, t_symbol_table* table)
+int ft_echo(t_command *command, t_symbol_table *table)
 {
-    (void)table;
-
+	(void)table;
     int is_new_line = 1;
-    int option_n = 0;
-    size_t i = 0;
+    int option_n 	= 0;
+    size_t i 		= 0;
     i = 0;
     if (command->argument && command->argument->arguments && command->argument->arguments[0])
     {

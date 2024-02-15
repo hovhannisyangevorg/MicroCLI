@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:10:28 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/02/08 22:13:05 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/11 20:57:22 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	ft_strdel(char **str);
 void	ft_vecstrdel(char ***vecptr);
 void	ft_threestrdel(char ****vecptr);
 char	*ft_strstr(const char *haystack, const char *needle);
+void 	ft_strswap(char **a, char **b);
 
 typedef struct s_list
 {

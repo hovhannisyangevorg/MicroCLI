@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:21:12 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/08 23:14:16 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/14 23:01:32 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	ft_hendle_env_variable(char **line, t_hash_table *env)
 
 int	ft_isquot(const char *end_of_file)
 {
-	if (end_of_file && *end_of_file && ft_strchr((char *)end_of_file, '\"') && ft_strchr((char *)end_of_file, '\''))
+	if ((end_of_file && *end_of_file) && (ft_strchr((char *)end_of_file, '\"') || ft_strchr((char *)end_of_file, '\'')))
 		return (1);
 	else
 		return (0);
@@ -183,7 +183,7 @@ char *ft_generate_filename()
 	filename	= ft_strdup("/tmp/.heredoc");
 	if (i == 0)
 	{
-		i++;	
+		i++;
 		return (filename);
 	}
 	id			= ft_itoa(i++);
@@ -192,10 +192,26 @@ char *ft_generate_filename()
 	return (filename);
 }
 
+// void handle_prompt(int signum)
+// {
+// 	(void)signum;
+// 	rl_prompt = "Minishell $>";
+// 	ft_putstr_fd("\n", STDOUT_FILENO);
+// 	rl_on_new_line();
+// 	rl_replace_line("", 0);
+// }
 
-int open_heredoc(t_redirect	*red, t_hash_table *env)
+void handler(int)
 {
-	int 	fd;
+	close(STDIN_FILENO);
+	g_minishell_signal = SIGHEREDOC;
+}
+
+
+int open_heredoc(t_redirect	*red, t_hash_table *env, t_io io)
+{
+	(void)io;
+	int 	here_fd;
 	int		flag;
 	char	*line;
 	char	*filename;
@@ -203,10 +219,15 @@ int open_heredoc(t_redirect	*red, t_hash_table *env)
 	
 	flag 		= 0;
 	filename	= ft_generate_filename();
-	fd = open(filename, O_TRUNC | O_WRONLY | O_CREAT, 0664);
+	here_fd 	= open(filename,  O_RDWR | O_CREAT, 0666);
 	end_of_file = ft_ignor_EOF_quots(red->argument);
+
+	g_minishell_signal = SIGHEREDOC;
 	if (ft_isquot(red->argument))
 		flag = 1;
+	
+	int stdio 	= dup(STDIN_FILENO);
+	
 	while (1)
 	{
 		line = readline(">");
@@ -214,17 +235,31 @@ int open_heredoc(t_redirect	*red, t_hash_table *env)
 			break ;
 		if (!flag)
 			ft_hendle_env_variable(&line, env);
-		printf ("%s\n", line);
-		ft_putendl_fd(line, fd);
+		ft_putstr_fd(line, here_fd);
+		ft_putstr_fd("\n", here_fd);
 		free(line);
 	}
+	close(here_fd);
+	if (g_minishell_signal == SIGHEREDOC)
+	{
+		here_fd 	= open(filename,  O_RDONLY, 0666);
+		dup2(here_fd, STDIN_FILENO);
+		close(here_fd);
+	}
+	else
+	{
+		dup2(stdio, STDIN_FILENO);
+		here_fd = stdio;
+	}
+	close(stdio);
 	free(end_of_file);
+	unlink(filename);
 	free(filename);
-	return (fd);
+	return (here_fd);
 }
 
-
-void	ft_open_type(t_redirect *redirect, t_command *cmd, t_vector *fd_vector, t_hash_table *env)
+// TODO: file prmition 
+void	ft_open_type(t_redirect *redirect, t_command *cmd, t_vector *fd_vector, t_hash_table *env, t_io io)
 {
 	int fd;
 
@@ -255,7 +290,7 @@ void	ft_open_type(t_redirect *redirect, t_command *cmd, t_vector *fd_vector, t_h
 	}
 	else if (redirect->base.token_type == HEREDOC)
 	{
-		fd = open_heredoc(redirect, env);
+		fd = open_heredoc(redirect, env, io);
 		if (cmd->io.input < fd)
 			cmd->io.input = fd;
 		else
@@ -273,16 +308,16 @@ void ft_close_fd(t_vector *fd_vector)
 	free(fd_vector->arr);
 }
 
-void	ft_open_all_fd(t_ast_node *ast_node, t_hash_table *env)
+void	ft_open_all_fd(t_ast_node *ast_node, t_hash_table *env, t_io io)
 {
 	t_vector fd_vector;
 	if (!ast_node)
 		return ;
 	ft_init_arrey(&fd_vector, 0);
 	if (ast_node->token_type == COMMAND)
-		ft_open_file(ft_ast_to_command(ast_node), env, &fd_vector);
-	ft_open_all_fd(ast_node->left, env);
-	ft_open_all_fd(ast_node->right, env);
+		ft_open_file(ft_ast_to_command(ast_node), env, &fd_vector, io);
+	ft_open_all_fd(ast_node->left, env, io);
+	ft_open_all_fd(ast_node->right, env, io);
 }
 
 // TODO expand env in command argument 
@@ -298,12 +333,16 @@ void ft_executor(t_symbol_table* table, t_container cont)
 	{
 		// printf("aaaa\n");
 		pipe_count = 0;
+		// ft_open_all_fd(ft_command_to_ast_node(cont.command), table->env);
 		cont.exit_status = ft_executor_with_list(cont.fd, cont.command, table);
+		char* st_status = ft_itoa(cont.exit_status);
+		ft_set_env(table->env, (t_hash_data){"?", st_status, HIDDEN});
+		free(st_status);
 	}
 	else
 	{
 		pipe_count = ft_pipe_count_tree(cont.tree->ast_node);
-		ft_open_all_fd(cont.tree->ast_node, table->env);
+		ft_open_all_fd(cont.tree->ast_node, table->env, cont.fd);
 		pipe_fd = ft_open_pipe_fd(pipe_count);
 		pipe_iter = 0;
 		
@@ -327,17 +366,5 @@ void ft_executor(t_symbol_table* table, t_container cont)
 		free(cont.tree);
 		// printf("aaaaaa\n");
 	}
-
-	// close(cont.fd.output);
-	// close(cont.fd.input);
-	// close(cont.fd.error);
-	// dup2(cont.fd.output, STDOUT);
-	// // close(cont.fd.output);
-	// dup2(cont.fd.input, STDIN);
-	// // close(cont.fd.input);
-	// dup2(cont.fd.error, STDERR);
-	// close(cont.fd.error);
-	
 	(void)pipe_count;
-	// print_env(table->env, 0);
 }

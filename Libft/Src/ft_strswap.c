@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sematic_with_list.c                             :+:      :+:    :+:   */
+/*   ft_strswap.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/08 21:39:37 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/11 20:50:56 by gevorg           ###   ########.fr       */
+/*   Created: 2024/02/11 20:56:47 by gevorg            #+#    #+#             */
+/*   Updated: 2024/02/11 20:57:09 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-t_status_codes ft_sematic_with_list(t_command* cmd)
+void ft_strswap(char **a, char **b)
 {
-	return (ft_validate_command(ft_command_to_ast_node(cmd)));
+    char *temp;
+	
+	temp = *a;
+    *a = *b;
+    *b = temp;
 }

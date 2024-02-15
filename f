@@ -1,6 +1,7 @@
 en.subject.pdf
 f
 fff.hs
+g
 Include
 Libft
 Makefile
@@ -12,5 +13,4 @@ Obj
 Readline
 Readline_update
 README.md
-run.sh
 Src
