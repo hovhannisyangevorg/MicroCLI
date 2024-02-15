@@ -6,10 +6,10 @@
 
 void ft_executor(t_symbol_table* table, t_container cont);
 
-void	ft_open_file(t_command *command, t_hash_table *env, t_vector* fd_vector);
+void	ft_open_file(t_command *command, t_hash_table *env, t_vector* fd_vector, t_io io);
 int     ft_executor_with_list(t_io io, t_command *command, t_symbol_table* table);
 int		ft_command_fron_PATH(t_command *command, t_hash_table *env);
-void	ft_open_type(t_redirect *redirect, t_command *cmd, t_vector *fd_vector, t_hash_table *env);
+void	ft_open_type(t_redirect *redirect, t_command *cmd, t_vector *fd_vector, t_hash_table *env, t_io io);
 void	ft_close_fd(t_vector *fd_vector);
 void    ft_handle_redirect_ios(t_io io);
 void    ft_restore_std_io(t_io io);
@@ -57,11 +57,15 @@ void				ft_execute_part(t_io io, t_ast_node *tree, t_symbol_table* table, t_vect
 t_hash_table_arr    ft_convert_env_to_args(t_hash_table* env, t_visibility_type type);
 void                print_env_table(t_hash_table_arr arr);
 
-
+char				*ft_count_replace(char *arg, t_symbol_table *symbol_table, t_expand_type isexpand);
 
 
 
 
 void				ft_free_tree(t_ast_node *tree);
+
+
+void sigint_handler(int signum);
+void sigquit_handler(int signum);
 
 #endif

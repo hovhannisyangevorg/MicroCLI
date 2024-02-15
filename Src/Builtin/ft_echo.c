@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:49:04 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/13 20:41:34 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/13 20:43:59 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,3 @@ int ft_echo(t_command *command, t_symbol_table *table)
 
     return 0;
 }
->>>>>>> origin/main

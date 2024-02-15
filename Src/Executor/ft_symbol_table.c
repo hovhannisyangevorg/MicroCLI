@@ -10,6 +10,7 @@ t_symbol_table      *ft_create_symbol_table(char** env)
     table->env      = ft_create_env(env);
     table->function = ft_create_func_table();
     ft_set_env(table->env, (t_hash_data){"OLDPWD", NULL, EXPORT});
+	ft_set_env(table->env, (t_hash_data){"?", "0", HIDDEN});
     return table;
 }
 

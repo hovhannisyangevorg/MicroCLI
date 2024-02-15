@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:42:38 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/11 21:02:36 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/14 14:31:46 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -384,6 +384,7 @@ t_hash_table* ft_create_func_table()
 	ft_insert_entity(funcs, (t_hash_data){ "export",	ft_export,	0});
 	ft_insert_entity(funcs, (t_hash_data){ "unset",		ft_unset,	0});
 	ft_insert_entity(funcs, (t_hash_data){ "pwd",		ft_pwd,		0});
+	ft_insert_entity(funcs, (t_hash_data){ "test",		ft_test,	0});
 	return funcs;
 }
 

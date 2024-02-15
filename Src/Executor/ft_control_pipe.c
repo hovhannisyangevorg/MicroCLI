@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 21:58:30 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/12 19:07:19 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/14 15:32:16 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,29 +138,27 @@ void ft_handle_redirect_ios(t_io io)
 	{
 		// printf("fd: %d\n", io.input);
 		dup2(io.input, STDIN_FILENO);
-		// close(io.input);
+		close(io.input);
 	}
 	if (io.output != STDOUT_FILENO)
 	{
 		dup2(io.output, STDOUT_FILENO);
-		// close(io.output);
+		close(io.output);
 	}
 	if (io.error != STDERR_FILENO)
 	{
 		dup2(io.error, STDERR_FILENO);
-		// close(io.error);
+		close(io.error);
 	}
 }
 
-char* ft_count_replace(char *arg, t_symbol_table *symbol_table);
 void ft_expand_env(t_command *command, t_symbol_table* table)
 {
 	size_t i = 0;
 	while (command->argument && command->argument->arguments && command->argument->arguments[i])
 	{
-		char* tmp = ft_count_replace(command->argument->arguments[i], table);
-		printf("expandarg: %s\n", tmp);
-		// free(command->argument->arguments[i]);
+		char* tmp = ft_count_replace(command->argument->arguments[i], table, NOEXPAND);
+		free(command->argument->arguments[i]);
 		command->argument->arguments[i] = tmp;
 		++i;
 	}
@@ -182,14 +180,14 @@ int		ft_execut_command(t_io io, t_command *command, t_symbol_table* table, t_vec
 	{
 		ft_handle_redirect_ios(command->io);
 		ft_hendle_pipe(pipe_fd, pipe_iter, command->io);
-		// printf("aaa\n");
-		t_function_callback biltin_func =  ft_get_function(table->function, command->argument->arguments[0]);
-		// printf("found: %d\n", biltin_func == 0);
+		t_function_callback biltin_func;
+		if (!command->argument->arguments)
+			biltin_func = NULL;
+		else
+			biltin_func =  ft_get_function(table->function, command->argument->arguments[0]);
 		if (biltin_func)
 		{
 			int status = biltin_func(command, table);
-		// 	char* st = ft_itoa(status);
-		// 	// ft_set_env(env_table, "?", st, 1);
 			exit(status);
 		}
 		ft_command_fron_PATH(command, table->env);
@@ -200,12 +198,7 @@ int		ft_execut_command(t_io io, t_command *command, t_symbol_table* table, t_vec
 	else
 	{
 		if (command->base.parent && command->base.parent->parent && command->base.parent->parent->token_type != ROOT)
-		{
 			ft_restore_std_io(io);
-			// close(io.input);
-			// close(io.output);
-			// close(io.error);
-		}
 
 	}
 	return(0);

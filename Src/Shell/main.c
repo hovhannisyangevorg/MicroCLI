@@ -6,11 +6,12 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/02/11 22:24:28 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/14 22:27:13 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include <signal.h>
 // #include <termio.h>
 
 // size_t numofrec;
@@ -25,6 +26,8 @@
 // }
 
 
+t_signal_type g_minishell_signal;
+
 // 0924
 // $OLDPWD
 void print_env_args(char** env)
@@ -38,6 +41,8 @@ void print_env_args(char** env)
 	printf("-------------end args----------\n");
 	
 }
+
+
 
 void	ft_get_pid(t_container cont, t_hash_table *env)
 {
@@ -59,14 +64,42 @@ void	ft_get_pid(t_container cont, t_hash_table *env)
     }
 }
 
+
+void sigint_handler(int signum)
+{
+	(void)signum;
+	if (g_minishell_signal == SIGHEREDOC)
+	{
+		close(STDIN_FILENO);
+		g_minishell_signal = SIGNORMAL;
+		return ;
+	}
+	else if (g_minishell_signal != SIGCHILD)
+	{
+		rl_replace_line("", 0);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
+
+void sigquit_handler(int signum)
+{
+	if (g_minishell_signal == SIGCHILD)
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		SIG_DFL(signum);
+	}
+}
+
 void	ft_program(char **env)
 {
 	t_container		container;
 	char 			*line;
 	t_list_token	*list;
 
-	// signal(SIGINT, sig_handler_c);
-	// rl_catch_signals = 0;
+	rl_catch_signals = 0;
 	container.table = ft_create_symbol_table(env);
 	//finished testing of sort functionality of hash table!!!
 	
@@ -77,13 +110,20 @@ void	ft_program(char **env)
 	// print_env(table, 1);
 	// test for function table
 	ft_get_pid(container, container.table->env);
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
+	
+	
 	// char** env1 = ft_convert_env_to_args(table);
 	// print_env_args(env1);
 	while (1)
 	{
+		g_minishell_signal = SIGNORMAL;
 		line = ft_get_line();
 		if (!line)
-			return ;
+		{
+			exit(0);
+		}
 		if (!(*line))
 		{
 			free(line);

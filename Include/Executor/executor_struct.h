@@ -16,18 +16,29 @@ typedef struct 	s_vector			t_vector;
 
 typedef int (*t_function_callback)();
 
-typedef struct s_function_entity        t_function_entity;
+typedef struct 	s_function_entity       t_function_entity;
 
-typedef struct s_env_entity             t_env_entity;
+typedef struct 	s_env_entity            t_env_entity;
 
-typedef struct s_hash_table_arr         t_hash_table_arr;
+typedef struct 	s_hash_table_arr        t_hash_table_arr;
 
-typedef struct s_symbol_table           t_symbol_table;
+typedef struct 	s_symbol_table          t_symbol_table;
 
-typedef enum e_visibility_type          t_visibility_type;
+typedef enum 	e_visibility_type		t_visibility_type;
 
-typedef struct s_hash_data              t_hash_data;
+typedef struct 	s_hash_data				t_hash_data;
 
+typedef enum 	e_expand_type			t_expand_type;
+
+typedef enum 	e_signal_type			t_signal_type;
+
+
+enum e_signal_type
+{
+	SIGNORMAL,
+	SIGHEREDOC,
+	SIGCHILD
+};
 
 enum e_exec_type
 {
@@ -39,6 +50,12 @@ enum e_hash_type
 {
     FUNCTION,
     ENV
+};
+ 
+enum e_expand_type
+{
+	EXPAND,
+	NOEXPAND
 };
 
 enum e_visibility_type
@@ -119,5 +136,9 @@ struct s_vector
 	size_t		size;
 	size_t		capacity;
 };
+
+
+
+extern t_signal_type g_minishell_signal;
 
 #endif
