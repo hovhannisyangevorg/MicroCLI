@@ -54,7 +54,7 @@ t_vector			ft_open_pipe_fd(size_t pipe_count);
 // void				ft_assign_pipe_fd(t_io io, t_ast_node *tree, t_vector *pipe_fd, size_t* pipe_iter);
 
 void				ft_execute_part(t_io io, t_ast_node *tree, t_symbol_table* table, t_vector *pipe_fd, size_t* pipe_iter);
-t_hash_table_arr    ft_convert_env_to_args(t_hash_table* env, t_visibility_type type);
+t_hash_table_arr    ft_convert_env_to_args(t_hash_table* env, t_visibility_type visibility, int mode);
 void                print_env_table(t_hash_table_arr arr);
 
 char				*ft_count_replace(char *arg, t_symbol_table *symbol_table, t_expand_type isexpand);
@@ -68,5 +68,6 @@ void				ft_free_tree(t_ast_node *tree);
 void sigint_handler(int signum);
 void sigquit_handler(int signum);
 void ft_child_sigint(int num);
+void ft_heredoc_handler_child(int num);
 
 #endif

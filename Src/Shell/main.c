@@ -63,6 +63,7 @@ void	ft_get_pid(t_container cont, t_hash_table *env)
     else
 	{
 		wait(NULL);
+		g_global_state.pid = pid - 1;
 		char* p_id = ft_itoa(pid - 1);
 		ft_set_env(env, (t_hash_data){"$", p_id, HIDDEN});
 		free(p_id);
@@ -98,8 +99,10 @@ void	ft_program(char **env)
 	char 			*line;
 	t_list_token	*list;
 
+	g_global_state.heredoc_signal = -1;
 	rl_catch_signals = 0;
 	container.table = ft_create_symbol_table(env);
+	
 	//finished testing of sort functionality of hash table!!!
 	
 	// ft_set_env(container.table->env, (t_hash_data){"a", "b", NORMAL});

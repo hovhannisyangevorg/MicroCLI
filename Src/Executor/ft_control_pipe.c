@@ -169,12 +169,13 @@ void ft_expand_env(t_command *command, t_symbol_table* table)
 
 int		ft_execut_command(t_io io, t_command *command, t_symbol_table* table, t_vector *pipe_fd, size_t pipe_iter)
 {
-	(void)io;
+	t_function_callback biltin_func;
+	t_hash_table_arr env;
+
 	ft_expand_env(command, table);
-	t_vector fd_vector;
-	// ft_expand_envirement(command, table);
+	tcsetattr(STDIN_FILENO, TCSANOW, &g_global_state.orig_termios);
 	signal(SIGINT, SIG_IGN);
-	t_hash_table_arr env = ft_convert_env_to_args(table->env, 1);
+	env = ft_convert_env_to_args(table->env, 1, 0);
 	int pid = fork();
 	if (pid == -1)
 		return (-1);
@@ -183,11 +184,8 @@ int		ft_execut_command(t_io io, t_command *command, t_symbol_table* table, t_vec
 		rl_catch_signals = 0;
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		ft_init_arrey(&fd_vector, 0);
-		ft_open_file(command, table->env, &fd_vector, io);
 		ft_handle_redirect_ios(command->io);
 		ft_hendle_pipe(pipe_fd, pipe_iter, command->io);
-		t_function_callback biltin_func;
 		if (!command->argument->arguments)
 			biltin_func = NULL;
 		else
@@ -197,10 +195,14 @@ int		ft_execut_command(t_io io, t_command *command, t_symbol_table* table, t_vec
 			int status = biltin_func(command, table);
 			exit(status);
 		}
-		ft_command_fron_PATH(command, table->env);
-		execve(command->argument->arguments[0], command->argument->arguments, env.table);
-		ft_panic_shell(command->argument->arguments[0], ": command not found");
-		exit(EXIT_FAILURE);
+		else if (command->argument && command->argument->arguments && command->argument->arguments[0])
+		{
+			ft_command_fron_PATH(command, table->env);
+			execve(command->argument->arguments[0], command->argument->arguments, env.table);
+			ft_panic_shell(command->argument->arguments[0], ": command not found");
+			exit(EXIT_FAILURE);
+		}
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
@@ -248,19 +250,3 @@ void	ft_execute_part(t_io io, t_ast_node *tree, t_symbol_table* table, t_vector 
 	}
 	ft_execute_part(io, tree->right, table, pipe_fd, pipe_iter);
 }
-
-
-
-
-
-
-
-// void	ft_open_proces(size_t pipe_count)
-// {
-	
-// }
-
-// void	ft_open_wait(size_t pipe_count)
-// {
-	
-// }

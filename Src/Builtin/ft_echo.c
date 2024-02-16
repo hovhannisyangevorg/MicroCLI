@@ -15,9 +15,12 @@
 int ft_echo(t_command *command, t_symbol_table *table)
 {
 	(void)table;
-    int is_new_line = 1;
-    int option_n 	= 0;
-    size_t i 		= 0;
+    int     is_new_line;
+    int     option_n;
+    size_t  i;
+    
+    option_n 	= 0;
+    is_new_line = 1;
     i = 0;
     if (command->argument && command->argument->arguments && command->argument->arguments[0])
     {
@@ -56,5 +59,5 @@ int ft_echo(t_command *command, t_symbol_table *table)
     if (is_new_line)
         ft_putchar_fd('\n', STDOUT_FILENO);
 
-    return 0;
+    return (0);
 }

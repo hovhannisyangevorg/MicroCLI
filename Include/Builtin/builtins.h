@@ -10,6 +10,5 @@ int	ft_pwd(t_command* command, t_symbol_table* table);
 int	ft_cd(t_command* command, t_symbol_table* table);
 int	ft_env(t_command* command, t_symbol_table* table);
 int	ft_export(t_command* command, t_symbol_table* table);
-int ft_test(t_command *command, t_symbol_table *table);
 
 #endif

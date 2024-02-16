@@ -51,7 +51,7 @@ t_hash_table_arr ft_sort_env(t_hash_table* table)
 {
 	t_hash_table_arr	env_arr;
 	
-	env_arr = ft_convert_env_to_args(table, EXPORT);
+	env_arr = ft_convert_env_to_args(table, EXPORT, 1);
 	ft_quicksort(env_arr.table, 0, env_arr.size - 1);
 	return (env_arr);
 }
@@ -384,7 +384,6 @@ t_hash_table* ft_create_func_table()
 	ft_insert_entity(funcs, (t_hash_data){ "export",	ft_export,	0});
 	ft_insert_entity(funcs, (t_hash_data){ "unset",		ft_unset,	0});
 	ft_insert_entity(funcs, (t_hash_data){ "pwd",		ft_pwd,		0});
-	ft_insert_entity(funcs, (t_hash_data){ "test",		ft_test,	0});
 	return funcs;
 }
 
@@ -392,13 +391,14 @@ t_hash_table* ft_create_func_table()
 
 void	ft_pop_entity(t_hash_table *table, char *key)
 {
-	size_t index;
-	if (!table)
-		return;
+	size_t				index;
 	t_hash_entity		*node;
 	t_hash_entity		*tmp;
 	t_hash_entity_list	*lst;
 	t_hash_entity		*entry;
+
+	if (!table)
+		return;
 	index = ft_hash_entity(table->table->capacity, key);
 
 	lst = &table->table->entity[index];
@@ -450,7 +450,7 @@ void	ft_pop_entity(t_hash_table *table, char *key)
 
 
 
-t_hash_table_arr ft_convert_env_to_args(t_hash_table* env, t_visibility_type visibility)
+t_hash_table_arr ft_convert_env_to_args(t_hash_table* env, t_visibility_type visibility, int mode)
 {
 	t_hash_table_arr	arr;
 	size_t 				i;
@@ -475,7 +475,11 @@ t_hash_table_arr ft_convert_env_to_args(t_hash_table* env, t_visibility_type vis
 				if (node->value)
 				{
 					arr.table[j] = ft_gnl_strjoin(arr.table[j], "=");
+					if (mode)
+						arr.table[j] = ft_gnl_strjoin(arr.table[j], "\"");
 					arr.table[j] = ft_gnl_strjoin(arr.table[j], node->value);
+					if (mode)
+						arr.table[j] = ft_gnl_strjoin(arr.table[j], "\"");
 				}
 				++j;
 			}

@@ -64,6 +64,7 @@ $(FCLEAN): $(CLEAN)
 	@$(RM) $(NAME)
 
 $(RL):
+	@$(RM) $(READ_UPDIR)
 	$(info Compiling readline library)
 	@$(CD) $(READ_DIR) && ./configure --prefix=$(PREFIX) && $(MAKE) -s && $(MAKE) -s install
 

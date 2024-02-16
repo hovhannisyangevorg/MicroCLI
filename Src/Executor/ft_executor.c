@@ -191,11 +191,12 @@ char *ft_generate_filename()
 	free(id);
 	return (filename);
 }
-
-void ft_heredoc_handler(int)
+void ft_heredoc_handler_child(int);
+void ft_heredoc_handler(int num)
 {
-	signal(SIGINT, SIG_DFL);
-	kill(0, SIGINT);
+	g_global_state.heredoc_signal = num;
+	g_global_state.minishell_signal = SIGNORMAL;
+	close(STDIN_FILENO);
 }
 
 int open_heredoc(t_redirect	*red, t_hash_table *env, t_io io)
@@ -209,7 +210,7 @@ int open_heredoc(t_redirect	*red, t_hash_table *env, t_io io)
 	
 	flag 		= 0;
 	filename	= ft_generate_filename();
-	here_fd 	= open(filename, O_RDWR | O_CREAT, 0666);
+	here_fd 	= open(filename, O_RDWR | O_CREAT | O_TRUNC, 0666);
 	end_of_file = ft_ignor_EOF_quots(red->argument);
 
 	signal(SIGINT, ft_heredoc_handler);
@@ -217,31 +218,39 @@ int open_heredoc(t_redirect	*red, t_hash_table *env, t_io io)
 	g_global_state.minishell_signal = SIGHEREDOC;
 	if (ft_isquot(red->argument))
 		flag = 1;
-	
+	// tcsetattr(STDIN_FILENO, TCSANOW, &g_global_state.orig_termios);
 	int stdio 	= dup(STDIN_FILENO);
 	
 	while (1)
 	{
+		// rl_catch_signals = 0;
+		// rl_already_prompted = 1;
 		line = readline(">");
 		if (!line || !ft_strcmp(line, end_of_file))
+		{
 			break ;
+		}
 		if (!flag)
 			ft_hendle_env_variable(&line, env);
 		ft_putstr_fd(line, here_fd);
 		ft_putstr_fd("\n", here_fd);
 		free(line);
 	}
+	tcsetattr(STDIN_FILENO, TCSANOW, &g_global_state.orig_termios);
 	close(here_fd);
-	here_fd 	= open(filename,  O_RDONLY, 0666);
-	dup2(here_fd, STDIN_FILENO);
-	close(here_fd);
+	if (g_global_state.heredoc_signal == -1)
+	{
+		here_fd 	= open(filename,  O_RDONLY, 0666);
+	}
+	else
+		here_fd = -1;
+	dup2(stdio, STDIN_FILENO);
 	close(stdio);
 	free(end_of_file);
 	unlink(filename);
 	free(filename);
-	g_global_state.minishell_signal = SIGCHILD;
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
 	return (here_fd);
 }
 
@@ -311,12 +320,12 @@ void ft_child_sigint2(int num)
 {
 	(void)num;
 	rl_replace_line("", 0);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	rl_on_new_line();
 	tcsetattr(STDIN_FILENO, TCSANOW, &g_global_state.orig_termios);
 
 }
 
-// TODO expand env in command argument 
 void ft_executor(t_symbol_table* table, t_container cont)
 {
 	t_vector	pipe_fd;
@@ -331,50 +340,60 @@ void ft_executor(t_symbol_table* table, t_container cont)
 
 	if (cont.exec_type == LIST)
 	{
-		// printf("aaaa\n");
 		pipe_count = 0;
-		// ft_open_all_fd(ft_command_to_ast_node(cont.command), table->env);
-		status = ft_executor_with_list(cont.fd, cont.command, table);
+		ft_open_all_fd(ft_command_to_ast_node(cont.command), table->env, cont.fd);
+		if (g_global_state.heredoc_signal == -1)
+			status = ft_executor_with_list(cont.fd, cont.command, table);
+		else
+			status = 128 + g_global_state.heredoc_signal;
 		
 	}
 	else
 	{
 		pipe_count = ft_pipe_count_tree(cont.tree->ast_node);
-		// ft_open_all_fd(cont.tree->ast_node, table->env, cont.fd);
+		ft_open_all_fd(cont.tree->ast_node, table->env, cont.fd);
 		pipe_fd = ft_open_pipe_fd(pipe_count);
 		pipe_iter = 0;
+		if (g_global_state.heredoc_signal == -1)
+		{
+			ft_execute_part(cont.fd, cont.tree->ast_node, table, &pipe_fd, &pipe_iter);
+			
+			for (size_t i = 0; i < pipe_fd.size; i++)
+			{
+				close(pipe_fd.arr[i]);
+			}
+			for (size_t i = 0; i < pipe_count + 1; i++)
+			{
+				wait(&status);
+				if (!isSignaled)
+				{
+					if (WIFSIGNALED(status))
+					{
+						if (WTERMSIG(status) == SIGPIPE)
+							status = 0;
+						else
+							status = 128 + WTERMSIG(status);
+						rl_catch_signals = 0;
+						g_global_state.minishell_signal = SIGCHILD;
+						ft_child_sigint2(SIGNORMAL);
+						isSignaled = 1;
+					}
+					else if (WIFEXITED(status))
+						status = WEXITSTATUS(status);
+				}
+			}
+		}
+		else
+			status = 128 + g_global_state.heredoc_signal;
 		
+		ft_free_tree(cont.tree->ast_node);	
+		free(cont.tree);
 		// char *leak = ft_strdup("");
 		// ft_ast_print(cont.tree->ast_node, leak, 0, 1);
 		// free(leak);
 		
-		ft_execute_part(cont.fd, cont.tree->ast_node, table, &pipe_fd, &pipe_iter);
-		
-		for (size_t i = 0; i < pipe_fd.size; i++)
-		{
-			close(pipe_fd.arr[i]);
-		}
-		for (size_t i = 0; i < pipe_count + 1; i++)
-		{
-			wait(&status);
-			if (!isSignaled)
-			{
-				if (WIFSIGNALED(status))
-				{
-					status = 128 + WTERMSIG(status);
-					rl_catch_signals = 0;
-					g_global_state.minishell_signal = SIGCHILD;
-					ft_child_sigint2(SIGNORMAL);
-					isSignaled = 1;
-				}
-				else if (WIFEXITED(status))
-					status = WEXITSTATUS(status);
-			}
-			signal(SIGINT, sigint_handler); 
-		}
-		ft_free_tree(cont.tree->ast_node);	
-		free(cont.tree);
 	}
+	g_global_state.heredoc_signal = -1;
 	cont.exit_status = status;
 	char* st_status = ft_itoa(cont.exit_status);
 	ft_set_env(table->env, (t_hash_data){"?", st_status, HIDDEN});

@@ -4,13 +4,19 @@
 t_symbol_table      *ft_create_symbol_table(char** env)
 {
     t_symbol_table  *table;
+    char            *shlvl;
+    char            *currlvl;   
 
     table = malloc(sizeof(t_symbol_table));
 
     table->env      = ft_create_env(env);
     table->function = ft_create_func_table();
+    currlvl         = ft_get_env(table->env, "SHLVL");
+    shlvl           = ft_itoa(ft_atoi(currlvl) + 1);
     ft_set_env(table->env, (t_hash_data){"OLDPWD", NULL, EXPORT});
 	ft_set_env(table->env, (t_hash_data){"?", "0", HIDDEN});
+    ft_set_env(table->env, (t_hash_data){"SHLVL", shlvl, NORMAL});
+    free(shlvl);
     return table;
 }
 
