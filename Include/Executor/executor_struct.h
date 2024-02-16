@@ -139,6 +139,4 @@ struct s_vector
 
 
 
-extern t_signal_type g_minishell_signal;
-
 #endif

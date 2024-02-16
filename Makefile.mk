@@ -2,16 +2,18 @@
 NAME 			= 	minishell
 
 # Main Directories Name
-SRC_DIR 		= 	Src
-OBJ_DIR			= 	Obj
-INC_DIR			=	Include
-FT_LIB			=	Libft
-INC_DIR_LIB		= 	Include
-READ_DIR 		=	Readline
-READ_UPDIR		=	Readline_update
-READ_ARX 		=	lib
-OS				=	$(shell uname -s)
-PREFIX			=	$(shell pwd)/$(READ_UPDIR)
+SRC_DIR 			= 	Src
+HEREDOC_DIR_PATH	=	$(shell pwd)/.Heredoc
+HEREDOC_DIR			=	\"$(HEREDOC_DIR_PATH)\"
+OBJ_DIR				= 	Obj
+INC_DIR				=	Include
+FT_LIB				=	Libft
+INC_DIR_LIB			= 	Include
+READ_DIR 			=	Readline
+READ_UPDIR			=	Readline_update
+READ_ARX 			=	lib
+OS					=	$(shell uname -s)
+PREFIX				=	$(shell pwd)/$(READ_UPDIR)
 
 # Minishell Static Libraries File Name.
 FT_ARX			=	libft.a
@@ -60,6 +62,7 @@ L_FLAG			=	-L
 I_FLAG			=	-I
 O_FLAG 			=	-o
 C_FLAG 			=	-c
+D_FLAG 			=	-D
 
 # # File extension Variables
 _C 				=	.c
@@ -72,9 +75,10 @@ CD 				=	cd
 RM				=	rm -rf
 MK				=	mkdir -p
 HARD_FLAG		=	-Wall -Wextra -Werror
+DEFINES			=	$(D_FLAG)HEREDOC_DIR=$(HEREDOC_DIR)
 SANIT_FLAG		=	-g3 #-fsanitize=leak
 READ_FLAG		=	-lreadline -lhistory
-CFLAGS			=	$(HARD_FLAG) $(SANIT_FLAG)
+CFLAGS			=	$(HARD_FLAG) $(SANIT_FLAG) $(DEFINES)
 
 ifeq ($(OS),Darwin)
 	LINKERS += $(L_FLAG)$(READ_UPDIR)/$(READ_ARX)

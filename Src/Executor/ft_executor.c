@@ -180,7 +180,7 @@ char *ft_generate_filename()
 	char 			*id;
 	char			*filename;
 
-	filename	= ft_strdup("/tmp/.heredoc");
+	filename	= ft_strdup(HEREDOC_DIR"/.heredoc");
 	if (i == 0)
 	{
 		i++;
@@ -192,21 +192,11 @@ char *ft_generate_filename()
 	return (filename);
 }
 
-// void handle_prompt(int signum)
-// {
-// 	(void)signum;
-// 	rl_prompt = "Minishell $>";
-// 	ft_putstr_fd("\n", STDOUT_FILENO);
-// 	rl_on_new_line();
-// 	rl_replace_line("", 0);
-// }
-
-void handler(int)
+void ft_heredoc_handler(int)
 {
-	close(STDIN_FILENO);
-	g_minishell_signal = SIGHEREDOC;
+	signal(SIGINT, SIG_DFL);
+	kill(0, SIGINT);
 }
-
 
 int open_heredoc(t_redirect	*red, t_hash_table *env, t_io io)
 {
@@ -219,10 +209,12 @@ int open_heredoc(t_redirect	*red, t_hash_table *env, t_io io)
 	
 	flag 		= 0;
 	filename	= ft_generate_filename();
-	here_fd 	= open(filename,  O_RDWR | O_CREAT, 0666);
+	here_fd 	= open(filename, O_RDWR | O_CREAT, 0666);
 	end_of_file = ft_ignor_EOF_quots(red->argument);
 
-	g_minishell_signal = SIGHEREDOC;
+	signal(SIGINT, ft_heredoc_handler);
+	signal(SIGQUIT, SIG_IGN);
+	g_global_state.minishell_signal = SIGHEREDOC;
 	if (ft_isquot(red->argument))
 		flag = 1;
 	
@@ -240,21 +232,16 @@ int open_heredoc(t_redirect	*red, t_hash_table *env, t_io io)
 		free(line);
 	}
 	close(here_fd);
-	if (g_minishell_signal == SIGHEREDOC)
-	{
-		here_fd 	= open(filename,  O_RDONLY, 0666);
-		dup2(here_fd, STDIN_FILENO);
-		close(here_fd);
-	}
-	else
-	{
-		dup2(stdio, STDIN_FILENO);
-		here_fd = stdio;
-	}
+	here_fd 	= open(filename,  O_RDONLY, 0666);
+	dup2(here_fd, STDIN_FILENO);
+	close(here_fd);
 	close(stdio);
 	free(end_of_file);
 	unlink(filename);
 	free(filename);
+	g_global_state.minishell_signal = SIGCHILD;
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	return (here_fd);
 }
 
@@ -320,6 +307,15 @@ void	ft_open_all_fd(t_ast_node *ast_node, t_hash_table *env, t_io io)
 	ft_open_all_fd(ast_node->right, env, io);
 }
 
+void ft_child_sigint2(int num)
+{
+	(void)num;
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	tcsetattr(STDIN_FILENO, TCSANOW, &g_global_state.orig_termios);
+
+}
+
 // TODO expand env in command argument 
 void ft_executor(t_symbol_table* table, t_container cont)
 {
@@ -329,20 +325,22 @@ void ft_executor(t_symbol_table* table, t_container cont)
 	int			status;
 
 
+
+	status = 0;
+	int isSignaled = 0;
+
 	if (cont.exec_type == LIST)
 	{
 		// printf("aaaa\n");
 		pipe_count = 0;
 		// ft_open_all_fd(ft_command_to_ast_node(cont.command), table->env);
-		cont.exit_status = ft_executor_with_list(cont.fd, cont.command, table);
-		char* st_status = ft_itoa(cont.exit_status);
-		ft_set_env(table->env, (t_hash_data){"?", st_status, HIDDEN});
-		free(st_status);
+		status = ft_executor_with_list(cont.fd, cont.command, table);
+		
 	}
 	else
 	{
 		pipe_count = ft_pipe_count_tree(cont.tree->ast_node);
-		ft_open_all_fd(cont.tree->ast_node, table->env, cont.fd);
+		// ft_open_all_fd(cont.tree->ast_node, table->env, cont.fd);
 		pipe_fd = ft_open_pipe_fd(pipe_count);
 		pipe_iter = 0;
 		
@@ -359,12 +357,27 @@ void ft_executor(t_symbol_table* table, t_container cont)
 		for (size_t i = 0; i < pipe_count + 1; i++)
 		{
 			wait(&status);
+			if (!isSignaled)
+			{
+				if (WIFSIGNALED(status))
+				{
+					status = 128 + WTERMSIG(status);
+					rl_catch_signals = 0;
+					g_global_state.minishell_signal = SIGCHILD;
+					ft_child_sigint2(SIGNORMAL);
+					isSignaled = 1;
+				}
+				else if (WIFEXITED(status))
+					status = WEXITSTATUS(status);
+			}
+			signal(SIGINT, sigint_handler); 
 		}
-		if (WIFEXITED(status))
-			cont.exit_status = WEXITSTATUS(status);
 		ft_free_tree(cont.tree->ast_node);	
 		free(cont.tree);
-		// printf("aaaaaa\n");
 	}
+	cont.exit_status = status;
+	char* st_status = ft_itoa(cont.exit_status);
+	ft_set_env(table->env, (t_hash_data){"?", st_status, HIDDEN});
+	free(st_status);
 	(void)pipe_count;
 }

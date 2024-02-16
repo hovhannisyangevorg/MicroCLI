@@ -12,8 +12,12 @@
 # include <errno.h>
 
 #ifndef  READLINE_LIBRARY
-#define READLINE_LIBRARY 1
+    # define READLINE_LIBRARY 1
 #endif
+
+# ifndef  HEREDOC_DIR
+    # define HEREDOC_DIR "."
+# endif
 
 #include "readline/readline.h"
 #include "readline/history.h"

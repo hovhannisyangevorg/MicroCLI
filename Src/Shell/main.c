@@ -12,6 +12,11 @@
 
 #include "shell.h"
 #include <signal.h>
+#include <termios.h>
+
+
+t_global_state g_global_state;
+
 // #include <termio.h>
 
 // size_t numofrec;
@@ -68,13 +73,7 @@ void	ft_get_pid(t_container cont, t_hash_table *env)
 void sigint_handler(int signum)
 {
 	(void)signum;
-	if (g_minishell_signal == SIGHEREDOC)
-	{
-		close(STDIN_FILENO);
-		g_minishell_signal = SIGNORMAL;
-		return ;
-	}
-	else if (g_minishell_signal != SIGCHILD)
+	if (g_minishell_signal != SIGCHILD)
 	{
 		rl_replace_line("", 0);
 		ft_putstr_fd("\n", STDOUT_FILENO);
@@ -85,11 +84,11 @@ void sigint_handler(int signum)
 
 void sigquit_handler(int signum)
 {
+	(void)signum;
 	if (g_minishell_signal == SIGCHILD)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		SIG_DFL(signum);
 	}
 }
 
@@ -110,10 +109,11 @@ void	ft_program(char **env)
 	// print_env(table, 1);
 	// test for function table
 	ft_get_pid(container, container.table->env);
+	tcgetattr(STDIN_FILENO, &g_global_state.orig_termios);
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
 	
-	
+	// rl_clear_signals();
 	// char** env1 = ft_convert_env_to_args(table);
 	// print_env_args(env1);
 	while (1)

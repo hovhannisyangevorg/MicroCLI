@@ -67,5 +67,6 @@ void				ft_free_tree(t_ast_node *tree);
 
 void sigint_handler(int signum);
 void sigquit_handler(int signum);
+void ft_child_sigint(int num);
 
 #endif

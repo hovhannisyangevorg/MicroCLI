@@ -45,19 +45,24 @@ void	ft_open_file(t_command *command, t_hash_table *env, t_vector* fd_vector, t_
 	ft_close_fd(fd_vector);
 }
 
+int func()
+{
+	return 0;
+}
 void ft_child_sigint(int num)
 {
 	(void)num;
 	rl_replace_line("", 0);
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	rl_on_new_line();
-	
-}
+	tcsetattr(STDIN_FILENO, TCSANOW, &g_global_state.orig_termios);
 
+}
 int ft_handle_external(t_io io, t_command* command, t_hash_table* env_table)
 {
 	(void)io;
 	t_hash_table_arr env = ft_convert_env_to_args(env_table, 1);
+	t_vector	fd_vector;
 	signal(SIGINT, SIG_IGN);
 	int status = 0;
 	int pid = fork();
@@ -66,15 +71,15 @@ int ft_handle_external(t_io io, t_command* command, t_hash_table* env_table)
 	if (pid == 0) 
 	{
 		rl_catch_signals = 0;
-		signal(SIGINT, ft_child_sigint); 
+		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-
+		ft_init_arrey(&fd_vector, 0);
+		ft_open_file(command, env_table, &fd_vector, io);
 		ft_handle_redirect_ios(command->io);
 		ft_command_fron_PATH(command, env_table);
 		execve(command->argument->arguments[0], command->argument->arguments, env.table);
 		
 		ft_panic_shell(command->argument->arguments[0], ": command not found");
-		// perror("execve: ");
 		exit(EXIT_FAILURE);
 	}
 	else
@@ -82,19 +87,18 @@ int ft_handle_external(t_io io, t_command* command, t_hash_table* env_table)
 		wait(&status);
 		if (WIFSIGNALED(status))
 		{
-			// signal(SIGINT, ctrl_c); 
-			g_minishell_signal = SIGCHILD;
+			g_global_state.minishell_signal = SIGCHILD;
 			if (WTERMSIG(status) == SIGINT || WTERMSIG(status) == SIGQUIT)
 			{
 				rl_catch_signals = 0;
-				g_minishell_signal = SIGCHILD;
+				g_global_state.minishell_signal = SIGCHILD;
 				ft_child_sigint(SIGNORMAL);
 			}
 			status = 128 + WTERMSIG(status);
 		}
 		else if (WIFEXITED(status))
 		{
-			g_minishell_signal = SIGNORMAL;
+			g_global_state.minishell_signal = SIGNORMAL;
 			status = WEXITSTATUS(status);
 		}
 		signal(SIGINT, sigint_handler); 
@@ -110,8 +114,7 @@ int	ft_executor_with_list(t_io io, t_command *command, t_symbol_table* table)
 	t_vector	fd_vector;
 
 	ft_expand_env(command, table);
-	ft_init_arrey(&fd_vector, 0);
-	ft_open_file(command, table->env, &fd_vector, io);
+	
 	t_function_callback biltin_func;
 	if (!command->argument->arguments)
 		biltin_func = NULL;
@@ -119,6 +122,8 @@ int	ft_executor_with_list(t_io io, t_command *command, t_symbol_table* table)
 		biltin_func =  ft_get_function(table->function, command->argument->arguments[0]);
 	if (biltin_func)
 	{
+		ft_init_arrey(&fd_vector, 0);
+		ft_open_file(command, table->env, &fd_vector, io);
 		ft_handle_redirect_ios(command->io);
 		status = biltin_func(command, table);
 		ft_restore_std_io(io);

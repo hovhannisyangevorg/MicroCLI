@@ -15,6 +15,14 @@ $(1)/%$(_O): $(2)/%$(_C) $(3)
 	$$(CC) $$(CFLAGS) $$(INCLUDES) $$(C_FLAG) $$< $$(O_FLAG) $$@ 
 endef
 
+define generate_heredoc_dir
+$(info ✅ Generated objects for $(1) directory)
+$(1):
+	echo $$@
+	$$(MK) $$@
+endef
+$(info $(HEREDOC_DIR_PATH))
+$(eval $(call generate_heredoc_dir, $(HEREDOC_DIR_PATH)))
 $(eval $(call generate_rule_hier, $(OBJ_DIR),$(SRC_DIR)))
 $(eval $(call generate_rule_hier, $(OBJ_EXEC_DIR),$(SRC_EXEC_DIR)))
 $(eval $(call generate_rule_hier, $(OBJ_LEXR_DIR),$(SRC_LEXR_DIR)))
@@ -37,7 +45,8 @@ $(eval $(call generate_obj_rule_hier, $(OBJ_SEMATIC_DIR),$(SRC_SEMATIC_DIR),$(IN
 $(ALL): $(FT_LIB)/$(FT_ARX) $(NAME) 
 
 
-$(NAME): $(OBJ_DIR) $(OBJ_ALL_DIR) $(OBJS_ALL)
+
+$(NAME): $(OBJ_DIR) $(OBJ_ALL_DIR) $(OBJS_ALL) $(HEREDOC_DIR_PATH)
 	@$(CC) $(INCLUDES) $(CFLAGS) $(O_FLAG) $@ $(OBJS_ALL) $(LINKERS)
 
 
