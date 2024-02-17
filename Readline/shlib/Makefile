@@ -32,7 +32,7 @@ datarootdir = ${prefix}/share
 srcdir = .
 VPATH = ..
 topdir = ..
-BUILD_DIR = /home/gevorg/Desktop/Minishell/Readline
+BUILD_DIR = /home/hohayrap/Desktop/minishell_old/Readline
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -52,7 +52,7 @@ SHELL = /bin/sh
 host_os = linux-gnu
 host_vendor = pc
 
-prefix = /home/gevorg/Desktop/Minishell/Readline_update
+prefix = /home/hohayrap/Desktop/minishell_old/Readline_update
 exec_prefix = ${prefix}
 includedir = ${prefix}/include
 bindir = ${exec_prefix}/bin

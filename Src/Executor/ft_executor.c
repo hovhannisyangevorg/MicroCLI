@@ -370,7 +370,7 @@ void ft_executor(t_symbol_table* table, t_container cont)
 					if (WIFSIGNALED(status))
 					{
 						if (WTERMSIG(status) == SIGPIPE)
-							status = 0;
+							status = WEXITSTATUS(status);
 						else
 							status = 128 + WTERMSIG(status);
 						rl_catch_signals = 0;

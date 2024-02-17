@@ -17,6 +17,8 @@ int is_numeric(char *str)
     size_t i;
 
     i = 0;
+    if (str && str[i] && str[i] == '-' && ft_isdigit(str[i + 1]))
+        return (1);
     while(str && str[i])
     {
         if (!ft_isdigit(str[i]))
@@ -55,9 +57,10 @@ long long ft_atoll(char* str)
 //TODO handle arguments and non-numerics
 int	ft_exit(t_command *command, t_symbol_table* table)
 {
-    unsigned long long   status;
+    long long            status;
     size_t               i;
     size_t               ac;
+    unsigned char        st;
     printf("exit\n");
     (void)command;
     (void)table;
@@ -85,7 +88,10 @@ int	ft_exit(t_command *command, t_symbol_table* table)
         else if (ac > 1)
             ft_panic_shell("exit: ", "too many arguments");
         else
-            exit (i % 255);
+        {
+            st = status;
+            exit (st);
+        }
         return (2);
     }
     exit (EXIT_SUCCESS);
