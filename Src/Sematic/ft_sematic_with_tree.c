@@ -6,11 +6,19 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 20:41:20 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/08 21:41:16 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 16:07:57 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+
+
+
+
+
+
+
 
 t_status_codes ft_callback(t_status_codes code, t_callback callback, t_ast_node *node)
 {
@@ -54,6 +62,7 @@ t_status_codes ft_validate_command(t_ast_node *node)
 	}
 	return (status);
 }
+
 t_status_codes ft_validate_redirect(t_ast_node *node)
 {
 	t_redirect *redirect;
