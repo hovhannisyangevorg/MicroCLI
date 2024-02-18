@@ -6,16 +6,13 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/02/18 20:16:05 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 22:04:01 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-#include <signal.h>
-#include <termios.h>
 
-
-t_global_state g_global_state;
+t_global_state	g_global_state;
 
 void	ft_program(char **env)
 {
@@ -24,17 +21,16 @@ void	ft_program(char **env)
 	t_list_token	*list;
 
 	list = NULL;
-	g_global_state.heredoc_signal 		= -1;
-	g_global_state.permission_status 	= 0;
-	rl_catch_signals 					= 0;
-	g_global_state.is_dir 				= 0;
-	container.table 					= ft_create_symbol_table(env);
-	g_global_state.argument 			= ft_get_env(container.table->env, "_");
+	g_global_state.heredoc_signal = -1;
+	g_global_state.permission_status = 0;
+	rl_catch_signals = 0;
+	g_global_state.is_dir = 0;
+	container.table = ft_create_symbol_table(env);
+	g_global_state.argument = ft_get_env(container.table->env, "_");
 	ft_get_pid(container, container.table->env);
 	tcgetattr(STDIN_FILENO, &g_global_state.orig_termios);
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, ft_sigquit_handler);
-
 	while (1)
 	{
 		g_global_state.minishell_signal = SIGNORMAL;

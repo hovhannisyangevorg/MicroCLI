@@ -11,6 +11,8 @@
 # include <errno.h>
 # include <signal.h>
 # include <termios.h>
+# include <signal.h>
+# include <termios.h>
 
 #ifndef  READLINE_LIBRARY
     # define READLINE_LIBRARY 1

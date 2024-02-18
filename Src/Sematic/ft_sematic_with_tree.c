@@ -6,28 +6,21 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 20:41:20 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 16:07:57 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 22:10:04 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-
-
-
-
-
-
-
-
-t_status_codes ft_callback(t_status_codes code, t_callback callback, t_ast_node *node)
+t_status_codes	ft_callback(t_status_codes code, \
+		t_callback callback, t_ast_node *node)
 {
 	if (!code)
 		return (callback(node));
 	return (code);
 }
 
-t_status_codes ft_validate_operator(t_ast_node *node)
+t_status_codes	ft_validate_operator(t_ast_node *node)
 {
 	if (!node)
 		return (SUCCESS_CODE);
@@ -36,54 +29,7 @@ t_status_codes ft_validate_operator(t_ast_node *node)
 	return (SUCCESS_CODE);
 }
 
-t_status_codes ft_validate_command(t_ast_node *node)
-{
-	t_command		*cmd;
-	t_redirect		*redirect;
-	t_argument		*argument;
-	t_ast_node		*reds;
-	t_status_codes	status;
-
-	if (!node)
-		return (SUCCESS_CODE);
-	status = SUCCESS_CODE;
-	cmd = ft_ast_to_command(node);
-	redirect = cmd->redirect;
-	argument = cmd->argument;
-	if (argument && argument->arguments && cmd->base.subshell->size)
-		return (MISSING_OPERATOR);
-	if (redirect && redirect->side == PREV_BRACE && cmd->base.subshell->size)
-		return (MISSING_OPERATOR);
-	reds = &redirect->base;
-	while (reds)
-	{
-		status = ft_callback(status, ft_validate_redirect, reds);
-		reds = reds->left;
-	}
-	return (status);
-}
-
-t_status_codes ft_validate_redirect(t_ast_node *node)
-{
-	t_redirect *redirect;
-
-	if (!node)
-		return (SUCCESS_CODE);
-	redirect = ft_ast_to_redirect(node);
-	if (!redirect->argument)
-		return (UNEXPECTED_REDIRECT);
-	return (SUCCESS_CODE);
-}
-t_status_codes ft_validate_subshell(t_ast_node *node)
-{
-	if (!node)
-		return (SUCCESS_CODE);
-	if (node->subshell->size > 1)
-		return (MISSING_OPERATOR);
-	return (SUCCESS_CODE);
-}
-
-t_status_codes ft_validate_empty(t_ast_node *node)
+t_status_codes	ft_validate_empty(t_ast_node *node)
 {
 	if (!node)
 		return (SUCCESS_CODE);
@@ -92,7 +38,7 @@ t_status_codes ft_validate_empty(t_ast_node *node)
 	return (SUCCESS_CODE);
 }
 
-t_status_codes ft_sematic_with_tree(t_ast_node *root)
+t_status_codes	ft_sematic_with_tree(t_ast_node *root)
 {
 	t_shant_stack	*node;
 	t_status_codes	status;
@@ -112,9 +58,9 @@ t_status_codes ft_sematic_with_tree(t_ast_node *root)
 	node = root->subshell->top;
 	while (node)
 	{
-		status	= ft_callback(status, ft_validate_empty, node->ast_node);
-		status	= ft_callback(status, ft_sematic_with_tree, node->ast_node);
-		node	= node->next;
+		status = ft_callback(status, ft_validate_empty, node->ast_node);
+		status = ft_callback(status, ft_sematic_with_tree, node->ast_node);
+		node = node->next;
 	}
 	status = ft_callback(status, ft_sematic_with_tree, root->left);
 	status = ft_callback(status, ft_sematic_with_tree, root->right);
