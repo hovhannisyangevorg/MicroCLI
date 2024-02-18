@@ -6,17 +6,11 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 17:55:10 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 16:14:59 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 19:47:11 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-/**
- * Src/Tokenizer/ft_balanced.c
- */
-int		ft_balanced(char *line);
-
 
 static int	ft_is_quota_balanc(char *input)
 {
@@ -90,8 +84,6 @@ static int	ft_is_balanc(char *line)
 	return (balanced);
 }
 
-
-// TODO: do this in same way as sematic validator work
 int ft_balanced(char *line)
 {
 	if (!ft_is_balanc(line))

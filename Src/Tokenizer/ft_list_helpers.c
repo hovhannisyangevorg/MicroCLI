@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 18:05:12 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 16:40:48 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 19:47:18 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ t_token* ft_find_list(t_token_type type, t_token* start)
 	}
 	return NULL;
 }
-
 
 t_token		*ft_find_close_list(t_token *open_brac)
 {

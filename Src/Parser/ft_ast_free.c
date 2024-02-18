@@ -6,12 +6,11 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 18:18:13 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 15:18:21 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 19:45:58 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
 
 void	ft_collect_ast_to_q(t_ast_node *tree, t_global_stack *q_node)
 {

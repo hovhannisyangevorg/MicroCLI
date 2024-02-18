@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 19:15:33 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 16:44:32 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 19:47:35 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static void ft_splitted(t_token *token, char *delims)
 	char* str = ft_strdup(expr + pipe_size);
 	free(token->token);
 	token->token = str;
-
 }
 
 void	ft_split_token(t_list_token *list)

@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:54:42 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 15:39:48 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 19:46:47 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ void	ft_free_shant_stack(t_global_stack *stack)
 		ft_pop_shant_stack(stack);
 	free(stack);
 }
-
-
 
 void ft_print_shat_steak(t_global_stack *stack)
 {

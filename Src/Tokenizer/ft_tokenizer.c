@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 18:04:57 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 16:48:43 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 19:47:43 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int ft_ignore_quots(char *str, char quot, size_t i)
 	}
 	return (i);
 }
-
 
 int ft_ignore_quots2(char *str, char quot, size_t i)
 {
