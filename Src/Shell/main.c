@@ -92,6 +92,8 @@ void sigquit_handler(int signum)
 		rl_on_new_line();
 	}
 }
+void ft_free_command(t_command *command);
+
 
 void	ft_program(char **env)
 {
@@ -99,9 +101,13 @@ void	ft_program(char **env)
 	char 			*line;
 	t_list_token	*list;
 
+	list = NULL;
 	g_global_state.heredoc_signal = -1;
+	g_global_state.permission_status = 0;
 	rl_catch_signals = 0;
+	g_global_state.is_dir = 0;
 	container.table = ft_create_symbol_table(env);
+	g_global_state.argument = ft_get_env(container.table->env, "_");
 	
 	//finished testing of sort functionality of hash table!!!
 	
@@ -132,11 +138,36 @@ void	ft_program(char **env)
 			free(line);
 			continue;
 		}
-		ft_balanced(line);
-        list = ft_tokenize(line, SEPARATORS);
+		int status = ft_balanced(line);
+		if (status)
+		{
+			container.exit_status = status;
+			char* st_status = ft_itoa(container.exit_status);
+			ft_set_env(container.table->env, (t_hash_data){"?", st_status, HIDDEN});
+			free(st_status);
+			free(line);
+			continue;
+		}
+		list = ft_tokenize(line, SEPARATORS);
 		container = ft_parser(container, list);
 		if (container.exit_status == SUCCESS_CODE)
 			ft_executor(container.table, container);
+		else
+		{
+			char* st_status = ft_itoa(container.exit_status);
+			ft_set_env(container.table->env, (t_hash_data){"?", st_status, HIDDEN});
+			free(st_status);
+		}
+		if (container.exec_type == LIST)
+		{
+			// ft_free_command(container.command);
+
+		}
+		else
+		{
+			// ft_free_tree(container.tree->ast_node);	
+			// free(container.tree);
+		}
 		ft_free_list(list);
 		free(line);
     }

@@ -21,7 +21,7 @@ int 			ft_is_empty(t_stack *stack);
 void			ft_push_stack(t_stack *stack, char item);
 char 			ft_pop_stack(t_stack *stack);
 void 			ft_free_stack(t_stack *stack);
-void			ft_balanced(char *line);
+int             ft_balanced(char *line);
 t_list_token 	*ft_init_list();
 void			ft_push_back(t_list_token *list, int type, const char *token);
 void			ft_push_front(t_list_token *list, int type, const char *token);

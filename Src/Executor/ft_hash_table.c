@@ -218,6 +218,9 @@ t_function_callback	ft_get_function(t_hash_table *table, char *key)
     size_t			index;
 	t_hash_entity	*entry;
 
+	if (!key || !*key)
+		return NULL;
+
 	index = ft_hash_entity(table->table->capacity, key);
     entry = table->table->entity[index].head;
     while (entry != NULL)
@@ -235,6 +238,8 @@ t_function_entity	*ft_get_function_entity(t_hash_table *table, char *key)
     size_t			index;
 	t_hash_entity	*entry;
 
+	if (!key || !*key)
+		return NULL;
 	index = ft_hash_entity(table->table->capacity, key);
     entry = table->table->entity[index].head;
     while (entry != NULL)
@@ -253,6 +258,8 @@ t_env_entity	*ft_get_env_entity(t_hash_table *table, char *key)
     size_t			index;
 	t_hash_entity	*entry;
 
+	if (!key || !*key)
+		return NULL;
 	index = ft_hash_entity(table->table->capacity, key);
     entry = table->table->entity[index].head;
     while (entry != NULL)
@@ -269,6 +276,8 @@ char* ft_get_env(t_hash_table *table, char *key)
     size_t			index;
     t_hash_entity	*entry;
 
+	if (!key || !*key)
+		return NULL;
 	index = ft_hash_entity(table->table->capacity, key);
 	entry = table->table->entity[index].head;
     while (entry != NULL)
@@ -287,6 +296,8 @@ void	ft_set_env(t_hash_table *table, t_hash_data data)
     t_hash_entity	*entry;
 	t_env_entity	*ent_tmp;
 
+	if (!data.key || !*data.key)
+		return ;
 	index = ft_hash_entity(table->table->capacity, data.key);
 	entry = table->table->entity[index].head;
     while (entry != NULL)
@@ -399,6 +410,8 @@ void	ft_pop_entity(t_hash_table *table, char *key)
 
 	if (!table)
 		return;
+	if (ft_get_env_entity(table, key)->visibility == HIDDEN)
+		return ;
 	index = ft_hash_entity(table->table->capacity, key);
 
 	lst = &table->table->entity[index];

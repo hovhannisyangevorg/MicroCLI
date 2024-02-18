@@ -23,6 +23,20 @@ int ft_ignore_quots(char *str, char quot, size_t i)
 	return (i);
 }
 
+
+int ft_ignore_quots2(char *str, char quot, size_t i)
+{
+	if (str && str[i])
+	{
+		++i;
+		while (str[i] && str[i] != quot)
+			++i;
+		if (str[i] && str[i] == quot)
+			++i;
+	}
+	return (i);
+}
+
 char *ft_tokenize_with_delims(char *str,  char *delim, int* type)
 {
     static char *next_token;

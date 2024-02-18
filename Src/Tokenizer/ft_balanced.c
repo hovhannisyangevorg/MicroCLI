@@ -18,11 +18,12 @@ static int	ft_is_quota_balanc(char *input)
 	int single_quotes;
 	int double_quotes;
 
+
 	i = 0;
 	single_quotes = 0;
 	double_quotes = 0;
 	if (input == NULL)
-		return 0;
+		return 1;
 
     while (input && input[i])
 	{
@@ -30,11 +31,23 @@ static int	ft_is_quota_balanc(char *input)
 		{
 			single_quotes++;
 			i = ft_ignore_quots(input, input[i], i);
+			if (input[i])
+			{
+				if (input[i] == '\'')
+					++single_quotes;
+				++i;
+			}
 			continue ;
         } else if (input[i] == '\"')
 		{
 			double_quotes++;
 			i = ft_ignore_quots(input, input[i], i);
+			if (input[i])
+			{
+				if (input[i] == '\"')
+					++double_quotes;
+				++i;
+			}
 			continue ;
 		}
 		i++;
@@ -73,17 +86,17 @@ static int	ft_is_balanc(char *line)
 
 
 // TODO: do this in same way as sematic validator work
-void ft_balanced(char *line)
+int ft_balanced(char *line)
 {
-	char *color;
-
 	if (!ft_is_balanc(line))
 	{
-		color = RED "Bash Oops! : " BLACK "Syntax error parentheses are not balanced ! `('";
-		ft_panic(color);
-	}else if (!ft_is_quota_balanc(line))
-	{
-		color = RED "Bash Oops! : " BLACK "Syntax error quotes are not balanced ! `\" or `\''";
-		ft_panic_shell("", color);
+		ft_panic_shell("minishell: ", "unexpected EOF while looking for matching `('");
+		return (2);
 	}
+	else if (!ft_is_quota_balanc(line))
+	{
+		ft_panic_shell("minishell: ", "unexpected EOF while looking for matching `\'\'");
+		return (2);
+	}
+	return EXIT_SUCCESS;
 }

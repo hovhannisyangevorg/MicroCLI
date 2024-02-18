@@ -33,6 +33,9 @@ struct s_global_state
 	t_signal_type	minishell_signal;
 	pid_t			pid;
 	int				heredoc_signal;
+	int				permission_status;
+	int				is_dir;
+	char*			argument;
 };
 
 extern t_global_state g_global_state;

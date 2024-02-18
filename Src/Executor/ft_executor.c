@@ -260,37 +260,60 @@ void	ft_open_type(t_redirect *redirect, t_command *cmd, t_vector *fd_vector, t_h
 	int fd;
 
 	fd = -1;
-	if (redirect->base.token_type == WRITE)
+	
+	if (g_global_state.permission_status == SUCCESS_CODE)
 	{
-		fd = open(redirect->argument, O_TRUNC | O_WRONLY | O_CREAT, 0664);
-		if (cmd->io.output < fd)
-			cmd->io.output = fd;
-		else
-			ft_push_arrey(fd_vector, fd);
-	}
-	else if (redirect->base.token_type == READ)
-	{
-		fd = open(redirect->argument,  O_RDONLY);
-		if (cmd->io.input < fd)
-			cmd->io.input = fd;
-		else
-			ft_push_arrey(fd_vector, fd);
-	}
-	else if (redirect->base.token_type == APPEND)
-	{
-		fd = open(redirect->argument, O_APPEND | O_WRONLY | O_CREAT, 0664);
-		if (cmd->io.output < fd)
-			cmd->io.output = fd;
-		else
-			ft_push_arrey(fd_vector, fd);
-	}
-	else if (redirect->base.token_type == HEREDOC)
-	{
-		fd = open_heredoc(redirect, env, io);
-		if (cmd->io.input < fd)
-			cmd->io.input = fd;
-		else
-			ft_push_arrey(fd_vector, fd);
+		if (redirect->base.token_type == WRITE)
+		{
+			fd = open(redirect->argument, O_TRUNC | O_WRONLY | O_CREAT, 0664);
+			if (access(redirect->argument, W_OK) == -1)
+			{
+				g_global_state.permission_status = errno;
+				// perror("");
+				close(fd);
+				return;
+			}
+			else if (cmd->io.output < fd)
+				cmd->io.output = fd;
+			else
+				ft_push_arrey(fd_vector, fd);
+		}
+		else if (redirect->base.token_type == READ)
+		{
+			fd = open(redirect->argument,  O_RDONLY);
+			if (access(redirect->argument, R_OK) == -1)
+			{
+				g_global_state.permission_status = errno;
+				close(fd);
+				return;
+			}
+			else if (cmd->io.input < fd)
+				cmd->io.input = fd;
+			else
+				ft_push_arrey(fd_vector, fd);
+		}
+		else if (redirect->base.token_type == APPEND)
+		{
+			fd = open(redirect->argument, O_APPEND | O_WRONLY | O_CREAT, 0664);
+			if (access(redirect->argument, R_OK | W_OK) == -1)
+			{
+				g_global_state.permission_status = errno;
+				close(fd);
+				return;
+			}
+			else if (cmd->io.output < fd)
+				cmd->io.output = fd;
+			else
+				ft_push_arrey(fd_vector, fd);
+		}
+		else if (redirect->base.token_type == HEREDOC)
+		{
+			fd = open_heredoc(redirect, env, io);
+			if (cmd->io.input < fd)
+				cmd->io.input = fd;
+			else
+				ft_push_arrey(fd_vector, fd);
+		}
 	}
 }
 
@@ -334,24 +357,20 @@ void ft_executor(t_symbol_table* table, t_container cont)
 	int			status;
 
 
-
 	status = 0;
 	int isSignaled = 0;
 
 	if (cont.exec_type == LIST)
 	{
 		pipe_count = 0;
-		ft_open_all_fd(ft_command_to_ast_node(cont.command), table->env, cont.fd);
 		if (g_global_state.heredoc_signal == -1)
 			status = ft_executor_with_list(cont.fd, cont.command, table);
 		else
 			status = 128 + g_global_state.heredoc_signal;
-		
 	}
 	else
 	{
 		pipe_count = ft_pipe_count_tree(cont.tree->ast_node);
-		ft_open_all_fd(cont.tree->ast_node, table->env, cont.fd);
 		pipe_fd = ft_open_pipe_fd(pipe_count);
 		pipe_iter = 0;
 		if (g_global_state.heredoc_signal == -1)
@@ -386,6 +405,7 @@ void ft_executor(t_symbol_table* table, t_container cont)
 		else
 			status = 128 + g_global_state.heredoc_signal;
 		
+
 		ft_free_tree(cont.tree->ast_node);	
 		free(cont.tree);
 		// char *leak = ft_strdup("");
@@ -393,10 +413,17 @@ void ft_executor(t_symbol_table* table, t_container cont)
 		// free(leak);
 		
 	}
+	// printf("_env %s\n", g_global_state.argument);
 	g_global_state.heredoc_signal = -1;
 	cont.exit_status = status;
 	char* st_status = ft_itoa(cont.exit_status);
 	ft_set_env(table->env, (t_hash_data){"?", st_status, HIDDEN});
+	if (g_global_state.argument)
+	{
+		ft_set_env(table->env, (t_hash_data){"_", g_global_state.argument, VENV});
+		free(g_global_state.argument);
+		g_global_state.argument = NULL;
+	}
 	free(st_status);
 	(void)pipe_count;
 }

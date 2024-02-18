@@ -69,5 +69,6 @@ void sigint_handler(int signum);
 void sigquit_handler(int signum);
 void ft_child_sigint(int num);
 void ft_heredoc_handler_child(int num);
+char	*ft_get_last_arg(t_command* command);
 
 #endif

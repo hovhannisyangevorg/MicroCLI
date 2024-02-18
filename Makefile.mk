@@ -76,7 +76,7 @@ RM				=	rm -rf
 MK				=	mkdir -p
 HARD_FLAG		=	-Wall -Wextra -Werror
 DEFINES			=	$(D_FLAG)HEREDOC_DIR=$(HEREDOC_DIR)
-SANIT_FLAG		=	-g3 #-fsanitize=leak
+SANIT_FLAG		=	-g3
 READ_FLAG		=	-lreadline -lhistory
 CFLAGS			=	$(HARD_FLAG) $(SANIT_FLAG) $(DEFINES)
 

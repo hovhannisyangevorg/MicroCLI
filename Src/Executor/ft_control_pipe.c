@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "shell.h"
+#include <sys/stat.h>
 
 t_vector	ft_open_pipe_fd(size_t pipe_count)
 {
@@ -91,6 +92,7 @@ int ft_command_fron_PATH(t_command *command, t_hash_table *env)
 {
 	size_t i;
 	char **paths;
+	struct stat path_stat;
 	char *path_exec;
 	char *prefix;
 	int	 status;
@@ -102,9 +104,32 @@ int ft_command_fron_PATH(t_command *command, t_hash_table *env)
 	
 	if (path_exec[0] == '/' || !ft_strncmp(path_exec, "./", 2) || !ft_strncmp(path_exec, "../", 3))
 	{
-		status = access (path_exec, F_OK | X_OK);
+		if (stat(command->argument->arguments[0], &path_stat) == 0)
+		{
+			if (S_ISDIR(path_stat.st_mode))
+			{
+				g_global_state.is_dir = 1;
+				g_global_state.permission_status = 0;
+				return errno;
+			}
+		}
+
+		status = access (path_exec, F_OK);
 		free(path_exec);
-		return (errno);	
+		path_exec = NULL;
+
+		if (status == -1)
+		{
+			g_global_state.permission_status = errno;
+			return errno;
+		}
+		status = access (path_exec, X_OK);
+		if (status == -1)
+		{
+			g_global_state.permission_status = errno;
+			return errno;
+		}
+		return (EXIT_SUCCESS);
 	}
 	else
 	{
@@ -114,13 +139,14 @@ int ft_command_fron_PATH(t_command *command, t_hash_table *env)
 		{
 			prefix = ft_strdup(paths[i]);
 			prefix = ft_gnl_strjoin(prefix, "/");
-			prefix = ft_strjoin(prefix, path_exec);
+			prefix = ft_gnl_strjoin(prefix, path_exec);
 			status = access(prefix, F_OK | X_OK);
 			if (!status)
 			{
 				free(command->argument->arguments[0]);
 				command->argument->arguments[0] = prefix;
-				return (status);
+				status = EXIT_SUCCESS;
+				break;
 			}
 			i++;
 		}
@@ -129,7 +155,23 @@ int ft_command_fron_PATH(t_command *command, t_hash_table *env)
 	}
 
 	free(path_exec);
-	return (status);
+
+    // Get information about the file
+    if (stat(command->argument->arguments[0], &path_stat) == 0)
+	{
+        if (S_ISDIR(path_stat.st_mode))
+		{
+			g_global_state.is_dir = 1;
+			g_global_state.permission_status = 0;
+			return errno;
+		}
+	}
+	if (status)
+	{
+		g_global_state.permission_status = errno;
+		return (errno);
+	}
+	return EXIT_SUCCESS;
 }
 
 void ft_handle_redirect_ios(t_io io)
@@ -155,27 +197,77 @@ void ft_handle_redirect_ios(t_io io)
 void ft_expand_env(t_command *command, t_symbol_table* table)
 {
 	size_t i = 0;
-	while (command->argument && command->argument->arguments && command->argument->arguments[i])
+	if (command->argument && command->argument->arguments && command->argument->arguments[0])
 	{
-		char* tmp = ft_count_replace(command->argument->arguments[i], table, NOEXPAND);
-		free(command->argument->arguments[i]);
-		command->argument->arguments[i] = tmp;
-		++i;
+		while (command->argument && command->argument->arguments && command->argument->arguments[i])
+		{
+			char* tmp = ft_count_replace(command->argument->arguments[i], table, NOEXPAND);
+			free(command->argument->arguments[i]);
+			command->argument->arguments[i] = tmp;
+			++i;
+		}
+		i = 0;
+		size_t j = 0;
+		while (command->argument && command->argument->arguments && command->argument->arguments[i])
+		{
+			if (ft_strlen(command->argument->arguments[i]))
+				++j;
+				// printf("arg: %s\n", command->argument->arguments[i]);
+			++i;
+		}
+		char** av = ft_calloc(j + 1, sizeof(char*));
+		j = 0;
+		i = 0;
+		while (command->argument && command->argument->arguments && command->argument->arguments[i])
+		{
+			if (ft_strlen(command->argument->arguments[i]))
+			{
+				av[j] = ft_strdup(command->argument->arguments[i]);
+				++j;
+			}
+				// printf("arg: %s\n", command->argument->arguments[i]);
+			++i;
+		}
+		command->argument->arguments = av;
+		// i = 0;
+		// while (av && av[i])
+		// {
+			
+		// 	// printf("arg %s\n", av[i]);
+		// 		// printf("arg: %s\n", command->argument->arguments[i]);
+		// 	++i;
+		// }
+
 	}
 	
 }
 
 
+char	*ft_get_last_arg(t_command* command)
+{
+	if (!command || !command->argument || !command->argument->arguments || !command->argument->arguments[0])
+		return NULL;
+	size_t i = 0;
+	while (command->argument->arguments[i])
+		++i;
+	return ft_strdup(command->argument->arguments[i - 1]);
+}
 
 int		ft_execut_command(t_io io, t_command *command, t_symbol_table* table, t_vector *pipe_fd, size_t pipe_iter)
 {
 	t_function_callback biltin_func;
 	t_hash_table_arr env;
+	t_vector fd_vector;
+	int status;
 
-	ft_expand_env(command, table);
+	status = 0;
+	g_global_state.is_dir = 0;
 	tcsetattr(STDIN_FILENO, TCSANOW, &g_global_state.orig_termios);
 	signal(SIGINT, SIG_IGN);
+	g_global_state.permission_status = SUCCESS_CODE;
 	env = ft_convert_env_to_args(table->env, 1, 0);
+	ft_expand_env(command, table);
+
 	int pid = fork();
 	if (pid == -1)
 		return (-1);
@@ -184,6 +276,10 @@ int		ft_execut_command(t_io io, t_command *command, t_symbol_table* table, t_vec
 		rl_catch_signals = 0;
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
+		g_global_state.permission_status = 0;
+		ft_init_arrey(&fd_vector, 0);
+		ft_open_file(command, table->env, &fd_vector, io);
+
 		ft_handle_redirect_ios(command->io);
 		ft_hendle_pipe(pipe_fd, pipe_iter, command->io);
 		if (!command->argument->arguments)
@@ -197,10 +293,24 @@ int		ft_execut_command(t_io io, t_command *command, t_symbol_table* table, t_vec
 		}
 		else if (command->argument && command->argument->arguments && command->argument->arguments[0])
 		{
-			ft_command_fron_PATH(command, table->env);
-			execve(command->argument->arguments[0], command->argument->arguments, env.table);
-			ft_panic_shell(command->argument->arguments[0], ": command not found");
-			exit(EXIT_FAILURE);
+
+			status = ft_command_fron_PATH(command, table->env);
+			if (g_global_state.is_dir)
+			{
+				ft_putstr_fd("Minishell: ", STDERR_FILENO);
+				ft_panic_shell(command->argument->arguments[0], " Is a directory");
+				exit(g_global_state.permission_status);
+			}
+			if (g_global_state.permission_status)
+			{
+				ft_panic_shell("minishell: ", strerror(g_global_state.permission_status));
+				exit(g_global_state.permission_status);
+			}
+			if (!status)
+				execve(command->argument->arguments[0], command->argument->arguments, env.table);
+			else if (status != 126)
+				ft_panic_shell(command->argument->arguments[0], ": command not found");
+			exit(status);
 		}
 		exit(EXIT_SUCCESS);
 	}
@@ -224,11 +334,13 @@ int		ft_open_process_for_pipe(t_io io, t_ast_node *tree, t_symbol_table* table, 
 		ast_node = ft_ast_left_most(tree->left);
 		if (ast_node)
 		{
+
 			ft_execut_command(io, ft_ast_to_command(ast_node), table, pipe_fd, *pipe_iter);
+			g_global_state.argument = ft_get_last_arg(ft_ast_to_command(ast_node));
 			(*pipe_iter)++;
 		}
-		
 		ft_execut_command(io, ft_ast_to_command(tree->right), table, pipe_fd, *pipe_iter);
+		g_global_state.argument = ft_get_last_arg(ft_ast_to_command(tree->right));
 		(*pipe_iter)++;
 	}
 	

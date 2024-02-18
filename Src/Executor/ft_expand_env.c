@@ -24,7 +24,7 @@ int ft_ignore_symbol(char *str, char sym, size_t i)
 		++i;
 		if (str[i] == '?')
 			return i;
-		while (str[i] && str[i] != sym && !ft_isspace(str[i]) && str[i] != '\'' && str[i] != '\"')
+		while (str[i] && str[i] != sym && !ft_isspace(str[i]) && str[i] != '\'' && str[i] != '\"' && str[i] != '/')
 			++i;
 	}
 	return (i);
@@ -84,15 +84,18 @@ size_t ft_count_replace_len(char *arg, t_symbol_table *symbol_table, t_expand_ty
 		{
 			index_quot = ft_ignore_quots(arg, arg[i], i);
 			if (arg[i] == '\'')
-				size += index_quot - i;
+			{
+				size += index_quot - i - 1;
+				i 	= index_quot + 1;
+			}
 			else
 			{
 				++i;
 				for_rep 	= ft_substr(arg, i, (index_quot - i));
 				size 		+= ft_count_replace_len(for_rep, symbol_table, EXPAND);
 				free(for_rep);
+				i 	= index_quot + 1;
 			}
-			i 	= index_quot;
 			continue ;
 		} else if (arg[i] == '$')
 		{
@@ -209,11 +212,14 @@ char* ft_count_replace(char *arg, t_symbol_table *symbol_table, t_expand_type is
 	{
 		if (isexpand && (arg[i] == '\'' || arg[i] == '\"'))
 		{
+
 			index_quot = ft_ignore_quots(arg, arg[i], i);
+			
 			if (arg[i] == '\'')
 			{
-				ft_memmove(expand + start, (arg + i), index_quot - i);
-				start += index_quot - i;
+				ft_memmove(expand + start, (arg + i + 1), index_quot - i - 1);
+				start += index_quot - i - 1;
+				i 	= index_quot + 1;
 			}
 			else
 			{
@@ -225,13 +231,12 @@ char* ft_count_replace(char *arg, t_symbol_table *symbol_table, t_expand_type is
 				free(tmp);
 				start += len;
 				free(for_rep);
+				i 	= index_quot + 1;
 			}
-			i 	= index_quot;
 			continue ;
 		}
 		else if (arg[i] == '$')
 		{
-			// printf("sss: %s\n", arg + i);
 			index_quot	= ft_ignore_symbol(arg, arg[i], i);
 			if (arg[i + 1] == '$')
 			{
@@ -255,6 +260,7 @@ char* ft_count_replace(char *arg, t_symbol_table *symbol_table, t_expand_type is
 		start++;
 		i++;
 	}
+	expand[start] = '\0';
 	return (expand);
 }
 

@@ -36,7 +36,7 @@ t_container ft_sematic(t_container cont, t_list_token *list)
 		str						= ft_get_error_message(status);
 		if (str)
 		{
-			ft_panic_shell("ERROR: ", str);
+			ft_panic_shell("minishell: ", str);
 		}
 		free(root.token);
 		free(str);
@@ -48,7 +48,7 @@ t_container ft_sematic(t_container cont, t_list_token *list)
 		container.exit_status 	= ft_sematic_with_list(container.command);
 		str						= ft_get_error_message(container.exit_status);
 		if (str)
-			ft_panic_shell("ERROR: ", str);
+			ft_panic_shell("minishell: ", str);
 		free(str);
 	}
 	return (container);

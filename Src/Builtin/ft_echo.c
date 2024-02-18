@@ -48,7 +48,11 @@ int ft_echo(t_command *command, t_symbol_table *table)
     if (is_new_line)
         i = 1;
     else
-        i = 2;
+    {
+        i = 1;
+        while (command->argument->arguments[i] && command->argument->arguments[i][0] == '-' && command->argument->arguments[i][1] == 'n')
+            ++i;
+    }
     while (command->argument->arguments[i])
     {
         ft_putstr_fd(command->argument->arguments[i], STDOUT_FILENO);

@@ -33,9 +33,12 @@ int ft_handle_export_ident(char *line, t_hash_table *table)
 {
 	t_hash_data data;
 	char* id;
+	char* tmp;
+	char plus;
 	size_t len;
 
-
+	// printf("id: %s\n", line);
+	plus = 0;
 	id = ft_strchr(line, '=');
 	if (id)
 	{
@@ -49,20 +52,50 @@ int ft_handle_export_ident(char *line, t_hash_table *table)
 		len = ft_strlen(line);
 		data.data = NULL;
 	}
-	data.key = ft_substr(line, 0, len);
+	tmp = ft_substr(line, 0, len);
+	if (*tmp)
+	{
+		plus = tmp[ft_strlen(tmp) - 1];
+		if (plus == '+')
+		{
+			data.key = ft_substr(tmp, 0, ft_strlen(tmp) - 1);
+		}
+		else
+		{
+			data.key = ft_substr(tmp, 0, ft_strlen(tmp));
+		}
+	}
+	else
+	{
+		data.key = ft_strdup(tmp);
+	}
 	if (!id)
 		data.type = EXPORT;
 	else
 		data.type = NORMAL;
-	if (!id || is_valid_identifier(data.key))
+	if (*data.key && is_valid_identifier(data.key))
 	{
-		ft_set_env(table, data);
+		if (plus == '+')
+		{
+			char* oldval; 
+			if(!ft_get_env(table, data.key))
+				oldval = ft_strdup("");
+			else
+				oldval = ft_strdup(ft_get_env(table, data.key));
+			oldval = ft_gnl_strjoin(oldval, data.data);
+			data.data = oldval;
+			ft_set_env(table, data);
+			free(oldval);
+		}
+		else
+			ft_set_env(table, data);
 	}
 	else
 	{
+		free(tmp);
 		free(data.key);
-		ft_panic_shell("export: not a valid identifier ", data.key);
-		return (2);
+		ft_panic_shell("export: not a valid identifier", "");
+		return (EXIT_FAILURE);
 	}
 	return EXIT_SUCCESS;
 }

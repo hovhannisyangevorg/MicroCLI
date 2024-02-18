@@ -61,6 +61,8 @@ void ft_child_sigint(int num)
 int ft_handle_external(t_io io, t_command* command, t_hash_table* env_table)
 {
 	t_hash_table_arr env = ft_convert_env_to_args(env_table, 1, 0);
+	t_vector fd_vector;
+	g_global_state.permission_status = SUCCESS_CODE;
 	signal(SIGINT, SIG_IGN);
 	int status = 0;
 	int pid = fork();
@@ -71,16 +73,35 @@ int ft_handle_external(t_io io, t_command* command, t_hash_table* env_table)
 		rl_catch_signals = 0;
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		
+		ft_init_arrey(&fd_vector, 0);
+		ft_open_file(command, env_table, &fd_vector, io);
 		ft_handle_redirect_ios(command->io);
+		if (g_global_state.permission_status)
+		{
+			ft_panic_shell("minishell: ", strerror(g_global_state.permission_status));
+			exit(g_global_state.permission_status);
+		}
 		if (command->argument && command->argument->arguments && command->argument->arguments[0])
 		{
-			ft_command_fron_PATH(command, env_table);
-			execve(command->argument->arguments[0], command->argument->arguments, env.table);
-			ft_panic_shell(command->argument->arguments[0], ": command not found");
-			exit(EXIT_FAILURE);
+			status = ft_command_fron_PATH(command, env_table);
+			if (g_global_state.is_dir)
+			{
+				ft_putstr_fd("Minishell: ", STDERR_FILENO);
+				ft_panic_shell(command->argument->arguments[0], " Is a directory");
+				exit(g_global_state.permission_status);
+			}
+			if (g_global_state.permission_status)
+			{
+				ft_panic_shell("minishell: ", strerror(g_global_state.permission_status));
+				exit(g_global_state.permission_status);
+			}
+			if (!status)
+				execve(command->argument->arguments[0], command->argument->arguments, env.table);
+			else if (status != 126)
+				ft_panic_shell(command->argument->arguments[0], ": command not found");
+			exit(status);
 		}
-		exit(EXIT_SUCCESS);
+		exit(status);
 	}
 	else
 	{
@@ -111,19 +132,29 @@ void ft_expand_env(t_command *command, t_symbol_table* table);
 int	ft_executor_with_list(t_io io, t_command *command, t_symbol_table* table)
 {
 	int			status;
-	// t_vector	fd_vector;
-
-	ft_expand_env(command, table);
-	
+	t_vector	fd_vector;
 	t_function_callback biltin_func;
+
+	g_global_state.argument = ft_get_last_arg(command);
+	g_global_state.permission_status = SUCCESS_CODE;
+	ft_expand_env(command, table);
+	g_global_state.is_dir = 0;
+
+	
 	if (!command->argument->arguments)
 		biltin_func = NULL;
 	else
 		biltin_func =  ft_get_function(table->function, command->argument->arguments[0]);
 	if (biltin_func)
 	{
-		// ft_init_arrey(&fd_vector, 0);
-		// ft_open_file(command, table->env, &fd_vector, io);
+		ft_init_arrey(&fd_vector, 0);
+
+		ft_open_file(command, table->env, &fd_vector, io);
+		if (g_global_state.permission_status != SUCCESS_CODE)
+		{
+			ft_panic_shell("minishell: ", strerror(g_global_state.permission_status));
+			return g_global_state.permission_status;
+		}
 		ft_handle_redirect_ios(command->io);
 		status = biltin_func(command, table);
 		ft_restore_std_io(io);
