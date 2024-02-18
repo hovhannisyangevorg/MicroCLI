@@ -1,42 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parser.c                                        :+:      :+:    :+:   */
+/*   ft_signals.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 19:56:54 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 15:37:27 by gevorg           ###   ########.fr       */
+/*   Created: 2024/02/18 15:00:08 by gevorg            #+#    #+#             */
+/*   Updated: 2024/02/18 15:48:59 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_io	ft_init_io()
+void sigint_handler(int signum)
 {
-	t_io io;
-
-	io.input	= 0;
-	io.output	= 1;
-	io.error	= 2;
-	return (io);
+	(void)signum;
+	if (g_global_state.minishell_signal != SIGCHILD)
+	{
+		rl_replace_line("", 0);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
-t_io	ft_init_io_std()
+void sigquit_handler(int signum)
 {
-	t_io io;
-
-	io.error	= dup(STDERR_FILENO);
-	io.input	= dup(STDIN_FILENO);
-	io.output	= dup(STDOUT_FILENO);
-	return io;
-}
-
-t_container ft_parser(t_container cont, t_list_token *list)
-{
-	t_container 	container;
-
-	container 		= ft_sematic(cont, list);
-	container.fd	= ft_init_io_std();
-	return (container);
+	(void)signum;
+	if (g_global_state.minishell_signal == SIGCHILD)
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+	}
 }

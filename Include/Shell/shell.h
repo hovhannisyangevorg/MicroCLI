@@ -32,5 +32,6 @@
 # include 	"tokenizer.h"
 # include	"builtins.h"
 
+void	ft_program(char **env);
 
 #endif

@@ -1,6 +1,5 @@
 #include "shell.h"
 
-
 t_ast_node	*ft_command_to_ast_node(t_command *cmd)
 {
 	return ((t_ast_node *)cmd);

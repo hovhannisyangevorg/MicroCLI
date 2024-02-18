@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 16:24:26 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/14 23:19:08 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 15:10:00 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 
 int ft_variable_identifier(char *ident);
+
+
 
 
 int ft_ignore_symbol(char *str, char sym, size_t i)
@@ -195,8 +197,6 @@ int ft_variable_identifier(char *ident)
 	return (1);
 }
 
-
-
 char* ft_count_replace(char *arg, t_symbol_table *symbol_table, t_expand_type isexpand)
 {
 	int 	i;
@@ -264,28 +264,14 @@ char* ft_count_replace(char *arg, t_symbol_table *symbol_table, t_expand_type is
 	return (expand);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void print_env_args(char** env)
+{
+	int i = -1;
+	printf("-------------args----------\n");
+	while (env && env[++i])
+	{
+		printf("%s\n", env[i]);
+	}
+	printf("-------------end args----------\n");
+	
+}

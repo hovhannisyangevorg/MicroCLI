@@ -1,91 +1,98 @@
-# ifndef 	PARSER_H
+#ifndef 	PARSER_H
 # define 	PARSER_H
-
 
 # include "shell.h"
 
 
-// ft_parser.c
-t_container			ft_parser(t_container cont, t_list_token *list);
+/**
+ * Src/Parser/ft_ast_free.c
+*/
+void				ft_collect_ast_to_q(t_ast_node *tree, t_global_stack *q_node);
+void				ft_free_redirect(t_redirect *redirect);
+void 				ft_free_arguments(t_argument *argument);
+void 				ft_close_command_fd(t_io io);
+void 				ft_free_command(t_command *command);
+void 				ft_free_tree(t_ast_node *tree);
 
-t_io                ft_init_io_std();
+/**
+ * Src/Parser/ft_ast_method.c 
+*/
+t_global_tree 		*ft_init_ast_tree();
+t_ast_node 			*ft_create_ast_node(t_token *token);
+size_t 				ft_ast_len(t_ast_node *root);
+void 				ft_init_ast_node(t_ast_node *node, t_token *token);
+char				*ft_ast_strjoin(char *s1, char *s2);
 
-// ft_helper.c
+
+/**
+ * Src/Parser/ft_ast_print.c
+*/
+void				print_redirect(t_ast_node *redirect);
+void				print_argument(t_ast_node *arg);
+void 				print_command(t_ast_node *command, char *prefix, int is_root, int is_left);
+void				print_node_type(t_ast_node *node, char *prefix, int is_root, int is_left);
+void 				ft_ast_print(t_ast_node *head, char *prefix, int is_left, int is_root);
+
+/**
+ * Src/Parser/ft_build_command.c
+*/
+t_command			*ft_create_command(t_argument *argument, t_redirect *redirect, t_ast_node base);
+t_argument			*ft_create_argument(char **argument, t_ast_node base);
+t_redirect			*ft_create_redirect(char *file_name, t_ast_node base, t_redirect_side side);
+void 				ft_push_redirect(t_command *command, char *file_name, t_token_type type, t_redirect_side side);
+void 				ft_handle_argument(t_list_token *lsit, t_command *command);
+void				ft_handle_redirect(t_list_token *list, t_command *command);
+t_command			*ft_handle_command(t_list_token *list);
+
+
+/**
+ * Src/Parser/ft_casts.c
+*/
+t_ast_node			*ft_command_to_ast_node(t_command *cmd);
+t_ast_node			*ft_redirect_to_ast_node(t_redirect *rd);
+t_ast_node			*ft_argument_to_ast_node(t_argument *arg);
+t_command			*ft_ast_to_command(t_ast_node *ast);
+t_argument			*ft_ast_to_argument(t_ast_node *ast);
+t_redirect			*ft_ast_to_redirect(t_ast_node *ast);
+
+/**
+ * Src/Parser/ft_helper.c
+*/
 int					ft_should_ast_create(t_list_token *list);
+int					ft_should_ast_created(t_list_token *list);
+void				ft_get_pid(t_container cont, t_hash_table *env);
 
 
+/**
+ * Src/Parser/ft_parser.c
+*/
+t_io				ft_init_io();
+t_io				ft_init_io_std();
+t_container 		ft_parser(t_container cont, t_list_token *list);
 
-// void			ft_subtree_TST(t_ast_node *tree);
+/**
+ * Src/Parser/ft_shanting_stack.c
+*/
+t_global_stack		*ft_init_shant_stack();
+int					ft_is_shant_stack_empty(t_global_stack *stack);
+t_shant_stack		*ft_push_shant_stack(t_global_stack *stack, t_ast_node *ast_node);
+void				ft_pop_shant_stack(t_global_stack *stack);
+void				ft_free_shant_stack(t_global_stack *stack);
+void 				ft_print_shat_steak(t_global_stack *stack);
 
-// ft_ast_functions.c
-t_global_tree 	*ft_init_ast_tree();
-void            ft_init_ast_node(t_ast_node* node, t_token* token);
-t_ast_node 		*ft_create_ast_node(t_token *token);
-size_t 			ft_ast_len(t_ast_node* root);
-void 			ft_ast_print(t_ast_node *head, char *prefix, int is_left, int is_root);
+/**
+ * Src/Parser/ft_shunting_yard.c
+*/
+t_ast_node			*ft_shunting_yard_build_ast(t_list_token *list);
 
-// ft_shant_stack.c
-t_global_stack 	*ft_init_shant_stack();
-t_shant_stack	*ft_push_shant_stack(t_global_stack *stack, t_ast_node *ast_node);
-// void			ft_free_shant_stack(t_global_stack *stack);
-int				ft_is_shant_stack_empty(t_global_stack *stack);
-void			ft_pop_shant_stack(t_global_stack *stack);
-void			ft_free_shant_stack(t_global_stack *stack);
-void 			ft_print_shat_steak(t_global_stack *stack);
-
-// ft_shanting_yard.c
-t_ast_node 	    *ft_shunting_yard_build_ast(t_list_token *list);
-
-
-// ft_subshell.c
-void            ft_handle_subshell(t_list_token* lst, t_command* command);
-
-t_list_token*   ft_get_subshell_list(t_token* start);
-
-void            ft_remove_subshell(t_list_token* lst);
-
-void            ft_remove_command_redirect(t_list_token* lst);
-
-t_token*        ft_skip_subshell(t_token* lst);
-
-t_ast_node*     ft_get_subshell(t_token* lst);
-
-
-// ft_build_command.c
-t_argument*     ft_create_argument(char** argument, t_ast_node base);
-
-t_command*      ft_create_command(t_argument* argument, t_redirect* redirect, t_ast_node base);
-
-t_redirect*     ft_create_redirect(char* arg, t_ast_node base, t_redirect_side side);
-
-void            ft_push_redirect(t_command* command, char* arg, t_token_type type, t_redirect_side side);
-
-t_command*      ft_handle_command(t_list_token* lst);
-
-void            ft_handle_argument(t_list_token* lst, t_command* command);
-
-
-// ft_casts.c
-t_ast_node* ft_command_to_ast_node(t_command* command);
-
-t_ast_node* ft_redirect_to_ast_node(t_redirect* rd);
-
-t_ast_node* ft_argument_to_ast_node(t_argument* arg);
-
-t_command* ft_ast_to_command(t_ast_node* ast);
-
-t_argument* ft_ast_to_argument(t_ast_node* ast);
-
-t_redirect* ft_ast_to_redirect(t_ast_node* ast);
-
-// t_ast_node	*ft_correct_subshell(t_ast_node* root);
-// char		*get_sub_string(char *str, size_t size, size_t* start);
-// int			ft_find(char* str, char c, size_t pos, size_t size);
-// int			ft_find_close(char* str, size_t size, int openIndex);
-
-int 		ft_should_ast_created(t_list_token *list);
-t_io		ft_init_io();
-void		ft_init_io_fd(t_io *io, t_io_type io_type, int fd);
-
+/**
+ * Src/Parser/ft_subshell.c
+*/
+void			ft_handle_subshell(t_list_token *list, t_command *command);
+t_list_token 	*ft_get_subshell_list(t_token *open_brek);
+void			ft_remove_subshell(t_list_token *lst);
+void 			ft_remove_command_redirect(t_list_token *lst);
+t_token 		*ft_skip_subshell(t_token *list);
+t_ast_node 		*ft_get_subshell(t_token *open_brek);
 
 #endif

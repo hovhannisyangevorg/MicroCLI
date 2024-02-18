@@ -6,11 +6,12 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 18:18:13 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/01 19:14:56 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 15:18:21 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
 
 void	ft_collect_ast_to_q(t_ast_node *tree, t_global_stack *q_node)
 {
@@ -56,7 +57,6 @@ void ft_free_arguments(t_argument *argument)
 
 	if (!argument)
 		return ;
-	
 	sub_shell = ft_argument_to_ast_node(argument)->subshell->top;
 	while (sub_shell)
 	{
@@ -66,8 +66,7 @@ void ft_free_arguments(t_argument *argument)
 	ft_free_shant_stack(argument->base.subshell);
 	ft_vecstrdel(&argument->arguments);
 	free(argument->base.token);
-	free(argument);
-	
+	free(argument);	
 }
 
 void ft_close_command_fd(t_io io)
@@ -119,9 +118,7 @@ void ft_free_tree(t_ast_node *tree)
 		}
 		ft_free_shant_stack(tmp_node->subshell);
 		if (tmp_node->token_type == COMMAND)
-		{
 			ft_free_command(ft_ast_to_command(tmp_node));
-		}
 		else
 		{
 			free(tmp_node->token);
