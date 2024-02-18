@@ -6,29 +6,33 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 12:34:11 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 16:46:14 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 21:41:29 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_stack *ft_initialize_stack()
+t_stack	*ft_initialize_stack(void)
 {
-	t_stack *stack = (t_stack *)malloc(sizeof(t_stack));
+	t_stack	*stack;
+
+	stack = (t_stack *)malloc(sizeof(t_stack));
 	if (stack == NULL)
 		return (NULL);
 	stack->top = NULL;
 	return (stack);
 }
 
-int ft_is_empty(t_stack *stack)
+int	ft_is_empty(t_stack *stack)
 {
 	return (stack->top == NULL);
 }
 
 void	ft_push_stack(t_stack *stack, char item)
 {
-	t_node *new_node = (t_node *)malloc(sizeof(t_node));
+	t_node	*new_node;
+
+	new_node = (t_node *)malloc(sizeof(t_node));
 	if (new_node == NULL)
 		return ;
 	new_node->data = item;
@@ -36,10 +40,10 @@ void	ft_push_stack(t_stack *stack, char item)
 	stack->top = new_node;
 }
 
-char ft_pop_stack(t_stack *stack)
+char	ft_pop_stack(t_stack *stack)
 {
-	char item;
-	t_node *temp;
+	char	item;
+	t_node	*temp;
 
 	if (ft_is_empty(stack))
 		return (0);
@@ -50,7 +54,7 @@ char ft_pop_stack(t_stack *stack)
 	return (item);
 }
 
-void ft_free_stack(t_stack *stack)
+void	ft_free_stack(t_stack *stack)
 {
 	if (stack == NULL || stack->top == NULL)
 		return ;

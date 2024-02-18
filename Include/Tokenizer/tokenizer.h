@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 22:23:33 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/02/18 16:59:42 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 21:58:18 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void 		ft_free_stack(t_stack *stack);
  * Src/Tokenizer/ft_tokenizer.c
  */
 int				ft_ignore_quots(char *str, char quot, size_t i);
-int				ft_ignore_quots2(char *str, char quot, size_t i);
 char			*ft_tokenize_with_delims(char *str,  char *delim, int* type);
 char			*ft_tokenize_with_space(char *expr, int* type);
 t_list_token	*ft_tokenize_string_space(char *input);

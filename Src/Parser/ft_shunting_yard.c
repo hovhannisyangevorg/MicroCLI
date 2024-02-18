@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 21:00:12 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 15:41:42 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 20:48:06 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,15 @@ t_ast_node	*ft_shunting_yard_build_ast(t_list_token *list)
 	t_command			*command;	
 	t_global_stack 		*stack_opre;
 	t_global_stack 		*stack_oute;
-	
+
 	stack_opre			= ft_init_shant_stack();
 	stack_oute			= ft_init_shant_stack();
-	
 	ast_node 			= NULL;
-	
-
 	while (list->head)
 	{
 		ft_init_token(&token, list->head->type, ft_strdup(list->head->token));
 		ft_pop_front(list);
-	
+
 		if (!ft_iscommand(token.type))
 		{
 			while (stack_opre->size && !ft_iscommand(stack_opre->top->ast_node->token_type))

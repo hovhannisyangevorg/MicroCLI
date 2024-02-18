@@ -6,15 +6,15 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 18:05:12 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 19:47:18 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 20:53:32 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_list_token* ft_sublist(t_token* start, t_token* end)
+t_list_token	*ft_sublist(t_token *start, t_token *end)
 {
-	t_list_token* list;
+	t_list_token	*list;
 
 	list = ft_init_list();
 	while (start != end)
@@ -22,33 +22,32 @@ t_list_token* ft_sublist(t_token* start, t_token* end)
 		ft_push_back(list, start->type, start->token);
 		start = start->next;
 	}
-	return list;
+	return (list);
 }
 
-t_token* ft_find_list(t_token_type type, t_token* start)
+t_token	*ft_find_list(t_token_type type, t_token *start)
 {
-	t_token* token;
+	t_token	*token;
 
 	token = start;
 	while (token)
 	{
 		if (token->type == type)
-			return token;
+			return (token);
 		token = token->next;
 	}
-	return NULL;
+	return (NULL);
 }
 
-t_token		*ft_find_close_list(t_token *open_brac)
+t_token	*ft_find_close_list(t_token *open_brac)
 {
-	int 		count;
-	t_token		*node;
+	int		count;
+	t_token	*node;
 
 	if (!open_brac)
 		return (NULL);
-
-	node	= open_brac->next;
-	count	= 1;
+	node = open_brac->next;
+	count = 1;
 	while (node)
 	{
 		if (node->type == OPBREK)

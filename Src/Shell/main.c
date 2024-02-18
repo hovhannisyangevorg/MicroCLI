@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 14:40:10 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/02/18 17:31:41 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 20:16:05 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_program(char **env)
 	tcgetattr(STDIN_FILENO, &g_global_state.orig_termios);
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, ft_sigquit_handler);
+
 	while (1)
 	{
 		g_global_state.minishell_signal = SIGNORMAL;
@@ -82,6 +83,8 @@ void	ft_program(char **env)
 	ft_clear_symbol_table(container.table);
 }
 
+
+// echo ''
 int main(int ac, char **av, char **env)
 {
 	(void)ac;
