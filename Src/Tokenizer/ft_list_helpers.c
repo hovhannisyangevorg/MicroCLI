@@ -6,12 +6,11 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 18:05:12 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/20 18:05:13 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 16:40:48 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
 
 t_list_token* ft_sublist(t_token* start, t_token* end)
 {

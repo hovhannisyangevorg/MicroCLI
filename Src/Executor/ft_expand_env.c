@@ -6,18 +6,12 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 16:24:26 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 15:10:00 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 18:49:30 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "shell.h"
-
-
-int ft_variable_identifier(char *ident);
-
-
-
 
 int ft_ignore_symbol(char *str, char sym, size_t i)
 {
@@ -69,7 +63,6 @@ size_t ft_size_variable_$(char *arg, t_symbol_table *symbol_table)
 	}
 	return 0;
 }
-
 
 size_t ft_count_replace_len(char *arg, t_symbol_table *symbol_table, t_expand_type isexpand)
 {
@@ -124,18 +117,6 @@ size_t ft_count_replace_len(char *arg, t_symbol_table *symbol_table, t_expand_ty
 	}
 	return (size);
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 size_t ft_vulue_variable_$(char *arg, char *expand, t_symbol_table *symbol_table)
 {
@@ -264,14 +245,38 @@ char* ft_count_replace(char *arg, t_symbol_table *symbol_table, t_expand_type is
 	return (expand);
 }
 
-void print_env_args(char** env)
+void ft_expand_env(t_command *command, t_symbol_table *table)
 {
-	int i = -1;
-	printf("-------------args----------\n");
-	while (env && env[++i])
+	size_t i = 0;
+	if (command->argument && command->argument->arguments && command->argument->arguments[0])
 	{
-		printf("%s\n", env[i]);
+		while (command->argument && command->argument->arguments && command->argument->arguments[i])
+		{
+			char* tmp = ft_count_replace(command->argument->arguments[i], table, NOEXPAND);
+			free(command->argument->arguments[i]);
+			command->argument->arguments[i] = tmp;
+			++i;
+		}
+		i = 0;
+		size_t j = 0;
+		while (command->argument && command->argument->arguments && command->argument->arguments[i])
+		{
+			if (ft_strlen(command->argument->arguments[i]))
+				++j;
+			++i;
+		}
+		char** av = ft_calloc(j + 1, sizeof(char*));
+		j = 0;
+		i = 0;
+		while (command->argument && command->argument->arguments && command->argument->arguments[i])
+		{
+			if (ft_strlen(command->argument->arguments[i]))
+			{
+				av[j] = ft_strdup(command->argument->arguments[i]);
+				++j;
+			}
+			++i;
+		}
+		command->argument->arguments = av;
 	}
-	printf("-------------end args----------\n");
-	
 }

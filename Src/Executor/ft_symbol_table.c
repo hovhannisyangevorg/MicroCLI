@@ -1,6 +1,5 @@
 #include "shell.h"
 
-
 t_symbol_table      *ft_create_symbol_table(char** env)
 {
     t_symbol_table  *table;

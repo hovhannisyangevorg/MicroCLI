@@ -22,6 +22,7 @@ t_ast_node 			*ft_create_ast_node(t_token *token);
 size_t 				ft_ast_len(t_ast_node *root);
 void 				ft_init_ast_node(t_ast_node *node, t_token *token);
 char				*ft_ast_strjoin(char *s1, char *s2);
+t_ast_node			*ft_ast_left_most(t_ast_node *ast_node);
 
 
 /**

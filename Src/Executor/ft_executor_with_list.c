@@ -6,11 +6,20 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:54:14 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/14 22:58:44 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 18:42:40 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+
+/**
+ * Src/Executor/ft_executor_with_list.c
+ */
+void	ft_restore_std_io(t_io io);
+int		ft_handle_external(t_io io, t_command* command, t_hash_table* env_table);
+int		ft_executor_with_list(t_io io, t_command *command, t_symbol_table* table);
+
 
 void ft_restore_std_io(t_io io)
 {
@@ -21,42 +30,6 @@ void ft_restore_std_io(t_io io)
 	dup2(io.error, STDERR_FILENO);
 	close(io.error);
 }
-
-t_io ft_init_io_restore(t_io io)
-{
-	t_io io_res;
-
-	io_res.input	= dup(io.input);
-	io_res.output	= dup(io.output);
-	io_res.error	= dup(io.error);
-	return io_res;
-}
-
-void	ft_open_file(t_command *command, t_hash_table *env, t_vector* fd_vector, t_io io)
-{
-	t_ast_node* node;
-
-	node		= ft_redirect_to_ast_node(command->redirect);
-	while (node)
-	{
-		if (g_global_state.heredoc_signal != -1)
-			break;
-		ft_open_type(ft_ast_to_redirect(node), command, fd_vector, env, io);
-		node = node->left;
-	}
-	ft_close_fd(fd_vector);
-}
-
-void ft_child_sigint(int num)
-{
-	(void)num;
-	rl_replace_line("", 0);
-	ft_putstr_fd("\n", STDOUT_FILENO);
-	rl_on_new_line();
-	tcsetattr(STDIN_FILENO, TCSANOW, &g_global_state.orig_termios);
-
-}
-
 
 int ft_handle_external(t_io io, t_command* command, t_hash_table* env_table)
 {
@@ -83,7 +56,7 @@ int ft_handle_external(t_io io, t_command* command, t_hash_table* env_table)
 		}
 		if (command->argument && command->argument->arguments && command->argument->arguments[0])
 		{
-			status = ft_command_fron_PATH(command, env_table);
+			status = ft_command_path(command, env_table);
 			if (g_global_state.is_dir)
 			{
 				ft_putstr_fd("Minishell: ", STDERR_FILENO);
@@ -128,7 +101,6 @@ int ft_handle_external(t_io io, t_command* command, t_hash_table* env_table)
 	return(status);
 }
 
-void ft_expand_env(t_command *command, t_symbol_table* table);
 int	ft_executor_with_list(t_io io, t_command *command, t_symbol_table* table)
 {
 	int			status;

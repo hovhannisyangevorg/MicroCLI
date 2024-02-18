@@ -6,26 +6,49 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 19:42:38 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/14 14:31:46 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 19:00:14 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-// Comparison function for qsort
-// int compare_strings(const void *a, const void *b)
-// {
-//     return ft_strcmp(*(char **)a, *(char **)b);
-// }
+/**
+ * Src/Executor/ft_hash_table.c
+ */
+int					ft_partition(char **arr, int low, int high);
+void				ft_quicksort(char **arr, int low, int high);
+t_hash_table_arr 	ft_sort_env(t_hash_table *table);
+t_entity_table		*ft_init_entity_table(size_t initialCapacity, t_hash_type type);
+t_hash_table		*ft_init_hash_table(size_t initialCapacity, t_hash_type type);
+void				ft_init_entity_list(t_hash_entity_list *list);
+size_t				ft_hash_entity(size_t capacity, char *key);
+t_function_entity	*ft_create_function_entity(char *key, void *data);
+t_env_entity		*ft_create_env_entity(t_hash_data data);
+void				ft_push_entity(t_hash_entity_list *lst, t_hash_data data, t_hash_type type);
+void				ft_resize_entity(t_hash_table *table, size_t new_capacity);
+void				ft_insert_entity(t_hash_table *table, t_hash_data data);
+t_function_callback	ft_get_function(t_hash_table *table, char *key);
+t_function_entity	*ft_get_function_entity(t_hash_table *table, char *key);
+t_env_entity		*ft_get_env_entity(t_hash_table *table, char *key);
+char				*ft_get_env(t_hash_table *table, char *key);
+void				ft_set_env(t_hash_table *table, t_hash_data data);
+void				print_env(t_hash_table* env, t_visibility_type visibility);
+t_hash_table		*ft_create_env(char **env);
+t_hash_table		*ft_create_func_table();
+void				ft_pop_entity(t_hash_table *table, char *key);
+t_hash_table_arr	ft_convert_env_to_args(t_hash_table* env, t_visibility_type visibility, int mode);
+void				ft_free_hash_table(t_hash_table* table);
+void                print_env_table(t_hash_table_arr arr);
+void				ft_clear_hash_table(t_hash_table* table);
 
-// Partition function for quicksort
 int ft_partition(char **arr, int low, int high)
 {
-	int	j;
-    char *pivot = arr[high];  // Pivot element
-    int i = low - 1;  // Index of smaller element
+	int		j;
+    int		i;
+    char	*pivot = arr[high];
 
 	j = low;
+	i = low - 1;
     while (j < high)
 	{
         if (ft_strcmp(arr[j], pivot) < 0)

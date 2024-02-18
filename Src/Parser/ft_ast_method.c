@@ -6,12 +6,11 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:52:35 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 15:49:25 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 17:23:30 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
 
 t_global_tree 	*ft_init_ast_tree()
 {
@@ -86,4 +85,13 @@ char	*ft_ast_strjoin(char *s1, char *s2)
 			new_str[s_index++] = s2[f_index++];
 	new_str[s_index] = '\0';
 	return (new_str);
+}
+
+t_ast_node *ft_ast_left_most(t_ast_node *ast_node)
+{
+	if (!ast_node || ast_node->token_type == PIPE)
+		return (NULL);
+	if (ast_node->right)
+		return (ast_node->right);
+	return (ast_node);
 }

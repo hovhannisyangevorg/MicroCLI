@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 20:04:43 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/19 19:57:14 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 17:06:57 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_env_entity		*ft_entity_to_env(t_hash_entity *hash)
 {
 	return ((t_env_entity *)hash);
 }
-
 
 t_hash_entity		*ft_function_to_entity(t_function_entity *func)
 {

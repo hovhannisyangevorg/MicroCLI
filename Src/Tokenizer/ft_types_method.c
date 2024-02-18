@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_types.c                                         :+:      :+:    :+:   */
+/*   ft_types_method.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 18:05:00 by gevorg            #+#    #+#             */
-/*   Updated: 2024/01/27 22:36:48 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/18 16:52:22 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
 
 int 	ft_is_redirection(t_token_type type)
 {
@@ -38,7 +37,7 @@ int		ft_iscommand(t_token_type type)
 	return (type == TEXT || ft_is_redirection(type) || ft_is_breckets(type));
 }
 
-char* ft_get_type(t_token_type type)
+char *ft_get_type(t_token_type type)
 {
     if (type == OR)
         return (ft_strdup("||"));
