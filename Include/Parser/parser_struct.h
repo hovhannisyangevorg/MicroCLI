@@ -6,12 +6,18 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:44:21 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/04 15:23:18 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/19 04:21:14 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef 	PARSER_STRUCT_H
 # define 	PARSER_STRUCT_H
+
+typedef struct s_for_shunting_yard t_for_shunting_yard;
+
+
+
+
 
 // #include "global_struct.h"
 
@@ -216,4 +222,146 @@ struct s_shant_stack
 };
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// typedef struct s_for_shunting_yard t_for_shunting_yard;
+
+// struct s_for_shunting_yard
+// {
+// 	t_token			token;
+// 	t_command		*command;	
+// 	t_ast_node		*node;
+// 	t_ast_node		*ast_node;
+// 	t_ast_node		*ast_left;
+// 	t_ast_node		*ast_right;
+// 	t_global_stack	*stack_opre;
+// 	t_global_stack	*stack_oute;	
+// };
 #endif

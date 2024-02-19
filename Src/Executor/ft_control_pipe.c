@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 21:58:30 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 18:40:54 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/19 04:24:21 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,15 @@ char	*ft_get_last_arg(t_command* command)
 	while (command->argument->arguments[i])
 		++i;
 	return ft_strdup(command->argument->arguments[i - 1]);
+}
+
+t_ast_node	*ft_ast_left_most(t_ast_node *ast_node)
+{
+	if (!ast_node || ast_node->token_type == PIPE)
+		return (NULL);
+	if (ast_node->right)
+		return (ast_node->right);
+	return (ast_node);
 }
 
 int		ft_open_process_for_pipe(t_io io, t_ast_node *tree, t_symbol_table* table, t_vector *pipe_fd, size_t* pipe_iter)

@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:55:56 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 15:58:19 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/19 02:48:41 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,55 +14,55 @@
 
 void	ft_get_pid(t_container cont, t_hash_table *env)
 {
-	pid_t pid;
+	char	*p_id;
+	pid_t	pid;
 
 	(void)cont;
-    pid = fork();
-
-    if (pid < 0)
-        return ;
-    else if (pid == 0)
+	pid = fork();
+	if (pid < 0)
+		return ;
+	else if (pid == 0)
 		exit(EXIT_SUCCESS);
-    else
+	else
 	{
 		wait(NULL);
-		g_global_state.pid = pid - 1;
-		char* p_id = ft_itoa(pid - 1);
+		g_global_state.pid = (pid - 1);
+		p_id = ft_itoa(pid - 1);
 		ft_set_env(env, (t_hash_data){"$", p_id, HIDDEN});
 		free(p_id);
-    }
+	}
 }
 
-int ft_should_ast_create(t_list_token *list)
+int	ft_should_ast_create(t_list_token *list)
 {
 	size_t	pc;
+	char	*tok;
 	t_token	*temp;
-	int is_pipe;
+	int		is_pipe;
 
 	pc = 0;
 	is_pipe = 0;
 	temp = list->head;
 	while (temp)
 	{
-		char* tok = temp->token;
-		while(*tok)
+		tok = temp->token;
+		while (*tok)
 		{
 			if (*tok == '|' || *tok == '&')
 			{
 				is_pipe = 1;
-				break;
-			}		
+				break ;
+			}
 			++tok;
 		}
-		if(temp->type == PIPE || temp->type == AND || is_pipe)
+		if (temp->type == PIPE || temp->type == AND || is_pipe)
 			pc++;
 		temp = temp->next;
 	}
 	return (pc != 0);
 }
 
-
-int ft_should_ast_created(t_list_token *list)
+int	ft_should_ast_created(t_list_token *list)
 {
 	size_t	pc;
 	t_token	*temp;

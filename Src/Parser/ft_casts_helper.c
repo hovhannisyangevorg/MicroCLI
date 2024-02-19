@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_casts.c                                         :+:      :+:    :+:   */
+/*   ft_casts_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/18 19:46:03 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/19 03:51:10 by gevorg           ###   ########.fr       */
+/*   Created: 2024/02/19 03:51:28 by gevorg            #+#    #+#             */
+/*   Updated: 2024/02/19 03:51:52 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_ast_node	*ft_command_to_ast_node(t_command *cmd)
+t_command	*ft_ast_to_command(t_ast_node *ast)
 {
-	return ((t_ast_node *)cmd);
+	return ((t_command *)ast);
 }
 
-t_ast_node	*ft_redirect_to_ast_node(t_redirect *rd)
+t_argument	*ft_ast_to_argument(t_ast_node *ast)
 {
-	return ((t_ast_node *)rd);
+	return ((t_argument *)ast);
 }
 
-t_ast_node	*ft_argument_to_ast_node(t_argument *arg)
+t_redirect	*ft_ast_to_redirect(t_ast_node *ast)
 {
-	return ((t_ast_node *)arg);
+	return ((t_redirect *)ast);
 }

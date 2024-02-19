@@ -6,7 +6,7 @@
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 20:25:50 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 15:46:47 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/19 03:58:50 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	ft_handle_subshell(t_list_token *list, t_command *command)
 	{
 		if (token->type == OPBREK)
 		{
-			node			= ft_get_subshell(token);
-			ast_node		= ft_command_to_ast_node(command);
+			node = ft_get_subshell(token);
+			ast_node = ft_command_to_ast_node(command);
 			if (node)
 				ft_push_shant_stack(ast_node->subshell, node);
 			token = ft_skip_subshell(token);
@@ -35,11 +35,11 @@ void	ft_handle_subshell(t_list_token *list, t_command *command)
 	}
 }
 
-t_list_token *ft_get_subshell_list(t_token *open_brek)
+t_list_token	*ft_get_subshell_list(t_token *open_brek)
 {
-	t_token *pos;
-	t_token *end;
-	
+	t_token	*pos;
+	t_token	*end;
+
 	pos = ft_find_list(OPBREK, open_brek);
 	if (!pos)
 		return (NULL);
@@ -49,38 +49,25 @@ t_list_token *ft_get_subshell_list(t_token *open_brek)
 	return (ft_sublist(pos->next, end));
 }
 
-
-void ft_remove_subshell(t_list_token* lst)
+void	ft_remove_subshell(t_list_token *list)
 {
-	t_token* end;
+	t_token	*end;
 
-
-	end = ft_find_close_list(lst->head);
-	if (!end || !lst->head)
+	end = ft_find_close_list(list->head);
+	if (!end || !list->head)
 		return ;
-	while (lst->head != end->next)
-		ft_pop_front(lst);
+	while (list->head != end->next)
+		ft_pop_front(list);
 }
 
-void ft_remove_command_redirect(t_list_token* lst)
-{
-	while (lst->head && ft_iscommand(lst->head->type))
-	{
-		if (ft_is_breckets(lst->head->type))
-			ft_remove_subshell(lst);
-		else
-			ft_pop_front(lst);
-	}
-}
-
-t_token *ft_skip_subshell(t_token *list)
+t_token	*ft_skip_subshell(t_token *list)
 {
 	if (!list || !ft_is_breckets(list->type))
 		return (list);
 	return (ft_find_close_list(list));
 }
 
-t_ast_node *ft_get_subshell(t_token *open_brek)
+t_ast_node	*ft_get_subshell(t_token *open_brek)
 {
 	t_list_token	*sub_list;
 	t_ast_node		*node;

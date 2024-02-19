@@ -44,6 +44,7 @@ void 				ft_push_redirect(t_command *command, char *file_name, t_token_type type
 void 				ft_handle_argument(t_list_token *lsit, t_command *command);
 void				ft_handle_redirect(t_list_token *list, t_command *command);
 t_command			*ft_handle_command(t_list_token *list);
+void				ft_handle_argument_helper(t_token **token, size_t *index);
 
 
 /**

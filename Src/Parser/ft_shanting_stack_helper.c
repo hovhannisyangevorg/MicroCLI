@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_casts.c                                         :+:      :+:    :+:   */
+/*   ft_shanting_stack_helper.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/18 19:46:03 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/19 03:51:10 by gevorg           ###   ########.fr       */
+/*   Created: 2024/02/19 04:02:48 by gevorg            #+#    #+#             */
+/*   Updated: 2024/02/19 04:04:29 by gevorg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_ast_node	*ft_command_to_ast_node(t_command *cmd)
+void	ft_print_shat_steak(t_global_stack *stack)
 {
-	return ((t_ast_node *)cmd);
-}
+	t_shant_stack	*tmp;
 
-t_ast_node	*ft_redirect_to_ast_node(t_redirect *rd)
-{
-	return ((t_ast_node *)rd);
-}
-
-t_ast_node	*ft_argument_to_ast_node(t_argument *arg)
-{
-	return ((t_ast_node *)arg);
+	tmp = stack->top;
+	while (tmp)
+	{
+		printf("shating token =>%s\n", tmp->ast_node->token);
+		tmp = tmp->next;
+	}
 }
