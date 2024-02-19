@@ -175,9 +175,9 @@ void	ft_hendle_env_variable(char **line, t_hash_table *env)
 	
 }
 
-int open_heredoc(t_redirect	*red, t_hash_table *env, t_io io)
+int open_heredoc(t_redirect	*red, t_hash_table *env)
 {
-	(void)io;
+	// (void)io;
 	int 	here_fd;
 	int		flag;
 	char	*line;
@@ -194,7 +194,6 @@ int open_heredoc(t_redirect	*red, t_hash_table *env, t_io io)
 	g_global_state.minishell_signal = SIGHEREDOC;
 	if (ft_isquot(red->argument))
 		flag = 1;
-	// tcsetattr(STDIN_FILENO, TCSANOW, &g_global_state.orig_termios);
 	int stdio 	= dup(STDIN_FILENO);
 	
 	while (1)

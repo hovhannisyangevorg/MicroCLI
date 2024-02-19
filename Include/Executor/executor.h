@@ -24,14 +24,14 @@ int		ft_command_path(t_command *command, t_hash_table *env);
 void	ft_hendle_pipe(t_vector * pipe_fd, size_t pipe_iter, t_io io);
 void	ft_handle_redirect_ios(t_io io);
 char	*ft_get_last_arg(t_command* command);
-int		ft_open_process_for_pipe(t_io io, t_ast_node *tree, t_symbol_table* table, t_vector *pipe_fd, size_t* pipe_iter);
-void	ft_execute_part(t_io io, t_ast_node *tree, t_symbol_table* table, t_vector *pipe_fd, size_t* pipe_iter);
+int		ft_open_process_for_pipe(t_ast_node *tree, t_process_info *info, size_t* pipe_iter);
+void	ft_execute_part(t_ast_node *tree, t_process_info *info, size_t* pipe_iter);
 
 /**
  * Src/Executor/ft_executor_with_list.c
  */
 void	ft_restore_std_io(t_io io);
-int		ft_handle_external(t_io io, t_command* command, t_hash_table* env_table);
+int     ft_handle_external(t_process_info *info);
 int		ft_executor_with_list(t_io io, t_command *command, t_symbol_table* table);
 
 /**
@@ -42,8 +42,9 @@ size_t	ft_pipe_count_tree(t_ast_node *tree);
 /**
  * Src/Executor/ft_executor.c
  */
-int		ft_execut_command(t_io io, t_command *command, t_symbol_table* table, t_vector *pipe_fd, size_t pipe_iter);
+int		ft_execute_command(t_process_info *info);
 void	ft_executor(t_symbol_table *table, t_container cont);
+void    ft_handle_child_process(t_process_info *info, int is_pipe);
 
 /**
  * Src/Executor/ft_expand_env.c
@@ -59,11 +60,11 @@ void 	ft_expand_env(t_command *command, t_symbol_table *table);
 /**
  * Src/Executor/ft_file_method.c
  */
-void		ft_open_file(t_command *command, t_hash_table *env, t_vector* fd_vector, t_io io);
+void	    ft_open_file(t_process_info *info, t_vector* fd_vector);
 t_vector	ft_open_pipe_fd(size_t pipe_count);
-void		ft_open_all_fd(t_ast_node *ast_node, t_hash_table *env, t_io io);
+void	    ft_open_all_fd(t_ast_node *ast_node, t_process_info *info);
 void		ft_close_fd(t_vector *fd_vector);
-void		ft_open_type(t_redirect *redirect, t_command *cmd, t_vector *fd_vector, t_hash_table *env, t_io io);
+void	    ft_open_type(t_redirect *redirect, t_process_info *info, t_vector *fd_vector);
 
 
 /**
@@ -105,7 +106,7 @@ char				*ft_ignor_EOF_quots(char *end_of_file);
 char				*ft_substr_c(char *line, char c);
 void				ft_replace_all(char **line, char *src_env, char *chang_env);
 void				ft_hendle_env_variable(char **line, t_hash_table *env);
-int					open_heredoc(t_redirect	*red, t_hash_table *env, t_io io);
+int					open_heredoc(t_redirect	*red, t_hash_table *env);
 
 /**
  * Src/Executor/ft_signals.c

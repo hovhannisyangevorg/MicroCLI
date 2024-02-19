@@ -63,40 +63,41 @@ t_ast_node	*ft_ast_left_most(t_ast_node *ast_node)
 	return (ast_node);
 }
 
-int		ft_open_process_for_pipe(t_io io, t_ast_node *tree, t_symbol_table* table, t_vector *pipe_fd, size_t* pipe_iter)
+int		ft_open_process_for_pipe(t_ast_node *tree, t_process_info *info, size_t* pipe_iter)
 {
 	t_ast_node *ast_node;
 
-
-	if (*pipe_iter <= pipe_fd->size / 2)
+	if (*pipe_iter <= info->pipe_fd.size / 2)
 	{
 		ast_node = ft_ast_left_most(tree->left);
 		if (ast_node)
 		{
-
-			ft_execut_command(io, ft_ast_to_command(ast_node), table, pipe_fd, *pipe_iter);
+			info->command = ft_ast_to_command(ast_node);
+			info->pipe_iter = *pipe_iter;
+			ft_execute_command(info);
 			g_global_state.argument = ft_get_last_arg(ft_ast_to_command(ast_node));
 			(*pipe_iter)++;
 		}
-		ft_execut_command(io, ft_ast_to_command(tree->right), table, pipe_fd, *pipe_iter);
+		info->command = ft_ast_to_command(tree->right);
+		info->pipe_iter = *pipe_iter;
+		ft_execute_command(info);
 		g_global_state.argument = ft_get_last_arg(ft_ast_to_command(tree->right));
 		(*pipe_iter)++;
 	}
-	
 	return (0);
 }	
 
 
-void	ft_execute_part(t_io io, t_ast_node *tree, t_symbol_table* table, t_vector *pipe_fd, size_t* pipe_iter)
+void	ft_execute_part(t_ast_node *tree, t_process_info *info, size_t* pipe_iter)
 {
 	if (!tree)
 		return ;
-	ft_execute_part(io, tree->left, table, pipe_fd, pipe_iter);
+	ft_execute_part(tree->left, info, pipe_iter);
 	
 	if (tree->token_type == PIPE)
 	{
-		ft_open_process_for_pipe(io, tree, table, pipe_fd, pipe_iter);
+		ft_open_process_for_pipe(tree, info, pipe_iter);
 		return ;
 	}
-	ft_execute_part(io, tree->right, table, pipe_fd, pipe_iter);
+	ft_execute_part(tree->right, info, pipe_iter);
 }

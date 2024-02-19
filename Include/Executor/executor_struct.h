@@ -44,6 +44,12 @@ typedef enum 	e_expand_type			t_expand_type;
 
 typedef enum 	e_signal_type			t_signal_type;
 
+typedef struct s_process_info           t_process_info;
+typedef struct s_expand_token           t_expand_token;
+
+typedef struct s_file_mode              t_file_mode;
+
+
 
 enum e_signal_type
 {
@@ -149,6 +155,37 @@ struct s_vector
 	size_t		capacity;
 };
 
+
+struct s_process_info
+{
+    t_command           *command;
+    t_io                io;
+    t_symbol_table      *table;
+    t_vector            pipe_fd;
+    size_t              pipe_iter;
+    size_t              pipe_count;
+    int                 status;
+    t_hash_table_arr    env;
+};
+
+struct s_expand_token
+{
+    size_t  index_quot;
+    size_t  size;
+    size_t  index;
+    char    *for_rep;
+    char    *token;   
+};
+
+
+struct s_file_mode
+{
+    int             access_mode;
+    int             open_mode;
+    t_token_type    mode;
+    int             is_heredoc;
+    int             is_input;
+};
 
 
 #endif

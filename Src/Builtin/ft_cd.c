@@ -74,8 +74,6 @@ int ft_cd(t_command* command, t_symbol_table* table)
 			ft_putendl_fd(strerror(errno), STDERR_FILENO);
 			return 1;
 		}
-
-
 	}
 	cwd = getcwd(NULL, 0); 
 	if (!cwd)

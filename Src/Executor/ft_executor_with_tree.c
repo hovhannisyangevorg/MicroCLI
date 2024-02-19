@@ -14,8 +14,12 @@
 
 size_t	ft_pipe_count_tree(t_ast_node *tree)
 {
-	size_t count_left	= 0;
-	size_t count_right	= 0;
+	size_t count_left;
+	size_t count_right;
+	
+	
+	count_right	= 0;
+	count_left	= 0;
 	if (!tree)
 		return (0);
 	if (tree->token_type == PIPE)

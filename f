@@ -1,0 +1,16 @@
+en.subject.pdf
+f
+Include
+Libft
+Makefile
+Makefile.mk
+Memcheck.sh
+minishell
+minishell_tester
+Obj
+Readline
+Readline_update
+README.md
+run.sh
+Src
+valgrind.out
