@@ -46,8 +46,11 @@ void ft_handle_child_process(t_process_info *info, int is_pipe)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	g_global_state.permission_status = 0;
-	ft_init_arrey(&fd_vector, 0);
-	ft_open_file(info, &fd_vector);
+	if (!is_pipe)
+	{
+		ft_init_arrey(&fd_vector, 0);
+		ft_open_file(info, &fd_vector);
+	}
 	ft_handle_redirect_ios(info->command->io);
 	if (is_pipe)
 	{
@@ -151,10 +154,10 @@ void ft_dispatch_container(t_container cont, t_process_info* info)
 	}
 	else
 	{
+		ft_open_all_fd(cont.tree->ast_node, info);
 		info->pipe_count = ft_pipe_count_tree(cont.tree->ast_node);
 		info->pipe_fd = ft_open_pipe_fd(info->pipe_count);
 		ft_execute_part(cont.tree->ast_node, info, &info->pipe_iter);
-			
 		ft_free_tree(cont.tree->ast_node);	
 		free(cont.tree);
 	}
@@ -182,7 +185,6 @@ void ft_executor(t_symbol_table *table, t_container cont)
 	else
 		status = 128 + g_global_state.heredoc_signal;
 	tcsetattr(STDIN_FILENO, TCSANOW, &g_global_state.orig_termios);
-	g_global_state.heredoc_signal = -1;
 	cont.exit_status = status;
 	ft_update_env_exit(cont, table);
 }

@@ -38,8 +38,12 @@ void ft_child_sigint(int num)
 {
 	(void)num;
 	rl_replace_line("", 0);
-	ft_putstr_fd("\n", STDOUT_FILENO);
-	rl_on_new_line();
+	if (g_global_state.heredoc_signal == -1)
+	{
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		rl_on_new_line();
+
+	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &g_global_state.orig_termios);
 }
 
@@ -48,4 +52,6 @@ void ft_heredoc_signal(int num)
 	g_global_state.heredoc_signal = num;
 	g_global_state.minishell_signal = SIGNORMAL;
 	close(STDIN_FILENO);
+	g_global_state.heredoc_signal = -1;
+
 }

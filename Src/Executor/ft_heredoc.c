@@ -201,6 +201,7 @@ int open_heredoc(t_redirect	*red, t_hash_table *env)
 		line = readline(">");
 		if (!line || !ft_strcmp(line, end_of_file))
 		{
+			tcsetattr(STDIN_FILENO, TCSANOW, &g_global_state.orig_termios);
 			break ;
 		}
 		if (!flag)
