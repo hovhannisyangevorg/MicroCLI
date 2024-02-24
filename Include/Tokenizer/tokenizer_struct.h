@@ -31,6 +31,9 @@ typedef struct	s_list_token	t_list_token;
  */
 typedef enum	e_token_type		t_token_type;
 
+typedef struct s_tokenize_wrapper	t_tokenize_wrapper;
+typedef struct s_tokenize_wrap		t_tokenize_wrap;
+
 enum e_token_type
 {
 	NNULL,						// NULL 
@@ -86,8 +89,22 @@ struct s_list_token
 
 struct s_tokenize_wrapper
 {
-	char	*token_start;
-	size_t	start;
+	t_list_token	*list;
+	t_list_token	*space_list;
+	t_token			*tmp;
+	t_token			*head;
+	char			*token;
+	char			*tmp_token;
+	int				type;
+};
+
+struct s_tokenize_wrap
+{
+	size_t		index;
+	char		*token_start;
+	char		*next_token;
+	int			type;
+	int			is_one_sym;
 };
 
 #endif

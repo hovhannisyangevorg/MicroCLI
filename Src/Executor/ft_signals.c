@@ -53,3 +53,8 @@ void	ft_heredoc_signal(int num)
 		close(STDIN_FILENO);
 	}
 }
+
+int	ft_sig(void)
+{
+	return (0);
+}

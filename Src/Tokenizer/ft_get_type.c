@@ -12,15 +12,15 @@
 
 #include "shell.h"
 
-char	*ft_get_type(t_token_type type)
+int	ft_is_command_type(t_token_type type)
 {
-	if (type == OR)
-		return (ft_strdup("||"));
-	else if (type == AND)
-		return (ft_strdup("&&"));
-	else if (type == JOB)
-		return (ft_strdup("&"));
-	else if (type == READ)
+	return (type == OPBREK || type == CLBREK || \
+			type == COMMAND || type == SUBSHELL);
+}
+
+char	*ft_get_redirect_type(t_token_type type)
+{
+	if (type == READ)
 		return (ft_strdup("<"));
 	else if (type == APPEND)
 		return (ft_strdup(">>"));
@@ -28,13 +28,29 @@ char	*ft_get_type(t_token_type type)
 		return (ft_strdup(">"));
 	else if (type == HEREDOC)
 		return (ft_strdup("<<"));
+	return (ft_strdup("Unknown"));
+}
+
+char	*ft_get_operator_type(t_token_type type)
+{
+	if (type == OR)
+		return (ft_strdup("||"));
+	else if (type == AND)
+		return (ft_strdup("&&"));
+	else if (type == JOB)
+		return (ft_strdup("&"));
 	else if (type == SEMI)
 		return (ft_strdup(";"));
 	else if (type == SEMITWO)
 		return (ft_strdup(";;"));
 	else if (type == PIPE)
 		return (ft_strdup("|"));
-	else if (type == OPBREK)
+	return (ft_strdup("Unknown"));
+}
+
+char	*ft_get_command_type(t_token_type type)
+{
+	if (type == OPBREK)
 		return (ft_strdup("("));
 	else if (type == CLBREK)
 		return (ft_strdup(")"));
@@ -42,38 +58,16 @@ char	*ft_get_type(t_token_type type)
 		return (ft_strdup("SubShell"));
 	else if (type == COMMAND)
 		return (ft_strdup("Command"));
-	else
-		return (ft_strdup("Unknown"));
+	return (ft_strdup("Unknown"));
 }
 
-t_token_type	ft_get_type_map(int type)
+char	*ft_get_type(t_token_type type)
 {
-	if (type == MOR)
-		return (OR);
-	else if (type == MAND)
-		return (AND);
-	else if (type == MJOB)
-		return (JOB);
-	else if (type == MREAD)
-		return (READ);
-	else if (type == MAPPEND)
-		return (APPEND);
-	else if (type == MWRITE)
-		return (WRITE);
-	else if (type == MHEREDOC)
-		return (HEREDOC);
-	else if (type == MSEMI)
-		return (SEMI);
-	else if (type == MSEMITWO)
-		return (SEMITWO);
-	else if (type == MPIPE)
-		return (PIPE);
-	else if (type == MOPBREK)
-		return (OPBREK);
-	else if (type == MCLBREK)
-		return (CLBREK);
-	else if (type == MTEXT)
-		return (TEXT);
-	else
-		return (NNULL);
+	if (ft_is_redirect_type(type))
+		return (ft_get_redirect_type(type));
+	else if (ft_is_operator_type(type))
+		return (ft_get_operator_type(type));
+	else if (ft_is_command_type(type))
+		return (ft_get_command_type(type));
+	return (ft_strdup("Unknown"));
 }

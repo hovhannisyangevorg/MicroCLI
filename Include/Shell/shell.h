@@ -34,5 +34,11 @@
 # include	"builtins.h"
 
 void	ft_program(char **env);
+void	ft_init_global_state(void);
+void	ft_start_shell(char *line, t_list_token **list, t_container *container);
+void	ft_free_container_dispatch(t_container container);
+void	ft_handle_status(char *line, t_list_token	**list, \
+						t_container *container);
+void	ft_main_loop(t_container *container);
 
 #endif
