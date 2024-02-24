@@ -5,7 +5,6 @@
 # include 	"parser_struct.h"
 # include 	"sematic_struct.h"
 # include 	"tokenizer_struct.h"
-# include <termios.h>
 
 typedef struct 	s_container			t_container;
 
@@ -34,7 +33,10 @@ struct s_global_state
 	int				heredoc_signal;
 	int				permission_status;
 	int				is_dir;
-	char*			argument;
+	char			*argument;
+	int				last_in;
+	int				is_tree;
+
 };
 
 extern t_global_state g_global_state;

@@ -13,6 +13,26 @@
 #include "shell.h"
 
 t_global_state	g_global_state;
+int ft_sig()
+{
+	return 0;
+}
+void ft_init_global_state()
+{
+	g_global_state.is_tree = 0;
+	g_global_state.last_in = -1;
+	g_global_state.heredoc_signal = -1;
+	g_global_state.permission_status = 0;
+	rl_catch_signals = 0;
+	g_global_state.is_dir = 0;
+	rl_signal_event_hook = &ft_sig;
+}
+
+void ft_init_start_state()
+{
+
+}
+
 
 void	ft_program(char **env)
 {
@@ -21,10 +41,7 @@ void	ft_program(char **env)
 	t_list_token	*list;
 
 	list = NULL;
-	g_global_state.heredoc_signal = -1;
-	g_global_state.permission_status = 0;
-	rl_catch_signals = 0;
-	g_global_state.is_dir = 0;
+	
 	container.table = ft_create_symbol_table(env);
 	g_global_state.argument = ft_get_env(container.table->env, "_");
 	ft_get_pid(container, container.table->env);
@@ -46,9 +63,7 @@ void	ft_program(char **env)
 		if (status)
 		{
 			container.exit_status = status;
-			char* st_status = ft_itoa(container.exit_status);
-			ft_set_env(container.table->env, (t_hash_data){"?", st_status, HIDDEN});
-			free(st_status);
+			ft_update_env_exit(container, container.table);
 			free(line);
 			continue;
 		}
@@ -58,9 +73,10 @@ void	ft_program(char **env)
 			ft_executor(container.table, container);
 		else
 		{
-			char* st_status = ft_itoa(container.exit_status);
-			ft_set_env(container.table->env, (t_hash_data){"?", st_status, HIDDEN});
-			free(st_status);
+			close(container.fd.error);
+			close(container.fd.input);
+			close(container.fd.output);
+			ft_update_env_exit(container, container.table);
 		}
 		if (container.exec_type == LIST)
 		{

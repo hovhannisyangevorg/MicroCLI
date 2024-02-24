@@ -12,6 +12,7 @@
 # include <signal.h>
 # include <termios.h>
 # include <signal.h>
+#include <sys/stat.h>
 # include <termios.h>
 
 #ifndef  READLINE_LIBRARY

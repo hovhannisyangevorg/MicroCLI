@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "shell.h"
 
 static void	ft_tabcpy_util(int *tab1, int *tab2, size_t size)
@@ -31,9 +30,9 @@ void	ft_init_arrey(t_vector *tab, size_t size)
 {
 	if (!tab)
 		return ;
-	tab->size		= size;
-	tab->capacity	= size;
-	tab->arr		= NULL;
+	tab->arr = NULL;
+	tab->size = size;
+	tab->capacity = size;
 	if (size)
 	{
 		tab->arr = (int *)malloc(sizeof(int) * size);

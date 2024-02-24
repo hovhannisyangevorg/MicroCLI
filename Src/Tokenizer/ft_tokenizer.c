@@ -45,7 +45,7 @@ char	*ft_tokenize_with_delims(char *str, char *delim, int *type)
 	}
 	while (token_start[i])
 	{
-		if (ft_strchr(delim, token_start[i])) 
+		if (ft_strchr(delim, token_start[i]))
 		{
 			if (token_start[i] && token_start[i + 1] && \
 					token_start[i] == token_start[i + 1] && \

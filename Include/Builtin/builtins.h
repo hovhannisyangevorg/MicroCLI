@@ -39,4 +39,15 @@ int	ft_pwd(t_command* command, t_symbol_table* table);
  */
 int	ft_unset(t_command* command, t_symbol_table* table);
 
+
+int         ft_ismultiply_overflow_u(long a, long b);
+int         ft_isadd_overflow_u(long a, long b);
+size_t      ft_atoll_util(size_t i, char *str, int *is_overflowed);
+long long   ft_atoll(char *str, int *is_overflowed);
+
+
+int     ft_is_valid_identifier(char *ident);
+char	*ft_export_get_key(char *token, char *plus);
+char	*ft_export_collect_data(char *line, t_hash_data *data, char *plus);
+
 #endif
