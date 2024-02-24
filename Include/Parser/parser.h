@@ -97,4 +97,7 @@ void 			ft_remove_command_redirect(t_list_token *lst);
 t_token 		*ft_skip_subshell(t_token *list);
 t_ast_node 		*ft_get_subshell(t_token *open_brek);
 
+void	ft_shunting_yard_step1(t_list_token **list, t_for_shunting_yard *model);
+void	ft_shunting_yard_step2(t_for_shunting_yard *model);
+
 #endif

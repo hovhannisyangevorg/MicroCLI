@@ -13,13 +13,7 @@
 #ifndef 	PARSER_STRUCT_H
 # define 	PARSER_STRUCT_H
 
-typedef struct s_for_shunting_yard t_for_shunting_yard;
-
-
-
-
-
-// #include "global_struct.h"
+#include "tokenizer_struct.h"
 
 /**
  * @typedef t_ast_node
@@ -41,11 +35,7 @@ typedef	struct	s_command		t_command;
 typedef	struct	s_argument		t_argument;
 typedef	struct	s_redirect		t_redirect;
 
-/**
- * @typedef t_token_type
- * @brief Enumerates different token types.
- */
-typedef enum	e_token_type		t_token_type;
+
 
 /**
  * @typedef t_token_type
@@ -87,6 +77,9 @@ typedef enum 	e_redirect_side		t_redirect_side;
 typedef struct 	s_io 				t_io;
 typedef enum 	e_io_type 			t_io_type;
 
+typedef struct s_for_shunting_yard t_for_shunting_yard;
+
+
 struct s_io 
 {
 	int input;
@@ -105,29 +98,6 @@ enum e_io_type
 
 
 
-enum e_token_type
-{
-	NNULL,						// NULL 
-	TEXT		= 1L << 0,		//	Text
-	PIPE		= 1L << 1,		//	|
-	OR			= 1L << 2,		//	||
-	JOB			= 1L << 3,		//	&
-	AND			= 1L << 4,		//	&&
-	SEMI		= 1L << 5,		//	;
-	SEMITWO 	= 1L << 6,		//	;;
-	OPBREK		= 1L << 7,		// 	(
-	CLBREK		= 1L << 8,		// 	)
-	WRITE		= 1L << 9, 		// 	>
-	READ		= 1L << 10, 	// 	<
-	APPEND		= 1L << 11, 	// >>
-	HEREDOC		= 1L << 12, 	// <<
-	
-	REDIRECT	= 1L << 13,
-	ROOT		= 1L << 14,		// 	(AST) Root Node
-	SUBSHELL 	= 1L << 15,		//	Subshell Root Node
-	COMMAND		= 1L << 16,		//	Command
-	ARGUMENT	= 1L << 17		//	Argument
-};
 
 enum e_redirect_side
 {
@@ -219,6 +189,19 @@ struct s_shant_stack
 {
 	t_ast_node		*ast_node;
 	t_shant_stack 	*next;
+};
+
+
+struct s_for_shunting_yard
+{
+	t_token			token;
+	t_command		*command;	
+	t_ast_node		*node;
+	t_ast_node		*ast_node;
+	t_ast_node		*ast_left;
+	t_ast_node		*ast_right;
+	t_global_stack	*stack_opre;
+	t_global_stack	*stack_oute;	
 };
 
 

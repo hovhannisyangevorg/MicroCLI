@@ -74,7 +74,7 @@ char	*ft_ast_strjoin(char *s1, char *s2)
 	size_t		f_index;
 	size_t		s_index;
 
-	f_index = 0; 
+	f_index = 0;
 	s_index = 0;
 	new_str = (char *)malloc(sizeof(char) * \
 			(ft_gnl_strlen(s1) + (ft_gnl_strlen(s2) + 1)));

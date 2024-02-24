@@ -79,4 +79,16 @@ int				ft_iscommand(t_token_type type);
 char			*ft_get_type(t_token_type type);
 t_token_type	ft_get_type_map(int type);
 
+int             ft_is_redirect_type_map(int type);
+int             ft_is_operator_type_map(int type);
+int             ft_is_command_type_map(int type);
+int             ft_is_redirect_type(t_token_type type);
+int             ft_is_operator_type(t_token_type type);
+
+void    ft_tokenize_delim_util(t_tokenize_wrap *wrap, int *type);
+int     ft_tokenize_delim_helper(t_tokenize_wrap *wrap, char *delim, int *type);
+char    *ft_tokenize_with_delims(char *str, char *delim, int *type);
+int     ft_tokenize_space_helper(t_tokenize_wrap *wrapper, int *type);
+char    *ft_tokenize_with_space(char *expr, int *type);
+
 #endif

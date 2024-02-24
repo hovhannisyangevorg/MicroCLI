@@ -12,23 +12,6 @@
 
 #include "shell.h"
 
-void	ft_shunting_yard_step1(t_list_token **list, t_for_shunting_yard *model);
-void	ft_shunting_yard_step2(t_for_shunting_yard *model);
-
-typedef struct s_for_shunting_yard t_for_shunting_yard;
-
-struct s_for_shunting_yard
-{
-	t_token			token;
-	t_command		*command;	
-	t_ast_node		*node;
-	t_ast_node		*ast_node;
-	t_ast_node		*ast_left;
-	t_ast_node		*ast_right;
-	t_global_stack	*stack_opre;
-	t_global_stack	*stack_oute;	
-};
-
 void	ft_shunting_yard_step1_util(t_for_shunting_yard *model)
 {
 	while (model->stack_opre->size && \

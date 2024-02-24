@@ -49,6 +49,8 @@ typedef struct s_expand_token           t_expand_token;
 
 typedef struct s_file_mode              t_file_mode;
 
+typedef struct s_hash_iterate           t_hash_iterate;
+
 
 
 enum e_signal_type
@@ -166,6 +168,7 @@ struct s_process_info
     size_t              pipe_count;
     int                 status;
     t_hash_table_arr    env;
+    int                 is_builtin;
 };
 
 struct s_expand_token
@@ -186,6 +189,18 @@ struct s_file_mode
     int             is_heredoc;
     int             is_input;
 };
+
+
+struct s_hash_iterate
+{
+    int                 mode;
+    t_visibility_type   visibility;
+    t_hash_entity       *entity;
+    size_t              pos;
+};
+
+
+
 
 
 #endif

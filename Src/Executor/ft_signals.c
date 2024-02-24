@@ -12,46 +12,49 @@
 
 #include "shell.h"
 
-void sigint_handler(int signum)
+void	sigint_handler(int signum)
 {
 	(void)signum;
 	if (g_global_state.minishell_signal != SIGCHILD)
 	{
-		rl_replace_line("", 0);
-		ft_putstr_fd("\n", STDOUT_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
 		rl_on_new_line();
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
 
-void ft_sigquit_handler(int signum)
+void	ft_sigquit_handler(int signum)
 {
 	(void)signum;
 	if (g_global_state.minishell_signal == SIGCHILD)
 	{
 		rl_replace_line("", 0);
-		rl_on_new_line();
+		rl_done = 1;
 	}
 }
 
-void ft_child_sigint(int num)
+void	ft_child_sigint(int num)
 {
 	(void)num;
-	rl_replace_line("", 0);
 	if (g_global_state.heredoc_signal == -1)
 	{
-		ft_putstr_fd("\n", STDOUT_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
 		rl_on_new_line();
-
 	}
-	tcsetattr(STDIN_FILENO, TCSANOW, &g_global_state.orig_termios);
 }
 
-void ft_heredoc_signal(int num)
+void	ft_heredoc_signal(int num)
 {
-	g_global_state.heredoc_signal = num;
-	g_global_state.minishell_signal = SIGNORMAL;
-	close(STDIN_FILENO);
-	g_global_state.heredoc_signal = -1;
+	if (num == SIGINT)
+	{
+		g_global_state.heredoc_signal = num;
+		g_global_state.minishell_signal = SIGHEREDOC;
+		close(STDIN_FILENO);
+	}
+}
 
+int	ft_sig(void)
+{
+	return (0);
 }
