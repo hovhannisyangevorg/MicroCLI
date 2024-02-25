@@ -15,9 +15,9 @@
 
 
 
-# define 	SEPARATORS 		";|&<>()"
+# define 	SEPARATORS 		"|<>"
 //;|&<>
-# define 	OPERATORS 		";|&"
+# define 	OPERATORS 		"|"
 
 
 typedef struct	s_stack			t_stack;
