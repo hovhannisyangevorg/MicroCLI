@@ -16,7 +16,7 @@ static void	ft_tabcpy_util(int *tab1, int *tab2, size_t size)
 {
 	size_t	i;
 
-	if (!tab1 | !tab2)
+	if (!tab1 || !tab2)
 		return ;
 	i = 0;
 	while (i < size)

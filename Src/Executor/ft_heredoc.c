@@ -85,6 +85,7 @@ void	ft_handle_heredoc(int here_fd, char *end_of_file, \
 
 	i = 1;
 	stdio = dup(STDIN_FILENO);
+	signal(SIGINT, ft_heredoc_signal);
 	while (1)
 	{
 		line = readline(">");

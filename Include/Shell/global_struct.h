@@ -30,13 +30,13 @@ struct s_global_state
 	struct termios	orig_termios;
 	t_signal_type	minishell_signal;
 	pid_t			pid;
+	t_history		history;
 	int				heredoc_signal;
 	int				permission_status;
 	int				is_dir;
 	char			*argument;
 	int				last_in;
 	int				is_tree;
-
 };
 
 extern t_global_state g_global_state;

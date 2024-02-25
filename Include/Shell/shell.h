@@ -40,5 +40,6 @@ void	ft_free_container_dispatch(t_container container);
 void	ft_handle_status(char *line, t_list_token	**list, \
 						t_container *container);
 void	ft_main_loop(t_container *container);
+void	ft_history_cleanup(t_history *history);
 
 #endif

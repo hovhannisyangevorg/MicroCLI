@@ -51,6 +51,8 @@ typedef struct s_file_mode              t_file_mode;
 
 typedef struct s_hash_iterate           t_hash_iterate;
 
+typedef struct s_history                t_history;
+
 
 
 enum e_signal_type
@@ -199,7 +201,12 @@ struct s_hash_iterate
     size_t              pos;
 };
 
-
+struct s_history
+{
+    char    **lines;
+    size_t  size;
+    size_t  capacity;
+};
 
 
 

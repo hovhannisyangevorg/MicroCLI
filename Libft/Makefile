@@ -89,7 +89,7 @@ $(FCLEAN): 		$(CLEAN)
 	$(info ✅ Remove archive from libft)
 	@$(RM) $(FT_ARX)
 
-$(RE):	$(FCLEAN) $(FT_ARX)
+$(RE):	$(FCLEAN) $(ALL)
 	$(info ✅ Recompile Libft)
 
 

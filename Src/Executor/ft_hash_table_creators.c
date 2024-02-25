@@ -64,6 +64,7 @@ t_hash_table	*ft_create_func_table(void)
 	ft_insert_entity(funcs, (t_hash_data){"export", ft_export, 0});
 	ft_insert_entity(funcs, (t_hash_data){"unset", ft_unset, 0});
 	ft_insert_entity(funcs, (t_hash_data){"pwd", ft_pwd, 0});
+	ft_insert_entity(funcs, (t_hash_data){"history", ft_history, 0});
 	return (funcs);
 }
 

@@ -12,6 +12,7 @@ void	ft_init_global_state(void)
 	tcgetattr(STDIN_FILENO, &g_global_state.orig_termios);
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, ft_sigquit_handler);
+	ft_init_history(&g_global_state.history, 0);
 }
 
 void	ft_start_shell(char *line, t_list_token **list, t_container *container)
@@ -64,6 +65,7 @@ void	ft_main_loop(t_container *container)
 	list = NULL;
 	while (1)
 	{
+		rl_done = 0;
 		g_global_state.minishell_signal = SIGNORMAL;
 		line = ft_get_line();
 		if (!line)

@@ -16,8 +16,11 @@ char	*ft_get_line(void)
 {
 	char	*line;
 
-	line = readline("Minishell $> ");
+	line = readline("minishell $> ");
 	if (line)
+	{
 		add_history(line);
+		ft_push_history(&g_global_state.history, line);
+	}
 	return (line);
 }

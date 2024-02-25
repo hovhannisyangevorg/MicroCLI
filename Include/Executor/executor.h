@@ -191,4 +191,7 @@ void	ft_fill_eof_str(char *end_of_file, char *eof_key);
 void	ft_handle_args(t_list_token *list, char **args);
 
 void	ft_update_env_exit(t_container cont, t_symbol_table *table);
+
+void	ft_push_history(t_history *hist, char *val);
+void	ft_init_history(t_history *hist, size_t size);
 #endif

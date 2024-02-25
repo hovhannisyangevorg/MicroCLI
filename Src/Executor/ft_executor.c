@@ -29,7 +29,7 @@ int	ft_get_signal_exit(int status, int *is_signaled, t_exec_type type)
 		rl_catch_signals = 0;
 		g_global_state.minishell_signal = SIGCHILD;
 		if (sig != SIGPIPE)
-			ft_child_sigint(SIGNORMAL);
+			ft_child_sigint(sig);
 		*is_signaled = 1;
 	}
 	else if (WIFEXITED(status))

@@ -3,6 +3,7 @@
 void	ft_restore_and_close(int here_fd, int stdio)
 {
 	dup2(stdio, STDIN_FILENO);
+	rl_redisplay();
 	close(stdio);
 	close(here_fd);
 }

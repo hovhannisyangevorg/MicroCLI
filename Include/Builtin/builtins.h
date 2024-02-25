@@ -39,6 +39,8 @@ int	ft_pwd(t_command* command, t_symbol_table* table);
  */
 int	ft_unset(t_command* command, t_symbol_table* table);
 
+int	ft_history(t_command *command, t_symbol_table *table);
+
 
 int         ft_ismultiply_overflow_u(long a, long b);
 int         ft_isadd_overflow_u(long a, long b);

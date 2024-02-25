@@ -14,6 +14,18 @@
 
 t_global_state	g_global_state;
 
+void	ft_history_cleanup(t_history *history)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < history->size)
+	{
+		ft_strdel(&history->lines[i]);
+		++i;
+	}
+}
+
 void	ft_program(char **env)
 {
 	t_container		container;
@@ -23,6 +35,7 @@ void	ft_program(char **env)
 	ft_get_pid(container, container.table->env);
 	ft_init_global_state();
 	ft_main_loop(&container);
+	ft_history_cleanup(&g_global_state.history);
 	clear_history();
 	ft_clear_symbol_table(container.table);
 }
