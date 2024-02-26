@@ -3,57 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   parser_struct.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hohayrap <hohayrap@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 16:44:21 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/19 04:21:14 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/26 20:28:04 by hohayrap         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef 	PARSER_STRUCT_H
-# define 	PARSER_STRUCT_H
+#ifndef PARSER_STRUCT_H
+# define PARSER_STRUCT_H
 
-#include "tokenizer_struct.h"
+# include "tokenizer_struct.h"
 
 /**
  * @typedef t_ast_node
  * @brief Represents a node in the abstract syntax tree (AST).
  */
-typedef struct	s_ast_node		t_ast_node;
+typedef struct s_ast_node			t_ast_node;
 
 /**
  * t_ast_node	base;
  * t_argument	*argument;
  * t_redirect	*redirect;
 */
-typedef	struct	s_command		t_command;
+typedef struct s_command			t_command;
 
 /**
  * t_ast_node	base;
  * char			**arguments;
 */
-typedef	struct	s_argument		t_argument;
-typedef	struct	s_redirect		t_redirect;
-
-
+typedef struct s_argument			t_argument;
+typedef struct s_redirect			t_redirect;
 
 /**
  * @typedef t_token_type
  * @brief Enumerates different token types mapping.
  */
-typedef enum	e_token_map_type	t_token_map_type;
+typedef enum e_token_map_type		t_token_map_type;
 
 /**
  * @typedef t_quot_type
  * @brief Enumerates different quotation types.
  */
-typedef enum	e_quot_type			t_quot_type;
+typedef enum e_quot_type			t_quot_type;
 
 /**
  * @typedef t_global_tree
  * @brief Represents the global abstract syntax tree (AST).
  */
-typedef struct	s_global_tree		t_global_tree;
+typedef struct s_global_tree		t_global_tree;
 
 /**
  * 
@@ -62,29 +60,27 @@ typedef struct	s_global_tree		t_global_tree;
  * This structs introduces two stack structures for 
  * handling abstract syntax trees (AST) during expression parsing.
 */
-typedef struct	s_global_stack		t_global_stack;
+typedef struct s_global_stack		t_global_stack;
 
-typedef struct	s_shant_stack		t_shant_stack;
+typedef struct s_shant_stack		t_shant_stack;
 
 /**
  * 	NEXT_BRACE = 1L << 0,
  *	PREV_BRACE = 1L << 1
 */
-typedef enum 	e_redirect_side		t_redirect_side;
+typedef enum e_redirect_side		t_redirect_side;
 // typedef void (*t_callback)(t_list_token* list);
 
+typedef struct s_io					t_io;
+typedef enum e_io_type				t_io_type;
 
-typedef struct 	s_io 				t_io;
-typedef enum 	e_io_type 			t_io_type;
+typedef struct s_for_shunting_yard	t_for_shunting_yard;
 
-typedef struct s_for_shunting_yard t_for_shunting_yard;
-
-
-struct s_io 
+struct s_io
 {
-	int input;
-	int output;
-	int error;
+	int	input;
+	int	output;
+	int	error;
 };
 
 enum e_io_type
@@ -93,11 +89,6 @@ enum e_io_type
 	STDOUT,
 	STDERR
 };
-
-
-
-
-
 
 enum e_redirect_side
 {
@@ -114,7 +105,7 @@ enum e_token_map_type
 	MJOB		= 38,
 	MAND		= -38,
 	MSEMI		= 59,
-	MSEMITWO 	= -59,
+	MSEMITWO	= -59,
 	MOPBREK		= 40,
 	MCLBREK		= 41,
 	MWRITE		= 62,
@@ -130,11 +121,10 @@ enum e_quot_type
 	DOUBLE		= 22
 };
 
-
 struct s_global_tree
 {
-	t_ast_node 		*ast_node;
-	size_t 			tree_size;
+	t_ast_node		*ast_node;
+	size_t			tree_size;
 };
 
 /**
@@ -143,11 +133,11 @@ struct s_global_tree
  */
 struct s_ast_node
 {
-    t_token_type	token_type;
+	t_token_type	token_type;
 	t_quot_type		quate_type;
-    char			*token;
-    t_ast_node		*left;
-    t_ast_node		*right;
+	char			*token;
+	t_ast_node		*left;
+	t_ast_node		*right;
 	t_ast_node		*parent;
 	t_global_stack	*subshell;
 };
@@ -163,13 +153,13 @@ struct s_command
 	t_ast_node	base;
 	t_argument	*argument;
 	t_redirect	*redirect;
-	t_io 		io;
+	t_io		io;
 };
 
 struct s_argument
 {
 	t_ast_node	base;
-	char		**arguments; 
+	char		**arguments;
 };
 
 struct s_redirect
@@ -182,15 +172,14 @@ struct s_redirect
 struct s_global_stack
 {
 	t_shant_stack	*top;
-	size_t 			size;
+	size_t			size;
 };
 
 struct s_shant_stack
 {
 	t_ast_node		*ast_node;
-	t_shant_stack 	*next;
+	t_shant_stack	*next;
 };
-
 
 struct s_for_shunting_yard
 {
@@ -204,136 +193,7 @@ struct s_for_shunting_yard
 	t_global_stack	*stack_oute;	
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#endif
 // typedef struct s_for_shunting_yard t_for_shunting_yard;
 
 // struct s_for_shunting_yard
@@ -347,4 +207,3 @@ struct s_for_shunting_yard
 // 	t_global_stack	*stack_opre;
 // 	t_global_stack	*stack_oute;	
 // };
-#endif

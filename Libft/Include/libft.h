@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hohayrap <hohayrap@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:10:28 by gehovhan          #+#    #+#             */
-/*   Updated: 2024/02/11 20:57:22 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/26 20:33:44 by hohayrap         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_strdel(char **str);
 void	ft_vecstrdel(char ***vecptr);
 void	ft_threestrdel(char ****vecptr);
 char	*ft_strstr(const char *haystack, const char *needle);
-void 	ft_strswap(char **a, char **b);
+void	ft_strswap(char **a, char **b);
 
 typedef struct s_list
 {
@@ -104,7 +104,6 @@ size_t	ft_gnl_strlen(const char *s);
 char	*ft_gnl_strjoin(char *s1, char *s2);
 int		ft_gnl_strchr(const char *s, int c);
 
-
-int	ft_strcmp(char *s1, char *s2);
+int		ft_strcmp(char *s1, char *s2);
 
 #endif

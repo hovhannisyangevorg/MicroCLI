@@ -12,26 +12,26 @@
 # include <signal.h>
 # include <termios.h>
 # include <signal.h>
-#include <sys/stat.h>
+# include <sys/stat.h>
 # include <termios.h>
 
-#ifndef  READLINE_LIBRARY
-    # define READLINE_LIBRARY 1
-#endif
-
-# ifndef  HEREDOC_DIR
-    # define HEREDOC_DIR "."
+# ifndef READLINE_LIBRARY
+#  define READLINE_LIBRARY 1
 # endif
 
-# include	"readline/readline.h"
-# include 	"readline/history.h"
-# include 	"global_struct.h"
-# include 	"libft.h"
-# include 	"executor.h"
-# include 	"parser.h"
-# include 	"sematic.h"
-# include 	"tokenizer.h"
-# include	"builtins.h"
+# ifndef HEREDOC_DIR
+#  define HEREDOC_DIR "."
+# endif
+
+# include "readline/readline.h"
+# include "global_struct.h"
+# include "readline/history.h"
+# include "libft.h"
+# include "executor.h"
+# include "parser.h"
+# include "sematic.h"
+# include "tokenizer.h"
+# include "builtins.h"
 
 void	ft_program(char **env);
 void	ft_init_global_state(void);

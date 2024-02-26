@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hohayrap <hohayrap@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 13:08:00 by gevorg            #+#    #+#             */
-/*   Updated: 2023/10/01 13:10:47 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/26 20:43:07 by hohayrap         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ char	*gnl_get_line(char *buffer)
 	index = 0;
 	while (buffer && buffer[index] && buffer[index] != '\n')
 		++index;
-	if (!buffer || !(line = malloc((index + 1))))
+	line = malloc(index + 1);
+	if (!buffer || !line)
 		return (NULL);
 	index = 0;
 	while (buffer && buffer[index] && buffer[index] != '\n')
@@ -50,7 +51,8 @@ char	*gnl_get_buffer(char *buffer)
 		return (NULL);
 	}
 	size = ft_gnl_strlen(buffer) - index;
-	if (!(change = malloc(sizeof(char) * (size + 1))))
+	change = malloc(sizeof(char) * (size + 1));
+	if (!change)
 		return (NULL);
 	++index;
 	c_index = 0;
@@ -61,21 +63,24 @@ char	*gnl_get_buffer(char *buffer)
 	return (change);
 }
 
-int		ft_getline(int fd, char **line)
+int	ft_getline(int fd, char **line)
 {
-	int				read_return;
-	char			*buffer;
-	static	char	*fd_buffer[1024] = {0};
+	int			read_return;
+	char		*buffer;
+	static char	*fd_buffer[1024] = {0};
 
 	if (fd < 0 || !line || BUFFER_SIZE <= 0)
 		return (-1);
-	if (!(buffer = malloc(BUFFER_SIZE + 1)))
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
 		return (-1);
-	while ((read_return = read(fd, buffer, BUFFER_SIZE)) > 0)
+	read_return = read(fd, buffer, BUFFER_SIZE);
+	while ((read_return) > 0)
 	{
 		buffer[read_return] = '\0';
 		fd_buffer[fd] = ft_gnl_strjoin(fd_buffer[fd], buffer);
-		if (ft_gnl_strchr(fd_buffer[fd], '\n') || ft_gnl_strchr(fd_buffer[fd], '\0'))
+		if (ft_gnl_strchr(fd_buffer[fd], '\n') || \
+			ft_gnl_strchr(fd_buffer[fd], '\0'))
 			break ;
 	}
 	free(buffer);

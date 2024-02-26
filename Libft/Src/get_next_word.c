@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_word.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gehovhan <gehovhan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hohayrap <hohayrap@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 18:23:24 by gehovhan          #+#    #+#             */
-/*   Updated: 2023/09/08 22:28:20 by gehovhan         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:34:00 by hohayrap         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
 static char	*ft_join(char *s1, char const *s2)
 {
 	size_t	i;
@@ -47,7 +48,7 @@ static char	*get_buffer(char *buff)
 	if (!len)
 	{
 		free(buff);
-		return 0;
+		return (0);
 	}
 	after = (char *)malloc(sizeof(char) * (len + 1));
 	if (!after)
