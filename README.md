@@ -62,7 +62,9 @@ To compile the program, run:
 ```shell
 $ cd Minishell
 ```
-
+```shell
+$ make Readline
+```
 ```shell
 $ make
 ```
