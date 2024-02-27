@@ -1,4 +1,4 @@
-prefix=/home/hohayrap/Desktop/minishell_old/Readline_update
+prefix=/Users/gehovhan/Desktop/gggg/Readline_update
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

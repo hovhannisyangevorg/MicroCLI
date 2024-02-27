@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shell.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gehovhan <gehovhan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/27 18:08:49 by gehovhan          #+#    #+#             */
+/*   Updated: 2024/02/27 18:10:03 by gehovhan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SHELL_H
 # define SHELL_H
 
@@ -24,8 +36,8 @@
 # endif
 
 # include "readline/readline.h"
-# include "global_struct.h"
 # include "readline/history.h"
+# include "global_struct.h"
 # include "libft.h"
 # include "executor.h"
 # include "parser.h"
@@ -41,5 +53,6 @@ void	ft_handle_status(char *line, t_list_token	**list, \
 						t_container *container);
 void	ft_main_loop(t_container *container);
 void	ft_history_cleanup(t_history *history);
+void	ft_print_header(void);
 
 #endif

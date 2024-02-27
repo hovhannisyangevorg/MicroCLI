@@ -1,8 +1,0 @@
-.vscode
-**/a.out
-**/*.o
-**/*.DS_Store
-**/*.sw*
-**/Obj
-**/*.a
-./minishell

@@ -54,6 +54,7 @@ $(CLEAN):
 
 
 $(FCLEAN): $(CLEAN)
+	$(RM) $(HEREDOC_DIR_PATH)
 	@$(MAKE) -s -C $(FT_LIB) $(FCLEAN)
 	@$(RM) $(NAME)
 

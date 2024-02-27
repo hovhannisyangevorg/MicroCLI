@@ -31,7 +31,7 @@ PACKAGE_TARNAME = readline
 srcdir = .
 
 top_srcdir = .
-BUILD_DIR = /home/hohayrap/Desktop/minishell_old/Readline
+BUILD_DIR = /Users/gehovhan/Desktop/gggg/Readline
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -48,7 +48,7 @@ MV = mv
 
 SHELL = /bin/sh
 
-prefix = /home/hohayrap/Desktop/minishell_old/Readline_update
+prefix = /Users/gehovhan/Desktop/gggg/Readline_update
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share

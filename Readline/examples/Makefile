@@ -21,7 +21,7 @@ RL_LIBRARY_VERSION = 8.1
 SHELL = /bin/sh
 RM = rm -f
 
-prefix = /home/hohayrap/Desktop/minishell_old/Readline_update
+prefix = /Users/gehovhan/Desktop/gggg/Readline_update
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share
@@ -32,7 +32,7 @@ datadir = ${datarootdir}
 
 top_srcdir = ..
 #BUILD_DIR = .
-BUILD_DIR = /home/hohayrap/Desktop/minishell_old/Readline
+BUILD_DIR = /Users/gehovhan/Desktop/gggg/Readline
 installdir = $(datadir)/readline
 
 INSTALL = /usr/bin/install -c

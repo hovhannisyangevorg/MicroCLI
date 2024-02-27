@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_build_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gehovhan <gehovhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 22:47:24 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/19 04:53:11 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/27 18:16:09 by gehovhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	ft_handle_argument(t_list_token *lsit, t_command *command)
 	t_token			arg;
 	char			**args;
 
+	args = NULL;
 	count = ft_get_argument_part(lsit);
 	if (count)
 		args = ft_get_argument_args(count, lsit);

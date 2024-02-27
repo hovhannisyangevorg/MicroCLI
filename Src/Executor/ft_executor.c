@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gehovhan <gehovhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:21:12 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/18 18:45:26 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/27 18:14:39 by gehovhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	ft_update_env_exit(t_container cont, t_symbol_table *table)
 	{
 		ft_set_env(table->env, \
 		(t_hash_data){"_", g_global_state.argument, VENV});
-		free(g_global_state.argument);
 		g_global_state.argument = NULL;
 	}
 	free(status);

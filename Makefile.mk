@@ -9,6 +9,7 @@ OBJ_DIR				= 	Obj
 INC_DIR				=	Include
 FT_LIB				=	Libft
 INC_DIR_LIB			= 	Include
+INC_DIR_RL			= 	include
 READ_DIR 			=	Readline
 READ_UPDIR			=	Readline_update
 READ_ARX 			=	lib
@@ -64,6 +65,7 @@ D_FLAG 			=	-D
 _C 				=	.c
 _O 				=	.o
 _H 				=	.h
+_LIB 			=	.a
 
 # Compiler and Linker Options Commands,
 CC				=	cc
@@ -72,12 +74,14 @@ RM				=	rm -rf
 MK				=	mkdir -p
 HARD_FLAG		=	-Wall -Wextra -Werror
 DEFINES			=	$(D_FLAG)HEREDOC_DIR=$(HEREDOC_DIR)
-SANIT_FLAG		=	-g3
-READ_FLAG		=	-lreadline -lhistory
+SANIT_FLAG		=	-g3 -fsanitize=address
+READ_FLAG		=	
 CFLAGS			=	$(HARD_FLAG) $(SANIT_FLAG) $(DEFINES)
 
 ifeq ($(OS),Darwin)
-	LINKERS += $(L_FLAG)$(READ_UPDIR)/$(READ_ARX)
+	READ_FLAG = $(READ_UPDIR)/$(READ_ARX)/libreadline$(_LIB) $(READ_UPDIR)/$(READ_ARX)/libhistory$(_LIB) -lncurses -ltermcap
+else
+	READ_FLAG = -lreadline -lhistory
 endif
 
 LINKERS			+=	 $(READ_FLAG) $(L_FLAG)$(FT_LIB) -lft
@@ -119,4 +123,4 @@ OBJS_ALL 		=	$(OBJS_EXEC) $(OBJS_PARS) $(OBJS_TOKS) $(OBJS_SHELL) $(OBJS_BILTIN)
 INCS_ALL 		=	$(INCS_EXEC) $(INCS_PARS) $(INCS_TOKS) $(INCS_SHELL) $(INCS_BILTIN) $(INCS_SEMATIC)
 
 # All include path
-INCLUDES		=	$(I_FLAG)$(INC_DIR) $(I_FLAG)$(FT_LIB)/$(INC_DIR_LIB) $(I_FLAG)$(INC_EXEC_DIR) $(I_FLAG)$(INC_PARS_DIR) $(I_FLAG)$(INC_TOKS_DIR) $(I_FLAG)$(INC_BILTIN_DIR) $(I_FLAG)$(INC_SHELL_DIR) $(I_FLAG)$(INC_SEMATIC_DIR) $(I_FLAG)$(READ_UPDIR)/$(INC_DIR_LIB) 
+INCLUDES		=	$(I_FLAG)$(INC_DIR) $(I_FLAG)$(FT_LIB)/$(INC_DIR_LIB) $(I_FLAG)$(INC_EXEC_DIR) $(I_FLAG)$(INC_PARS_DIR) $(I_FLAG)$(INC_TOKS_DIR) $(I_FLAG)$(INC_BILTIN_DIR) $(I_FLAG)$(INC_SHELL_DIR) $(I_FLAG)$(INC_SEMATIC_DIR) $(I_FLAG)$(READ_UPDIR)/$(INC_DIR_RL) 

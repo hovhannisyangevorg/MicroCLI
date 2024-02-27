@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gevorg <gevorg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gehovhan <gehovhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 20:49:33 by gevorg            #+#    #+#             */
-/*   Updated: 2024/02/13 20:41:45 by gevorg           ###   ########.fr       */
+/*   Updated: 2024/02/27 18:13:59 by gehovhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ int	ft_exit(t_command *command, t_symbol_table *table)
 {
 	unsigned char	status;
 
+	status = 0;
 	(void)table;
-	printf("exit\n");
+	ft_putendl_fd("exit", STDOUT_FILENO);
 	if (command->argument && command->argument->arguments && \
 		command->argument->arguments[0] && \
 		command->argument->arguments[1])
