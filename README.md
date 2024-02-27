@@ -41,6 +41,7 @@ For detailed information, refer to the [**subject of this project**](https://git
 * [**📁 Src:**](Src/) 			Contains the source code of the program.
 * [**📄 Makefile**](Makefile)   	Contains instructions for compiling the program and testing it.
 * [**📄 Makefile.mk**](MakeFile.mk)   	Contains a header file for the makefile.
+* [**🎭 en.subject.pdf**](MakeFile.mk)  Contains the subject file for the Minishell.
 
 
 Note: program covers only mandatory requirements of the project's subject.
