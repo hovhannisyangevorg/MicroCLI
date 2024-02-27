@@ -1,5 +1,5 @@
 <h1 align="center">
-	42 Cursus' Minishell
+	Shell
 </h1>
 
 <p align="center">
