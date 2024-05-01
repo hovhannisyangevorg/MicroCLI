@@ -2,11 +2,6 @@
 	MicroCLI
 </h1>
 
-<p align="center">
-	<b><i>Development repo MicroCLI project</i></b><br>
-	For further information about 42cursus and its projects, please refer to <a href="https://www.42courses.com/"><b>42cursus repo</b></a>.
-</p>
-
 <h3 align="center">
 	<a href="#%EF%B8%8F-about">About</a>
 	<span> · </span>
