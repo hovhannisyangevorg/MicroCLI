@@ -1,9 +1,9 @@
 <h1 align="center">
-	42 Cursus' Minishell
+	MicroCLI
 </h1>
 
 <p align="center">
-	<b><i>Development repo for 42cursus' minishell project</i></b><br>
+	<b><i>Development repo MicroCLI project</i></b><br>
 	For further information about 42cursus and its projects, please refer to <a href="https://www.42courses.com/"><b>42cursus repo</b></a>.
 </p>
 
@@ -41,7 +41,7 @@ For detailed information, refer to the [**subject of this project**](https://git
 * [**📁 Src:**](Src/) 			Contains the source code of the program.
 * [**📄 Makefile**](Makefile)   	Contains instructions for compiling the program and testing it.
 * [**📄 Makefile.mk**](MakeFile.mk)   	Contains a header file for the makefile.
-* [**🎭 en.subject.pdf**](MakeFile.mk)  Contains the subject file for the Minishell.
+* [**🎭 en.subject.pdf**](MakeFile.mk)  Contains the subject file for the MicroCLI.
 
 
 Note: program covers only mandatory requirements of the project's subject.
@@ -60,7 +60,7 @@ The program is written in C language for **Linux** distributions and thus needs 
 To compile the program, run:
 
 ```shell
-$ cd Minishell
+$ cd MicroCLI
 ```
 ```shell
 $ make Readline
