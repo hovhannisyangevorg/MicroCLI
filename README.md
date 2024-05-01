@@ -19,7 +19,7 @@
 
 ## 🤷🏻 About
 
-> _Minishell is a simple UNIX-like command-line shell implementation . This project aims to introduce students to the fundamentals of operating systems and processes by developing a basic shell application._
+> _MicroCLI is a simple UNIX-like command-line shell implementation . This project aims to introduce students to the fundamentals of operating systems and processes by developing a basic shell application._
 
 For detailed information, refer to the [**subject of this project**](https://github.com/hovhannisyangevorg/Minishell/blob/main/en.subject.pdf).
 
@@ -77,7 +77,6 @@ $ ./minishell
 
 * [The Linux Programming Interface](https://sciencesoftcode.files.wordpress.com/2018/12/the-linux-programming-interface-michael-kerrisk-1.pdf)
 * [AST - Abstract syntax tree data structure](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
-* [Harm-Smits' 42 Docs - minishell](https://harm-smits.github.io/42docs/projects/minishell)
 * [The Open Group Base Specifications - Shell Command Language](https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html)
 * [Introduction to Systems Programming: a Hands-on Approach - Chapter 5. Writing Your Own Shell ](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
 
